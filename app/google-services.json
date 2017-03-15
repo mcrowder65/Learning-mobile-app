@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "6745458066",
+    "firebase_url": "https://prendus-development.firebaseio.com",
+    "project_id": "prendus-development",
+    "storage_bucket": "prendus-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6745458066:android:d1553a025f70b1c1",
+        "android_client_info": {
+          "package_name": "com.prendus.prendus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6745458066-sjh842p6e7a05pjbv1rhmi1ildtm5j23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prendus.prendus",
+            "certificate_hash": "58cf1f693920c6cfed30d0cdc7b89e268fb22446"
+          }
+        },
+        {
+          "client_id": "6745458066-a38tidphc6perktgfst2fetcsfk8kkr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7SNHQbiv9_wtv9LKmYSY5qmmlaWHXDjw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6745458066-a38tidphc6perktgfst2fetcsfk8kkr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
