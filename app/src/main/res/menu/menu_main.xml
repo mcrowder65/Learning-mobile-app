@@ -4,14 +4,12 @@
         android:id="@+id/miProfile"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom"
-        android:onClick="movingToSnowman"
-        android:title="snowman">
+        android:title="search">
     </item>
     <item
         android:id="@+id/miCompose"
         android:icon="@drawable/menu"
         app:showAsAction="ifRoom"
-        android:onClick="movingToList"
-        android:title="list">
+        android:title="menu">
     </item>
 </menu>
