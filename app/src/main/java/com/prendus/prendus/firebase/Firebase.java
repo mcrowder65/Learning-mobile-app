@@ -138,7 +138,7 @@ public class Firebase {
         DatabaseReference ref = database.getReference(path);
         DatabaseReference pushedRef = ref.push();
         pushedRef.setValue(obj);
-        
+
     }
 
     public void delete(String path) {
