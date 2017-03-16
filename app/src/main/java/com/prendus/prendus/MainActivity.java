@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-
+        makeSnackBar("init!");
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -44,33 +44,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        return Actions.newView("Main", "http://[ENTER-YOUR-URL-HERE]");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        FirebaseUserActions.getInstance().start(getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        FirebaseUserActions.getInstance().end(getIndexApiAction());
-        super.onStop();
     }
 
     private void makeSnackBar(String message) {
