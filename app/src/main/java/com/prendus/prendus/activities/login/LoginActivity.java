@@ -1,10 +1,12 @@
 package com.prendus.prendus.activities.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.prendus.prendus.R;
 
@@ -38,4 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         Snackbar mySnackBar = Snackbar.make(findViewById(R.id.myCoordinatorLayout), message, Snackbar.LENGTH_SHORT);
         mySnackBar.show();
     }
+
+    public void loginClicked() {
+
+    }
+    public void movingToLogin(MenuItem item) {
+        makeSnackBar("you are already on login.");
+    }
+
 }
