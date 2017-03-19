@@ -7,16 +7,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
+import com.prendus.prendus.validators.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +61,22 @@ public class LoginActivity extends AppCompatActivity {
     public void loginClicked(View view) {
         Log.wtf(TAG, "login clicked!!!!");
         username = (EditText)findViewById(R.id.username);
+
         password = (EditText) findViewById(R.id.password);
         String usernameText = String.valueOf(username.getText());
+        if(!Validator.isEmailValid(usernameText)) {
+            makeSnackBar("email invalid!");
+            return;
+        }
         String passwordText = String.valueOf(password.getText());
+        if(!Validator.isPasswordValid(passwordText)) {
+            makeSnackBar("password invalid");
+            return;
+        }
         Log.wtf(TAG, "username: " + usernameText + " password: " + passwordText);
-        String uid = this.logInUserWithEmailAndPassword(usernameText, passwordText);
-        Log.wtf(TAG, "uid: " + uid);
+        this.logInUserWithEmailAndPassword(usernameText, passwordText);
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        Log.wtf(TAG, "email: " + auth.getCurrentUser().getEmail());
     }
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
@@ -72,13 +85,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
 
-    public synchronized String logInUserWithEmailAndPassword(String username, String password) {
+    public void logInUserWithEmailAndPassword(String username, String password) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        final List<String> uids = new ArrayList<>();
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.wtf(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                 // If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
@@ -86,22 +97,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.wtf(TAG, "signInWithEmail", task.getException());
 
-                } else {
-                    String uid = auth.getCurrentUser().getUid();
-                    uids.add(uid);
-                    semaphore.release();
                 }
 
             }
         });
-        while(semaphore.tryAcquire()) {
-
-        }
-//        try {
-//            semaphore.acquire();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        return uids.size() > 0 ? uids.get(0) : null;
     }
 }
