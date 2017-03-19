@@ -31,7 +31,9 @@ import java.util.concurrent.Semaphore;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "MY APP";
-    private Semaphore semaphore;
+
+    private EditText username;
+    private EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-//        makeSnackBar("login init!");
-        semaphore = new Semaphore(1);
+
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -81,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
     }
-    EditText username;
-    EditText password;
+
 
 
     public void logInUserWithEmailAndPassword(String username, String password) {
