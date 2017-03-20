@@ -11,9 +11,10 @@
         android:id="@+id/miCompose"
         android:icon="@drawable/menu"
         app:showAsAction="ifRoom"
-        android:onClick="movingToLogin"
+        android:onClick="dropDownMenuClicked"
         android:title="menu">
     </item>
+
 </menu>
     <!--android:onClick="movingToSnowman"-->
     <!--android:onClick="movingToList"-->

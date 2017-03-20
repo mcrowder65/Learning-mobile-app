@@ -8,16 +8,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         <activity android:name=".MainActivity">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.login.LoginActivity"/>
-
+        <activity android:name=".activities.login.LoginActivity" />
+        <activity android:name=".activities.dropdown.DropDownMenuActivity"/>
+        <!-- TODO put navigation drawer in here -->
+        <!-- TODO put myquizzes activity here. -->
+        <!-- TODO put profile activity here -->
+        <!-- TODO put search activity here -->
+        <!-- TODO put signup activity here -->
+        <!-- TODO put takequiz activity here -->
 
     </application>
 

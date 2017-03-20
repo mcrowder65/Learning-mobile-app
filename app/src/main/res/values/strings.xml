@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">PRENDUS</string>
     <string name="login">LOGIN</string>
+    <string-array name="loggedin_spinner">
+        <item>My Quizzes</item>
+        <item>Profile</item>
+        <item>Sign out</item>
+    </string-array>
+    <string-array name="loggedout_spinner">
+        <item>Sign in</item>
+        <item>Sign up</item>
+    </string-array>
 </resources>

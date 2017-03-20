@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.constants.Constants;
 import com.prendus.prendus.validators.Validator;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import java.util.concurrent.Semaphore;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "MY APP";
 
     private EditText username;
     private EditText password;
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         mySnackBar.show();
     }
     public void loginClicked(View view) {
-        Log.wtf(TAG, "login clicked!!!!");
+        Log.wtf(Constants.TAG, "login clicked!!!!");
         username = (EditText)findViewById(R.id.username);
 
         password = (EditText) findViewById(R.id.password);
@@ -74,10 +74,10 @@ public class LoginActivity extends AppCompatActivity {
             makeSnackBar("password invalid");
             return;
         }
-        Log.wtf(TAG, "username: " + usernameText + " password: " + passwordText);
+        Log.wtf(Constants.TAG, "username: " + usernameText + " password: " + passwordText);
         this.logInUserWithEmailAndPassword(usernameText, passwordText);
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        Log.wtf(TAG, "email: " + auth.getCurrentUser().getEmail());
+        Log.wtf(Constants.TAG, "email: " + auth.getCurrentUser().getEmail());
     }
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 // the auth state listener will be notified and logic to handle the
                 // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
-                    Log.wtf(TAG, "signInWithEmail", task.getException());
+                    Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
 
                 }
 
