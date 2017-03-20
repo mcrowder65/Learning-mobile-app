@@ -12,25 +12,36 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.constants.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mcrowder65 on 3/20/17.
  */
 
 public class DropDownMenuActivity extends Activity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dropdown_menu);
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        spinner = (Spinner) findViewById(R.id.spinner);
+        List<String> items = new ArrayList<>();
         if(auth.getCurrentUser() != null) {
-            spinner = (Spinner) findViewById(R.id.logggedin_spinner);
+            Log.wtf(Constants.TAG, auth.getCurrentUser().getEmail());
+
+            items.add("My Quizzes");
+            items.add("Profile");
+            items.add("Logout");
 
         } else {
-            spinner = (Spinner) findViewById(R.id.loggedout_spinner);
+            items.add("Login");
+            items.add("Signup");
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item);
+                android.R.layout.simple_spinner_dropdown_item, items);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
     }
