@@ -31,11 +31,9 @@ public class DropDownMenuActivity extends Activity implements AdapterView.OnItem
         List<String> items = new ArrayList<>();
         if(auth.getCurrentUser() != null) {
             Log.wtf(Constants.TAG, auth.getCurrentUser().getEmail());
-
             items.add("My Quizzes");
             items.add("Profile");
             items.add("Logout");
-
         } else {
             items.add("Login");
             items.add("Signup");
@@ -44,6 +42,7 @@ public class DropDownMenuActivity extends Activity implements AdapterView.OnItem
                 android.R.layout.simple_spinner_dropdown_item, items);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
