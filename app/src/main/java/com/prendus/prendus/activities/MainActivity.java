@@ -1,5 +1,6 @@
 package com.prendus.prendus.activities;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.utilities.Utilities;
 
 
@@ -43,19 +45,59 @@ public class MainActivity extends AppCompatActivity {
     }
     public void movingToLogin(MenuItem item) {
         makeSnackBar("moving to login!");
-//        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-//        startActivity(i);
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
     }
 
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(MainActivity.this, menuItemView);
-
-        popup.getMenuInflater().inflate(Utilities.isLoggedIn() ?
-                R.menu.logged_in_menu : R.menu.logged_out_menu, popup.getMenu());
-        //http://stackoverflow.com/questions/13784088/setting-popupmenu-menu-items-programmatically
+        if(Utilities.isLoggedIn()) {
+            popup.getMenu().add("My Quizzes");
+            popup.getMenu().add("Profile");
+            popup.getMenu().add("Logout");
+        } else {
+            popup.getMenu().add("Login");
+            popup.getMenu().add("Sign up");
+        }
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
+                if(Utilities.isLoggedIn()) {
+                    switch((String)item.getTitle()) {
+                        case "My Quizzes": {
+                            //TODO go to quizzes
+                            break;
+                        }
+                        case "Profile": {
+                            //TODO go to profile
+                            break;
+                        }
+                        case "Logout": {
+                            //TODO add to logout
+                            break;
+                        }
+                        default: {
+                            Toast.makeText(MainActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    switch((String)item.getTitle()) {
+                        case "Login": {
+//                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+//                            startActivity(i);
+                            break;
+                        }
+
+                        case "Sign up": {
+                            //TODO go to signup
+                            break;
+                        }
+                        default: {
+                            Toast.makeText(MainActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
                 Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                 return true;
             }
