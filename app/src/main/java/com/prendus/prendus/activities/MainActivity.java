@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(MainActivity.this, menuItemView);
+
         popup.getMenuInflater().inflate(Utilities.isLoggedIn() ?
                 R.menu.logged_in_menu : R.menu.logged_out_menu, popup.getMenu());
+        //http://stackoverflow.com/questions/13784088/setting-popupmenu-menu-items-programmatically
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
