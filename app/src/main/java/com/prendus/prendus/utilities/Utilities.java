@@ -19,4 +19,9 @@ public class Utilities {
             return true;
         }
     }
+
+    public static void logout() {
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
+    }
 }

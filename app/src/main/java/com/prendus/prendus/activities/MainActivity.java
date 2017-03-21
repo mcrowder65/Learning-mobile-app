@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
                         case "Logout": {
-                            //TODO add to logout
+                            Utilities.logout();
                             break;
                         }
                         default: {
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     switch((String)item.getTitle()) {
                         case "Login": {
-//                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-//                            startActivity(i);
+                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(i);
                             break;
                         }
 
