@@ -84,9 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
     }
-
-
-
+    
     public void logInUserWithEmailAndPassword(String username, String password) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
