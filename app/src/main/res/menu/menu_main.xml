@@ -1,14 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/miProfile"
+        android:id="@+id/search"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom"
 
         android:title="search">
     </item>
     <item
-        android:id="@+id/miCompose"
+        android:id="@+id/menu"
         android:icon="@drawable/menu"
         app:showAsAction="ifRoom"
         android:onClick="dropDownMenuClicked"

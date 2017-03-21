@@ -1,18 +1,20 @@
-package com.prendus.prendus;
+package com.prendus.prendus.activities;
 
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-import com.prendus.prendus.activities.dropdown.DropDownMenuActivity;
+import com.prendus.prendus.R;
+import com.prendus.prendus.utilities.Utilities;
 
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         makeSnackBar("init!");
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -45,9 +46,19 @@ public class MainActivity extends AppCompatActivity {
 //        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 //        startActivity(i);
     }
+
     public void dropDownMenuClicked(MenuItem item) {
-        Intent i = new Intent(getApplicationContext(), DropDownMenuActivity.class);
-        startActivity(i);
+        View menuItemView = findViewById(R.id.menu);
+        PopupMenu popup = new PopupMenu(MainActivity.this, menuItemView);
+        popup.getMenuInflater().inflate(Utilities.isLoggedIn() ?
+                R.menu.logged_in_menu : R.menu.logged_out_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        popup.show();//showing popup menu
     }
 
 }
