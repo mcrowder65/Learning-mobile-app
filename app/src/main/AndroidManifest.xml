@@ -16,9 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.login.LoginActivity" />
-        <activity android:name=".activities.dropdown.DropDownMenuActivity"/>
+        <activity android:name=".activities.myquizzes.MyQuizzesActivity"/>
         <!-- TODO put navigation drawer in here -->
-        <!-- TODO put myquizzes activity here. -->
         <!-- TODO put profile activity here -->
         <!-- TODO put search activity here -->
         <!-- TODO put signup activity here -->

@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.MainActivity;
 import com.prendus.prendus.activities.constants.Constants;
+import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
 
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
     }
-    
+
     public void logInUserWithEmailAndPassword(String username, String password) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
+                } else {
 
                 }
 
@@ -120,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(Utilities.isLoggedIn()) {
                     switch((String)item.getTitle()) {
                         case "My Quizzes": {
-                            //TODO go to quizzes
+                            Intent i = new Intent(getApplicationContext(), MyQuizzesActivity.class);
+                            startActivity(i);
                             break;
                         }
                         case "Profile": {
