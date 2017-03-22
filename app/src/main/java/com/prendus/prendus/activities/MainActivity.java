@@ -56,56 +56,12 @@ public class MainActivity extends AppCompatActivity {
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(MainActivity.this, menuItemView);
-        if(Utilities.isLoggedIn()) {
-            popup.getMenu().add("My Quizzes");
-            popup.getMenu().add("Profile");
-            popup.getMenu().add("Logout");
-        } else {
-            popup.getMenu().add("Login");
-            popup.getMenu().add("Sign up");
-        }
+        Utilities.populatePopup(popup);
+        final MainActivity self = this;
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                if(Utilities.isLoggedIn()) {
-                    switch((String)item.getTitle()) {
-                        case "My Quizzes": {
-                            Intent i = new Intent(getApplicationContext(), MyQuizzesActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-                        case "Profile": {
-                            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-                        case "Logout": {
-                            Utilities.logout();
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(MainActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    switch((String)item.getTitle()) {
-                        case "Login": {
-                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-
-                        case "Sign up": {
-                            Intent i = new Intent(getApplicationContext(), SignupActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(MainActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                Utilities.navigate(item, self, null);
                 return true;
             }
         });

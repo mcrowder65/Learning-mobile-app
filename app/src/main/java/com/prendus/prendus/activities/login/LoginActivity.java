@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
-
+                    //TODO decide on landing!
                 }
 
             }

@@ -26,19 +26,6 @@ import com.prendus.prendus.firebase.Firebase;
 public class Utilities {
     public static Firebase firebase = new Firebase();
     public static Gson g = new Gson();
-    public static boolean isLoggedIn() {
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        if(auth.getCurrentUser() == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public static void logout() {
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signOut();
-    }
 
     public static void populatePopup(PopupMenu popup) {
         if(isLoggedIn()) {
@@ -70,7 +57,9 @@ public class Utilities {
                     break;
                 }
                 case MenuOptions.LOGOUT: {
-                    Utilities.logout();
+                    logout();
+
+                    //TODO decide on landing page.
                     break;
                 }
                 default: {
@@ -100,5 +89,19 @@ public class Utilities {
                 }
             }
         }
+    }
+
+    private static boolean isLoggedIn() {
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private static void logout() {
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
     }
 }

@@ -37,6 +37,7 @@ public class SignupActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         title = (TextView)findViewById(R.id.signuptitle);
         title.setText("signup");
+
     }
 
     // Menu icons are inflated just as they were with actionbar
