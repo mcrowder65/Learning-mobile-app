@@ -8,4 +8,5 @@ import android.view.MenuItem;
 
 public interface IPrendusActivity {
     public void dropDownMenuClicked(MenuItem item);
+    public void searchClicked(MenuItem item);
 }

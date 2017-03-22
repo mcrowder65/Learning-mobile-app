@@ -15,12 +15,13 @@ import com.prendus.prendus.R;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
+import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.utilities.Utilities;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IPrendusActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         popup.show();//showing popup menu
+    }
+
+    @Override
+    public void searchClicked(MenuItem item) {
+        Utilities.goToActivity(SearchActivity.class, this);
     }
 
 }

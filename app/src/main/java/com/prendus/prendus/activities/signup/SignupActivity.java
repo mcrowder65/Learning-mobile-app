@@ -16,6 +16,7 @@ import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
+import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.utilities.Utilities;
@@ -62,5 +63,10 @@ public class SignupActivity extends AppCompatActivity implements IPrendusActivit
             }
         });
         popup.show();//showing popup menu
+    }
+
+    @Override
+    public void searchClicked(MenuItem item) {
+        Utilities.goToActivity(SearchActivity.class, this);
     }
 }

@@ -62,5 +62,9 @@ public class SearchActivity extends AppCompatActivity implements IPrendusActivit
         popup.show();//showing popup menu
     }
 
+    @Override
+    public void searchClicked(MenuItem item) {
+    }
+
 
 }

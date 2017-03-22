@@ -4,7 +4,8 @@
         android:id="@+id/search"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom"
-        android:title="search">
+        android:title="search"
+        android:onClick="searchClicked">
     </item>
     <item
         android:id="@+id/menu"
@@ -15,5 +16,3 @@
     </item>
 
 </menu>
-    <!--android:onClick="movingToSnowman"-->
-    <!--android:onClick="movingToList"-->

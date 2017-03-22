@@ -118,4 +118,9 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
         });
         popup.show();//showing popup menu
     }
+
+    @Override
+    public void searchClicked(MenuItem item) {
+        Utilities.goToActivity(SearchActivity.class, this);
+    }
 }

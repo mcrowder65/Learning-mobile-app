@@ -57,7 +57,7 @@ public class Utilities {
                 case MenuOptions.LOGOUT: {
                     logout();
 
-                    //TODO decide on landing page.
+                    goToActivity(LoginActivity.class, activity);
                     break;
                 }
                 default: {
