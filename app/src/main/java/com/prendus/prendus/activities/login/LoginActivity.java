@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
 
     private EditText username;
     private EditText password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
     }
 
     public void logInUserWithEmailAndPassword(String username, String password) {
+        Utilities.showSpinner(this);
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final LoginActivity self = this;
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -97,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
+                    Utilities.hideSpinner(self);
                     Utilities.goToActivity(MyQuizzesActivity.class, self);
                 }
 
@@ -122,5 +125,12 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
     @Override
     public void searchClicked(MenuItem item) {
         Utilities.goToActivity(SearchActivity.class, this);
+    }
+
+    @Override
+    public ProgressBar getSpinner() {
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        return spinner;
     }
 }

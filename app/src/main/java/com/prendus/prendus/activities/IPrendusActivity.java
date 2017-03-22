@@ -1,12 +1,14 @@
 package com.prendus.prendus.activities;
 
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 /**
  * Created by mcrowder65 on 3/22/17.
  */
 
 public interface IPrendusActivity {
-    public void dropDownMenuClicked(MenuItem item);
-    public void searchClicked(MenuItem item);
+    void dropDownMenuClicked(MenuItem item);
+    void searchClicked(MenuItem item);
+    ProgressBar getSpinner();
 }

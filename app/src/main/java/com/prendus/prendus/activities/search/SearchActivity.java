@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,13 @@ public class SearchActivity extends AppCompatActivity implements IPrendusActivit
 
     @Override
     public void searchClicked(MenuItem item) {
+    }
+
+    @Override
+    public ProgressBar getSpinner() {
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        return spinner;
     }
 
 

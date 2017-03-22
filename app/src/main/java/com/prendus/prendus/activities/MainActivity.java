@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.prendus.prendus.R;
@@ -72,6 +73,13 @@ public class MainActivity extends AppCompatActivity implements IPrendusActivity 
     @Override
     public void searchClicked(MenuItem item) {
         Utilities.goToActivity(SearchActivity.class, this);
+    }
+
+    @Override
+    public ProgressBar getSpinner() {
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        return spinner;
     }
 
 }

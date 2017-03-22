@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
@@ -89,6 +90,14 @@ public class Utilities {
     public static void goToActivity(Class newActivity, Activity activity) {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
         activity.startActivity(i);
+    }
+
+    public static void showSpinner(IPrendusActivity activity) {
+        activity.getSpinner().setVisibility(View.VISIBLE);
+    }
+
+    public static void hideSpinner(IPrendusActivity activity) {
+        activity.getSpinner().setVisibility(View.GONE);
     }
     private static boolean isLoggedIn() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
