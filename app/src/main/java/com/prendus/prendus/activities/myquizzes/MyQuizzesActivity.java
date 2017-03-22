@@ -8,10 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.login.LoginActivity;
+import com.prendus.prendus.activities.profile.ProfileActivity;
+import com.prendus.prendus.activities.signup.SignupActivity;
+import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -19,6 +23,7 @@ import com.prendus.prendus.utilities.Utilities;
  */
 
 public class MyQuizzesActivity extends AppCompatActivity {
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,8 @@ public class MyQuizzesActivity extends AppCompatActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
+        textView = (TextView)findViewById(R.id.myquiztitle);
+        textView.setText("my quizzes");
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -42,53 +49,12 @@ public class MyQuizzesActivity extends AppCompatActivity {
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(MyQuizzesActivity.this, menuItemView);
-        if(Utilities.isLoggedIn()) {
-            popup.getMenu().add("My Quizzes");
-            popup.getMenu().add("Profile");
-            popup.getMenu().add("Logout");
-        } else {
-            popup.getMenu().add("Login");
-            popup.getMenu().add("Sign up");
-        }
+        Utilities.populatePopup(popup);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        final MyQuizzesActivity self = this;
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                if(Utilities.isLoggedIn()) {
-                    switch((String)item.getTitle()) {
-                        case "My Quizzes": {
-                            Toast.makeText(MyQuizzesActivity.this,"You're already on my quizzes!",Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        case "Profile": {
-                            //TODO go to profile
-                            break;
-                        }
-                        case "Logout": {
-                            Utilities.logout();
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(MyQuizzesActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    switch((String)item.getTitle()) {
-                        case "Login": {
-                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-
-                        case "Sign up": {
-                            //TODO go to signup
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(MyQuizzesActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                Toast.makeText(MyQuizzesActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                Utilities.navigate(item, self, MenuOptions.MY_QUIZZES);
                 return true;
             }
         });

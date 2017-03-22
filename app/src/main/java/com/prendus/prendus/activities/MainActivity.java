@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.login.LoginActivity;
+import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
+import com.prendus.prendus.activities.profile.ProfileActivity;
+import com.prendus.prendus.activities.signup.SignupActivity;
+import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.utilities.Utilities;
 
 
@@ -66,11 +70,13 @@ public class MainActivity extends AppCompatActivity {
                 if(Utilities.isLoggedIn()) {
                     switch((String)item.getTitle()) {
                         case "My Quizzes": {
-                            //TODO go to quizzes
+                            Intent i = new Intent(getApplicationContext(), MyQuizzesActivity.class);
+                            startActivity(i);
                             break;
                         }
                         case "Profile": {
-                            //TODO go to profile
+                            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                            startActivity(i);
                             break;
                         }
                         case "Logout": {
@@ -90,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         case "Sign up": {
-                            //TODO go to signup
+                            Intent i = new Intent(getApplicationContext(), SignupActivity.class);
+                            startActivity(i);
                             break;
                         }
                         default: {

@@ -13,10 +13,6 @@
         android:onClick="dropDownMenuClicked"
         android:title="menu">
     </item>
-    <include
-        layout="@layout/activity_dropdown_menu"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
 
 </menu>
     <!--android:onClick="movingToSnowman"-->

@@ -17,10 +17,11 @@
         </activity>
         <activity android:name=".activities.login.LoginActivity" />
         <activity android:name=".activities.myquizzes.MyQuizzesActivity"/>
-        <!-- TODO put profile activity here -->
-        <!-- TODO put search activity here -->
-        <!-- TODO put signup activity here -->
-        <!-- TODO put takequiz activity here -->
+        <activity android:name=".activities.profile.ProfileActivity"/>
+        <activity android:name=".activities.search.SearchActivity"/>
+
+        <activity android:name=".activities.signup.SignupActivity"/>
+        <activity android:name=".activities.takequiz.TakeQuizActivity"/>
 
     </application>
 

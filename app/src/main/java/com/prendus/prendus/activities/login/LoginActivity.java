@@ -2,18 +2,17 @@ package com.prendus.prendus.activities.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,15 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
-import com.prendus.prendus.activities.MainActivity;
-import com.prendus.prendus.activities.constants.Constants;
+import com.prendus.prendus.activities.search.SearchActivity;
+import com.prendus.prendus.activities.signup.SignupActivity;
+import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
+import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by mcrowder65 on 3/16/17.
@@ -108,53 +105,12 @@ public class LoginActivity extends AppCompatActivity {
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(LoginActivity.this, menuItemView);
-        if(Utilities.isLoggedIn()) {
-            popup.getMenu().add("My Quizzes");
-            popup.getMenu().add("Profile");
-            popup.getMenu().add("Logout");
-        } else {
-            popup.getMenu().add("Login");
-            popup.getMenu().add("Sign up");
-        }
+        Utilities.populatePopup(popup);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        final LoginActivity self = this;
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                if(Utilities.isLoggedIn()) {
-                    switch((String)item.getTitle()) {
-                        case "My Quizzes": {
-                            Intent i = new Intent(getApplicationContext(), MyQuizzesActivity.class);
-                            startActivity(i);
-                            break;
-                        }
-                        case "Profile": {
-                            //TODO go to profile
-                            break;
-                        }
-                        case "Logout": {
-                            Utilities.logout();
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(LoginActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    switch((String)item.getTitle()) {
-                        case "Login": {
-                            Toast.makeText(LoginActivity.this,"You're already on login!",Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-
-                        case "Sign up": {
-                            //TODO go to signup
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(LoginActivity.this,"You didn't initialize a case",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                Toast.makeText(LoginActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                Utilities.navigate(item, self, MenuOptions.LOGIN);
                 return true;
             }
         });
