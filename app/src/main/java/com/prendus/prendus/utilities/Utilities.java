@@ -43,15 +43,13 @@ public class Utilities {
             switch((String)item.getTitle()) {
                 case MenuOptions.MY_QUIZZES: {
                     if(!MenuOptions.MY_QUIZZES.equals(currentLocation)) {
-                        Intent i = new Intent(activity.getApplicationContext(), MyQuizzesActivity.class);
-                        activity.startActivity(i);
+                        goToActivity(MyQuizzesActivity.class, activity);
                     }
                     break;
                 }
                 case MenuOptions.PROFILE: {
                     if(!MenuOptions.PROFILE.equals(currentLocation)) {
-                        Intent i = new Intent(activity.getApplicationContext(), ProfileActivity.class);
-                        activity.startActivity(i);
+                        goToActivity(ProfileActivity.class, activity);
                     }
 
                     break;
@@ -70,16 +68,14 @@ public class Utilities {
             switch((String)item.getTitle()) {
                 case MenuOptions.LOGIN: {
                     if(!MenuOptions.LOGIN.equals(currentLocation)) {
-                        Intent i = new Intent(activity.getApplicationContext(), LoginActivity.class);
-                        activity.startActivity(i);
+                        goToActivity(LoginActivity.class, activity);
                     }
                     break;
                 }
 
                 case MenuOptions.SIGNUP: {
                     if(!MenuOptions.SIGNUP.equals(currentLocation)) {
-                        Intent i = new Intent(activity.getApplicationContext(), SignupActivity.class);
-                        activity.startActivity(i);
+                        goToActivity(SignupActivity.class, activity);
                     }
 
                     break;
@@ -90,7 +86,10 @@ public class Utilities {
             }
         }
     }
-
+    public static void goToActivity(Class newActivity, Activity activity) {
+        Intent i = new Intent(activity.getApplicationContext(), newActivity);
+        activity.startActivity(i);
+    }
     private static boolean isLoggedIn() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() == null) {

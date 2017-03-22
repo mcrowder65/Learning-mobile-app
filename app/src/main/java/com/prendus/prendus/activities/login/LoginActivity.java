@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logInUserWithEmailAndPassword(String username, String password) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
+        final LoginActivity self = this;
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -95,7 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
+
                     //TODO decide on landing!
+                    Utilities.goToActivity(MyQuizzesActivity.class, self);
                 }
 
             }
