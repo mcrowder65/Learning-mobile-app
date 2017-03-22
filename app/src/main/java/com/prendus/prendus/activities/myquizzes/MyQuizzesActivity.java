@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
 import com.prendus.prendus.activities.signup.SignupActivity;
@@ -22,7 +23,7 @@ import com.prendus.prendus.utilities.Utilities;
  * Created by matt on 3/19/17.
  */
 
-public class MyQuizzesActivity extends AppCompatActivity {
+public class MyQuizzesActivity extends AppCompatActivity implements IPrendusActivity {
     private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

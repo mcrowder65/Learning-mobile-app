@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
@@ -32,7 +33,7 @@ import com.prendus.prendus.validators.Validator;
  * Created by mcrowder65 on 3/16/17.
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements IPrendusActivity {
 
     private EditText username;
     private EditText password;
@@ -96,8 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
-
-                    //TODO decide on landing!
                     Utilities.goToActivity(MyQuizzesActivity.class, self);
                 }
 
