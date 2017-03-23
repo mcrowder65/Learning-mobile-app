@@ -99,7 +99,7 @@ public class Utilities {
     public static void hideSpinner(IPrendusActivity activity) {
         activity.getSpinner().setVisibility(View.GONE);
     }
-    private static boolean isLoggedIn() {
+    public static boolean isLoggedIn() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() == null) {
             return false;
@@ -107,7 +107,9 @@ public class Utilities {
             return true;
         }
     }
-
+    public static FirebaseAuth getAuth() {
+        return FirebaseAuth.getInstance();
+    }
     private static void logout() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();

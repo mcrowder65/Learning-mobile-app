@@ -5,20 +5,26 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.prendus.prendus.FAO.UserFAO;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.activities.signup.SignupActivity;
+import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
+import com.prendus.prendus.objects.user.MetaData;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -26,7 +32,11 @@ import com.prendus.prendus.utilities.Utilities;
  */
 
 public class ProfileActivity extends AppCompatActivity implements IPrendusActivity {
-    private TextView title;
+
+    private EditText firstName;
+    private EditText lastName;
+    private EditText institution;
+    private EditText email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +48,23 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        title = (TextView)findViewById(R.id.profiletitle);
-        title.setText("profile");
         Utilities.hideSpinner(this);
+
+
+        firstName = (EditText)findViewById(R.id.firstName);
+        lastName = (EditText)findViewById(R.id.lastName);
+        institution = (EditText)findViewById(R.id.institution);
+        email = (EditText)findViewById(R.id.email);
+
+        if(Utilities.isLoggedIn()) {
+            final FirebaseAuth auth = Utilities.getAuth();
+            MetaData metaData = UserFAO.getUserMetaData(auth.getCurrentUser().getUid());
+            if(metaData != null) {
+                Log.wtf(Constants.TAG, metaData.toString());
+            }
+
+//            auth.getCurrentUser().
+        }
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -65,7 +89,9 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         });
         popup.show();//showing popup menu
     }
-
+    public void submit(View view) {
+        Log.wtf(Constants.TAG,  String.valueOf(email.getText()));
+    }
     @Override
     public void searchClicked(MenuItem item) {
         Utilities.goToActivity(SearchActivity.class, this);
