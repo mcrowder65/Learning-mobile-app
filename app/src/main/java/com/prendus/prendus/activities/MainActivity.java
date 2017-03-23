@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements IPrendusActivity 
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         makeSnackBar("init!");
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

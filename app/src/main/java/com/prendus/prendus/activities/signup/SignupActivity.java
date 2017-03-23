@@ -40,7 +40,7 @@ public class SignupActivity extends AppCompatActivity implements IPrendusActivit
         setSupportActionBar(toolbar);
         title = (TextView)findViewById(R.id.signuptitle);
         title.setText("signup");
-
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

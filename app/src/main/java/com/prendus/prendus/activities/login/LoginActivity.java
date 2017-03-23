@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
+
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

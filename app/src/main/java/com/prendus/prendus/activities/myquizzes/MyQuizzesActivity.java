@@ -39,6 +39,7 @@ public class MyQuizzesActivity extends AppCompatActivity implements IPrendusActi
         setSupportActionBar(toolbar);
         textView = (TextView)findViewById(R.id.myquiztitle);
         textView.setText("my quizzes");
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

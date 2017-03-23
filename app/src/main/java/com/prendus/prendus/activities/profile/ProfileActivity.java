@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
 
         title = (TextView)findViewById(R.id.profiletitle);
         title.setText("profile");
-
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

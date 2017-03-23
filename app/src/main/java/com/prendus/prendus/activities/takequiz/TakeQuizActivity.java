@@ -40,6 +40,7 @@ public class TakeQuizActivity extends AppCompatActivity implements IPrendusActiv
         setSupportActionBar(toolbar);
         title = (TextView) findViewById(R.id.takequiztitle);
         title.setText("take quiz");
+        Utilities.hideSpinner(this);
     }
 
     // Menu icons are inflated just as they were with actionbar
