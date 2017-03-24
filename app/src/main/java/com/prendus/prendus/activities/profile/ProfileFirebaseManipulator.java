@@ -3,6 +3,7 @@ package com.prendus.prendus.activities.profile;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -10,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.objects.user.MetaData;
+import com.prendus.prendus.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,13 @@ public class ProfileFirebaseManipulator {
     public void initUI(String id) {
         setInUI("users/" + id + "/metaData");
     }
-
+    public void update() {
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Utilities.firebase.update("users/" + id + "/metaData/email", String.valueOf(this.email.getText()));
+        Utilities.firebase.update("users/" + id + "/metaData/firstName", String.valueOf(this.firstName.getText()));
+        Utilities.firebase.update("users/" + id + "/metaData/lastName", String.valueOf(this.lastName.getText()));
+        Utilities.firebase.update("users/" + id + "/metaData/institution", String.valueOf(this.institution.getText()));
+    }
     public void setInUI(String path) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(path);
