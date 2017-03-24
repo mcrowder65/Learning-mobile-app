@@ -78,7 +78,6 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         popup.show();//showing popup menu
     }
     public void submit(View view) {
-        Log.wtf(Constants.TAG,  String.valueOf(email.getText()));
         firstName = (EditText)findViewById(R.id.firstName);
         lastName = (EditText)findViewById(R.id.lastName);
         institution = (EditText)findViewById(R.id.institution);
