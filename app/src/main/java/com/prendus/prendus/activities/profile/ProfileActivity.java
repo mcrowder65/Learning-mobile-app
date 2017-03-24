@@ -1,6 +1,5 @@
 package com.prendus.prendus.activities.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -11,20 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.prendus.prendus.FAO.UserFAO;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.IPrendusActivity;
-import com.prendus.prendus.activities.login.LoginActivity;
-import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
-import com.prendus.prendus.objects.user.MetaData;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -57,14 +48,11 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         email = (EditText)findViewById(R.id.email);
 
         if(Utilities.isLoggedIn()) {
-            final FirebaseAuth auth = Utilities.getAuth();
-            MetaData metaData = UserFAO.getUserMetaData(auth.getCurrentUser().getUid());
-            if(metaData != null) {
-                Log.wtf(Constants.TAG, metaData.toString());
-            }
 
-//            auth.getCurrentUser().
+            ProfileFirebaseManipulator manipulator = new ProfileFirebaseManipulator(firstName, lastName, institution, email);
+            manipulator.initUI(Utilities.getAuth().getCurrentUser().getUid());
         }
+
     }
 
     // Menu icons are inflated just as they were with actionbar
