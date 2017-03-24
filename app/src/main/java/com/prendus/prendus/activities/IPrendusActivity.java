@@ -1,5 +1,6 @@
 package com.prendus.prendus.activities;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
@@ -11,4 +12,5 @@ public interface IPrendusActivity {
     void dropDownMenuClicked(MenuItem item);
     void searchClicked(MenuItem item);
     ProgressBar getSpinner();
+
 }

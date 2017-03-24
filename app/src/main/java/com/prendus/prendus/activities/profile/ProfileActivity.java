@@ -16,6 +16,7 @@ import com.prendus.prendus.activities.IPrendusActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
+import com.prendus.prendus.manipulators.profile.ProfileManipulator;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -47,11 +48,10 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         institution = (EditText)findViewById(R.id.institution);
         email = (EditText)findViewById(R.id.email);
 
-        if(Utilities.isLoggedIn()) {
 
-            ProfileFirebaseManipulator manipulator = new ProfileFirebaseManipulator(firstName, lastName, institution, email);
-            manipulator.initUI(Utilities.getAuth().getCurrentUser().getUid());
-        }
+        ProfileManipulator manipulator = new ProfileManipulator(firstName, lastName, institution, email);
+        manipulator.manipulate();
+
 
     }
 
@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         lastName = (EditText)findViewById(R.id.lastName);
         institution = (EditText)findViewById(R.id.institution);
         email = (EditText)findViewById(R.id.email);
-        ProfileFirebaseManipulator manipulator = new ProfileFirebaseManipulator(firstName, lastName, institution, email);
+        ProfileManipulator manipulator = new ProfileManipulator(firstName, lastName, institution, email);
         manipulator.update();
     }
     @Override

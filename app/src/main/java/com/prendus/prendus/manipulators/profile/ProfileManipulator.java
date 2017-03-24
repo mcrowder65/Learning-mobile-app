@@ -1,4 +1,4 @@
-package com.prendus.prendus.activities.profile;
+package com.prendus.prendus.manipulators.profile;
 
 import android.util.Log;
 import android.widget.EditText;
@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.constants.Constants;
+import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.user.MetaData;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by mcrowder65 on 3/23/17.
  */
 
-public class ProfileFirebaseManipulator {
+public class ProfileManipulator implements IPrendusManipulator {
 
     private EditText firstName;
     private EditText lastName;
@@ -61,7 +62,7 @@ public class ProfileFirebaseManipulator {
     }
 
 
-    public ProfileFirebaseManipulator(EditText firstName, EditText lastName, EditText institution, EditText email) {
+    public ProfileManipulator(EditText firstName, EditText lastName, EditText institution, EditText email) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,9 +70,6 @@ public class ProfileFirebaseManipulator {
         this.email = email;
     }
 
-    public void initUI(String id) {
-        setInUI("users/" + id + "/metaData");
-    }
     public void update() {
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Utilities.firebase.update("users/" + id + "/metaData/email", String.valueOf(this.email.getText()));
@@ -79,10 +77,17 @@ public class ProfileFirebaseManipulator {
         Utilities.firebase.update("users/" + id + "/metaData/lastName", String.valueOf(this.lastName.getText()));
         Utilities.firebase.update("users/" + id + "/metaData/institution", String.valueOf(this.institution.getText()));
     }
+
+    @Override
+    public void manipulate() {
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        setInUI("users/" + id + "/metaData");
+    }
+
     public void setInUI(String path) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(path);
-        final ProfileFirebaseManipulator self = this;
+        final ProfileManipulator self = this;
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override

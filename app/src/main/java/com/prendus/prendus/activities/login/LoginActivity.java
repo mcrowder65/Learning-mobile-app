@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
             }
         });
     }
-
+    @Override
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(LoginActivity.this, menuItemView);

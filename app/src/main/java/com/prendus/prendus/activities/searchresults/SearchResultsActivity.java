@@ -1,35 +1,32 @@
-package com.prendus.prendus.activities.search;
+package com.prendus.prendus.activities.searchresults;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.IPrendusActivity;
-import com.prendus.prendus.activities.login.LoginActivity;
-import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
-import com.prendus.prendus.activities.profile.ProfileActivity;
-import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
-import com.prendus.prendus.activities.signup.SignupActivity;
+import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
- * Created by matt on 3/19/17.
+ * Created by mcrowder65 on 3/23/17.
  */
 
-public class SearchActivity extends AppCompatActivity implements IPrendusActivity {
+public class SearchResultsActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,
+        GestureDetector.OnDoubleTapListener, IPrendusActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search_results);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -38,21 +35,60 @@ public class SearchActivity extends AppCompatActivity implements IPrendusActivit
         setSupportActionBar(toolbar);
         Utilities.hideSpinner(this);
     }
-
-    // Menu icons are inflated just as they were with actionbar
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return false;
     }
 
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
+
+
+
+    @Override
     public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
-        PopupMenu popup = new PopupMenu(SearchActivity.this, menuItemView);
+        PopupMenu popup = new PopupMenu(SearchResultsActivity.this, menuItemView);
         Utilities.populatePopup(popup);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        final SearchActivity self = this;
+        final SearchResultsActivity self = this;
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 Utilities.navigate(item, self, null);
@@ -64,6 +100,7 @@ public class SearchActivity extends AppCompatActivity implements IPrendusActivit
 
     @Override
     public void searchClicked(MenuItem item) {
+        Utilities.goToActivity(SearchActivity.class, this);
     }
 
     @Override
@@ -71,9 +108,5 @@ public class SearchActivity extends AppCompatActivity implements IPrendusActivit
         ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
         return spinner;
-    }
-
-    public void goClicked(View view) {
-        Utilities.goToActivity(SearchResultsActivity.class, this);
     }
 }
