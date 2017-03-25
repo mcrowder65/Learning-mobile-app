@@ -48,5 +48,9 @@ public class SearchResultsActivity extends PrendusActivity {
 
     }
 
+    public void goToQuiz(View view) {
+        Utilities.log("i clicked the butt");
+    }
+
 
 }

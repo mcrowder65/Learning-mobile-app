@@ -58,7 +58,8 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                 List<Data> quizTitles = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Quiz obj = child.getValue(Quiz.class);
-                    quizTitles.add(new Data(obj.getTitle()));
+                    obj.setId(child.getKey());
+                    quizTitles.add(new Data(obj.getTitle(), obj.getId()));
                 }
                 RVAdapter adapter = new RVAdapter(quizTitles);
                 recyclerView.setAdapter(adapter);

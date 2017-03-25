@@ -29,7 +29,7 @@ public class Utilities {
     public static Gson g = new Gson();
 
     public static void populatePopup(PopupMenu popup) {
-        if(isLoggedIn()) {
+        if (isLoggedIn()) {
             popup.getMenu().add(MenuOptions.MY_QUIZZES);
             popup.getMenu().add(MenuOptions.PROFILE);
             popup.getMenu().add(MenuOptions.LOGOUT);
@@ -38,18 +38,19 @@ public class Utilities {
             popup.getMenu().add(MenuOptions.SIGNUP);
         }
     }
+
     public static void navigate(MenuItem item, Activity activity, String currentLocation) {
 
-        if(isLoggedIn()) {
-            switch((String)item.getTitle()) {
+        if (isLoggedIn()) {
+            switch ((String) item.getTitle()) {
                 case MenuOptions.MY_QUIZZES: {
-                    if(!MenuOptions.MY_QUIZZES.equals(currentLocation)) {
+                    if (!MenuOptions.MY_QUIZZES.equals(currentLocation)) {
                         goToActivity(MyQuizzesActivity.class, activity);
                     }
                     break;
                 }
                 case MenuOptions.PROFILE: {
-                    if(!MenuOptions.PROFILE.equals(currentLocation)) {
+                    if (!MenuOptions.PROFILE.equals(currentLocation)) {
                         goToActivity(ProfileActivity.class, activity);
                     }
 
@@ -66,16 +67,16 @@ public class Utilities {
                 }
             }
         } else {
-            switch((String)item.getTitle()) {
+            switch ((String) item.getTitle()) {
                 case MenuOptions.LOGIN: {
-                    if(!MenuOptions.LOGIN.equals(currentLocation)) {
+                    if (!MenuOptions.LOGIN.equals(currentLocation)) {
                         goToActivity(LoginActivity.class, activity);
                     }
                     break;
                 }
 
                 case MenuOptions.SIGNUP: {
-                    if(!MenuOptions.SIGNUP.equals(currentLocation)) {
+                    if (!MenuOptions.SIGNUP.equals(currentLocation)) {
                         goToActivity(SignupActivity.class, activity);
                     }
 
@@ -87,17 +88,20 @@ public class Utilities {
             }
         }
     }
+
     public static void goToActivity(Class newActivity, Activity activity) {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
         activity.startActivity(i);
     }
+
     public static void goToActivity(Class newActivity, Activity activity, Map<String, String> extraStrings) {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
-        for(String key: extraStrings.keySet()) {
+        for (String key : extraStrings.keySet()) {
             i.putExtra(key, extraStrings.get(key));
         }
         activity.startActivity(i);
     }
+
     public static void showSpinner(PrendusActivity activity) {
         activity.getSpinner().setVisibility(View.VISIBLE);
     }
@@ -105,22 +109,27 @@ public class Utilities {
     public static void hideSpinner(PrendusActivity activity) {
         activity.getSpinner().setVisibility(View.GONE);
     }
+
     public static boolean isLoggedIn() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        if(auth.getCurrentUser() == null) {
+        if (auth.getCurrentUser() == null) {
             return false;
         } else {
             return true;
         }
     }
+
     public static FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
     }
+
     private static void logout() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
     }
+
     public static void log(String obj) {
         Log.wtf(Constants.TAG, obj);
     }
+
 }

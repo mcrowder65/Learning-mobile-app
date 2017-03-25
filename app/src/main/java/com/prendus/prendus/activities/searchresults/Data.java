@@ -5,9 +5,26 @@ package com.prendus.prendus.activities.searchresults;
  */
 
 public class Data {
-    String name;
+    private String name;
+    private String quizId;
+    public Data(String name, String quizId) {
+        this.name = name;
+        this.quizId = quizId;
+    }
 
-    public Data(String name) {
+    public String getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(String quizId) {
+        this.quizId = quizId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }
