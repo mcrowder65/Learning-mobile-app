@@ -7,7 +7,7 @@ package com.prendus.prendus.activities.searchresults;
 public class Data {
     String name;
 
-    Data(String name) {
+    public Data(String name) {
         this.name = name;
     }
 }

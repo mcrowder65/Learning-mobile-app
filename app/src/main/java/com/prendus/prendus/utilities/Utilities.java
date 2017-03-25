@@ -114,4 +114,7 @@ public class Utilities {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
     }
+    public static void log(String obj) {
+        Log.wtf(Constants.TAG, obj);
+    }
 }

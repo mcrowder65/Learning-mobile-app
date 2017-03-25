@@ -100,9 +100,4 @@ public class MetaData extends PrendusObject {
                 ", uid='" + uid + '\'' +
                 '}';
     }
-
-    @Override
-    public String toJson() {
-        return Utilities.g.toJson(this);
-    }
 }

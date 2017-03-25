@@ -1,5 +1,7 @@
 package com.prendus.prendus.objects;
 
+import com.prendus.prendus.utilities.Utilities;
+
 /**
  * Created by mcrowder65 on 3/16/17.
  */
@@ -10,7 +12,9 @@ public abstract class PrendusObject {
     protected String id;
     private long timestamp;
 
-    public abstract String toJson();
+    public String toJson() {
+        return Utilities.g.toJson(this);
+    }
     public String getId() {
         return id;
     }

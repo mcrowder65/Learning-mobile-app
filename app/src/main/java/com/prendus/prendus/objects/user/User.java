@@ -22,9 +22,4 @@ public class User extends PrendusObject {
         this.metaData = metaData;
     }
 
-
-    @Override
-    public String toJson() {
-        return Utilities.g.toJson(this);
-    }
 }
