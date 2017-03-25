@@ -27,6 +27,7 @@ import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.constants.MenuOptions;
+import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
 
@@ -80,8 +81,9 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
             makeSnackBar("password invalid");
             return;
         }
-        Log.wtf(Constants.TAG, "username: " + usernameText + " password: " + passwordText);
+
         this.logInUserWithEmailAndPassword(usernameText, passwordText);
+
     }
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
@@ -98,11 +100,18 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
                 // If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
                 // signed in user can be handled in the listener.
+                Utilities.hideSpinner(self);
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
-                    Utilities.hideSpinner(self);
-                    Utilities.goToActivity(MyQuizzesActivity.class, self);
+
+                    if(!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
+                        Log.wtf(Constants.TAG, "email not verified...");
+                        FirebaseAuth.getInstance().signOut();
+                    } else {
+                        Utilities.goToActivity(MyQuizzesActivity.class, self);
+                    }
+
                 }
 
             }

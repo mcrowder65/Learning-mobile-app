@@ -1,5 +1,6 @@
 package com.prendus.prendus.activities.searchresults;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -20,8 +21,7 @@ import com.prendus.prendus.utilities.Utilities;
  * Created by mcrowder65 on 3/23/17.
  */
 
-public class SearchResultsActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener, IPrendusActivity {
+public class SearchResultsActivity extends AppCompatActivity implements IPrendusActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,51 +35,6 @@ public class SearchResultsActivity extends AppCompatActivity implements GestureD
         setSupportActionBar(toolbar);
         Utilities.hideSpinner(this);
     }
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-
 
 
     @Override
