@@ -1,6 +1,8 @@
 package com.prendus.prendus.manipulators.searchresults;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -9,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.activities.searchresults.Data;
 import com.prendus.prendus.activities.searchresults.RVAdapter;
+import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.objects.quiz.Quiz;
@@ -23,9 +26,12 @@ import java.util.List;
 
 public class SearchResultsManipulator implements IPrendusManipulator {
     private RecyclerView recyclerView;
-    public SearchResultsManipulator(RecyclerView recyclerView) {
+    private TextView searchInput;
+    private Intent intent;
+    public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent) {
         this.recyclerView = recyclerView;
-
+        this.searchInput = searchInput;
+        this.intent = intent;
     }
     @Override
     public void update() {
@@ -34,7 +40,8 @@ public class SearchResultsManipulator implements IPrendusManipulator {
 
     @Override
     public void manipulate() {
-
+        String s = intent.getStringExtra(Constants.SEARCH_INPUT);
+        searchInput.setText(s);
         String path = "quizzes";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(path);

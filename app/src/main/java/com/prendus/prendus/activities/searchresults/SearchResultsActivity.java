@@ -39,14 +39,11 @@ public class SearchResultsActivity extends PrendusActivity {
         setSupportActionBar(toolbar);
         Utilities.hideSpinner(this);
         searchInput = (TextView)findViewById(R.id.userSearchInput);
-        String s = getIntent().getStringExtra(Constants.SEARCH_INPUT);
-
-        searchInput.setText(s);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        SearchResultsManipulator manipulator = new SearchResultsManipulator(mRecyclerView);
+        SearchResultsManipulator manipulator = new SearchResultsManipulator(mRecyclerView, searchInput, getIntent());
         manipulator.manipulate();
 
     }
