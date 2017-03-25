@@ -25,18 +25,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     }
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.personName.setText(persons.get(i).name);
+        personViewHolder.personName.setText(datas.get(i).name);
     }
 
     @Override
     public int getItemCount() {
-        return persons.size();
+        return datas.size();
     }
 
-    List<Data> persons;
+    List<Data> datas;
 
     public RVAdapter(List<Data> persons){
-        this.persons = persons;
+        this.datas = persons;
     }
 
 

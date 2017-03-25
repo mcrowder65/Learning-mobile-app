@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
+
     <!-- Load the toolbar here -->
         <include
             layout="@layout/toolbar_main"
@@ -26,6 +27,13 @@
             android:layout_alignLeft="@+id/textview"
             android:layout_alignStart="@+id/textview"
             android:layout_alignParentBottom="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/userSearchInput"
+            android:layout_alignParentTop="true"
+            android:textSize="30sp"
+            />
     <!-- Rest of content for the activity -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

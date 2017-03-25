@@ -11,6 +11,7 @@ import java.util.Map;
 public class Quiz extends PrendusObject {
     private String title;
     private String uid;
+    //TODO figure out how to get this as an interface or enum of sorts
     private String visibility;
     private Map<String, Boolean> quizQuestionSettings;
     private Map<String, Map<String, Map<String, Boolean>>> questions;

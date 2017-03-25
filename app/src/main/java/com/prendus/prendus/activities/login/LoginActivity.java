@@ -1,8 +1,6 @@
 package com.prendus.prendus.activities.login;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,20 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
-import com.prendus.prendus.activities.IPrendusActivity;
+import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.constants.MenuOptions;
-import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
 
@@ -35,7 +30,7 @@ import com.prendus.prendus.validators.Validator;
  * Created by mcrowder65 on 3/16/17.
  */
 
-public class LoginActivity extends AppCompatActivity implements IPrendusActivity {
+public class LoginActivity extends PrendusActivity {
 
     private EditText username;
     private EditText password;
@@ -54,13 +49,6 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
         Utilities.hideSpinner(this);
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     private void makeSnackBar(String message) {
         Snackbar mySnackBar = Snackbar.make(findViewById(R.id.myCoordinatorLayout), message, Snackbar.LENGTH_SHORT);
@@ -117,31 +105,5 @@ public class LoginActivity extends AppCompatActivity implements IPrendusActivity
             }
         });
     }
-    @Override
-    public void dropDownMenuClicked(MenuItem item) {
-        View menuItemView = findViewById(R.id.menu);
-        PopupMenu popup = new PopupMenu(LoginActivity.this, menuItemView);
-        Utilities.populatePopup(popup);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        final LoginActivity self = this;
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                Utilities.navigate(item, self, MenuOptions.LOGIN);
-                return true;
-            }
-        });
-        popup.show();//showing popup menu
-    }
 
-    @Override
-    public void searchClicked(MenuItem item) {
-        Utilities.goToActivity(SearchActivity.class, this);
-    }
-
-    @Override
-    public ProgressBar getSpinner() {
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
-        return spinner;
-    }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,9 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.prendus.prendus.R;
-import com.prendus.prendus.activities.IPrendusActivity;
+import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.manipulators.profile.ProfileManipulator;
 import com.prendus.prendus.utilities.Utilities;
@@ -23,7 +21,7 @@ import com.prendus.prendus.utilities.Utilities;
  * Created by matt on 3/19/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements IPrendusActivity {
+public class ProfileActivity extends PrendusActivity {
 
     private EditText firstName;
     private EditText lastName;
@@ -55,28 +53,7 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    public void dropDownMenuClicked(MenuItem item) {
-        View menuItemView = findViewById(R.id.menu);
-        PopupMenu popup = new PopupMenu(ProfileActivity.this, menuItemView);
-        Utilities.populatePopup(popup);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        final ProfileActivity self = this;
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                Utilities.navigate(item, self, MenuOptions.PROFILE);
-                return true;
-            }
-        });
-        popup.show();//showing popup menu
-    }
     public void submit(View view) {
         firstName = (EditText)findViewById(R.id.firstName);
         lastName = (EditText)findViewById(R.id.lastName);
@@ -85,15 +62,5 @@ public class ProfileActivity extends AppCompatActivity implements IPrendusActivi
         ProfileManipulator manipulator = new ProfileManipulator(firstName, lastName, institution, email);
         manipulator.update();
     }
-    @Override
-    public void searchClicked(MenuItem item) {
-        Utilities.goToActivity(SearchActivity.class, this);
-    }
 
-    @Override
-    public ProgressBar getSpinner() {
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
-        return spinner;
-    }
 }

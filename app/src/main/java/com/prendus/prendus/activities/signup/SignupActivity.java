@@ -1,6 +1,5 @@
 package com.prendus.prendus.activities.signup;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,22 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
-import com.prendus.prendus.activities.IPrendusActivity;
+import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
-import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
-import com.prendus.prendus.activities.profile.ProfileActivity;
 import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
-import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.objects.user.MetaData;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
@@ -36,7 +30,7 @@ import com.prendus.prendus.validators.Validator;
  * Created by matt on 3/19/17.
  */
 
-public class SignupActivity extends AppCompatActivity implements IPrendusActivity {
+public class SignupActivity extends PrendusActivity {
     private TextView email;
     private TextView password;
     private TextView confirmPassword;
@@ -107,38 +101,5 @@ public class SignupActivity extends AppCompatActivity implements IPrendusActivit
             }
         });
     }
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    public void dropDownMenuClicked(MenuItem item) {
-        View menuItemView = findViewById(R.id.menu);
-        PopupMenu popup = new PopupMenu(SignupActivity.this, menuItemView);
-        Utilities.populatePopup(popup);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        final SignupActivity self = this;
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                Utilities.navigate(item, self, MenuOptions.SIGNUP);
-                return true;
-            }
-        });
-        popup.show();//showing popup menu
-    }
-
-    @Override
-    public void searchClicked(MenuItem item) {
-        Utilities.goToActivity(SearchActivity.class, this);
-    }
-
-    @Override
-    public ProgressBar getSpinner() {
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
-        return spinner;
-    }
 }

@@ -6,12 +6,10 @@ import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.prendus.prendus.R;
-import com.prendus.prendus.activities.IPrendusActivity;
+import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
@@ -19,6 +17,8 @@ import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.firebase.Firebase;
+
+import java.util.Map;
 
 /**
  * Created by mcrowder65 on 3/16/17.
@@ -91,12 +91,18 @@ public class Utilities {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
         activity.startActivity(i);
     }
-
-    public static void showSpinner(IPrendusActivity activity) {
+    public static void goToActivity(Class newActivity, Activity activity, Map<String, String> extraStrings) {
+        Intent i = new Intent(activity.getApplicationContext(), newActivity);
+        for(String key: extraStrings.keySet()) {
+            i.putExtra(key, extraStrings.get(key));
+        }
+        activity.startActivity(i);
+    }
+    public static void showSpinner(PrendusActivity activity) {
         activity.getSpinner().setVisibility(View.VISIBLE);
     }
 
-    public static void hideSpinner(IPrendusActivity activity) {
+    public static void hideSpinner(PrendusActivity activity) {
         activity.getSpinner().setVisibility(View.GONE);
     }
     public static boolean isLoggedIn() {
