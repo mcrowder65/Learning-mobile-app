@@ -47,7 +47,7 @@ dependencies {
 //    // Firebase UI
 //    compile 'com.firebaseui:firebase-ui-database:0.4.0'
     compile 'com.google.code.gson:gson:2.8.0'
-
+    compile 'com.android.support:recyclerview-v7:22.2.1+'
 
 }
 
