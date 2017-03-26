@@ -123,13 +123,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
             URLConnection conn = null;
             BufferedReader reader = null;
             String text = null;
-
+            OutputStreamWriter wr = null;
             // Send data
             try {
 
                 // Defined URL  where to send data
-                final URL url = new URL("http://192.168.0.108:5000/api/quiz/start-session");
-                final Task jwtTask = FirebaseAuth.getInstance().getCurrentUser().getToken(false);
+                URL url = new URL("http://192.168.0.108:5000/api/quiz/start-session");
+                Task jwtTask = FirebaseAuth.getInstance().getCurrentUser().getToken(false);
 
                 // Send POST data request
                 GetTokenResult result = (GetTokenResult) jwtTask.getResult();
@@ -138,10 +138,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
 
                 conn = url.openConnection();
                 conn.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+                wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
                 Obj sender = new Obj(jwt, quizId);
                 String json = sender.toJson();
-                wr.write(json);
+                Utilities.log(json);
+//                wr.write(json);
+                wr.write("jwt=" + jwt + "&");
+                wr.write("quizId=" + quizId);
                 wr.flush();
 
                 // Get the server response
@@ -164,6 +167,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                 Utilities.log(e.toString());
             } catch (IOException e) {
                 Utilities.log(e.toString());
+            } catch (Exception e) {
+                Utilities.log(e.toString());
+            } finally {
+                try {
+                    wr.close();
+                } catch (IOException e) {
+                    Utilities.log(e.toString());
+                }
             }
             return text;
         }
