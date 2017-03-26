@@ -22,7 +22,9 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContainer> {
 
@@ -143,8 +145,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                 String json = sender.toJson();
                 Utilities.log(json);
 //                wr.write(json);
-                wr.write("jwt=" + jwt + "&");
-                wr.write("quizId=" + quizId);
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("jwt", jwt);
+                parameters.put("quizId", quizId);
+                String params = Utilities.buildParametersForServer(parameters);
+                wr.write(params);
                 wr.flush();
 
                 // Get the server response

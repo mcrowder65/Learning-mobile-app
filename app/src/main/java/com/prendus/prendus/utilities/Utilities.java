@@ -132,4 +132,17 @@ public class Utilities {
         Log.wtf(Constants.TAG, obj);
     }
 
+    public static String buildParametersForServer(Map<String, String> parameters) {
+        StringBuilder params = new StringBuilder();
+        int counter = 0;
+        for (String key : parameters.keySet()) {
+            params.append(key + "=" + parameters.get(key));
+            if (counter != parameters.keySet().size()) {
+                params.append("&");
+            }
+            ++counter;
+        }
+        return params.toString();
+    }
+
 }
