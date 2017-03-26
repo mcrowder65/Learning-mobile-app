@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.activities.searchresults.Data;
 import com.prendus.prendus.activities.searchresults.RVAdapter;
+import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.quiz.Quiz;
@@ -26,11 +27,13 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     private RecyclerView recyclerView;
     private TextView searchInput;
     private Intent intent;
+    private SearchResultsActivity searchResultsActivity;
 
-    public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent) {
+    public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent, SearchResultsActivity activity) {
         this.recyclerView = recyclerView;
         this.searchInput = searchInput;
         this.intent = intent;
+        this.searchResultsActivity = activity;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                     }
 
                 }
-                RVAdapter adapter = new RVAdapter(quizTitles);
+                RVAdapter adapter = new RVAdapter(quizTitles, searchResultsActivity);
                 recyclerView.setAdapter(adapter);
             }
 

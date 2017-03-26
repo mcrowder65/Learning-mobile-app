@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.R;
+import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.objects.quizsession.QuizSession;
 import com.prendus.prendus.objects.quizsession.QuizSessionWrapper;
@@ -60,9 +61,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
     }
 
     List<Data> datas;
+    SearchResultsActivity searchResultsActivity;
 
-    public RVAdapter(List<Data> persons) {
+    public RVAdapter(List<Data> persons, SearchResultsActivity activity) {
         this.datas = persons;
+        this.searchResultsActivity = activity;
     }
 
 
@@ -96,8 +99,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                             try {
                                 Quiz quiz = dataSnapshot.getValue(Quiz.class);
                                 quiz.setId(dataSnapshot.getKey());
-
                                 Utilities.log(quiz);
+                                Utilities.goToActivity(TakeQuizActivity.class, searchResultsActivity);
+
                             } catch (Exception e) {
                                 Utilities.log(e);
                             }
