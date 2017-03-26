@@ -9,7 +9,7 @@ import android.widget.EditText;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
-import com.prendus.prendus.constants.Constants;
+import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.utilities.Utilities;
 
 import java.util.HashMap;
@@ -37,19 +37,20 @@ public class SearchActivity extends PrendusActivity {
     @Override
     public void searchClicked(MenuItem item) {
     }
+
     private EditText searchText;
 
     public void goClicked(View view) {
         try {
-            searchText = (EditText)findViewById(R.id.search_text_input);
+            searchText = (EditText) findViewById(R.id.search_text_input);
             String searchStr = String.valueOf(searchText.getText());
-            if(searchStr != null && !searchStr.equals("")) {
+            if (searchStr != null && !searchStr.equals("")) {
                 Map<String, String> stringExtras = new HashMap<>();
-                stringExtras.put(Constants.SEARCH_INPUT, searchStr);
+                stringExtras.put(IntentExtras.SEARCH_INPUT, searchStr);
                 Utilities.goToActivity(SearchResultsActivity.class, this, stringExtras);
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             Utilities.log(e.toString());
         }
 

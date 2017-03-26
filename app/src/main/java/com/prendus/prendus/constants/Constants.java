@@ -6,5 +6,5 @@ package com.prendus.prendus.constants;
 
 public class Constants {
     public static final String TAG = "MY APP";
-    public static final String SEARCH_INPUT = "SEARCH_INPUT";
+
 }

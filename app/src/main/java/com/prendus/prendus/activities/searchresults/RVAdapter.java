@@ -82,33 +82,37 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                 @Override
                 public void onClick(View v) {
                     //TODO go to quiz!
-//                    new HitServer().execute(quizId);
                     String path = "quizzes/" + quizId;
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference ref = database.getReference(path);
+                    try {
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = database.getReference(path);
 
-                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                        @Override
-                        public void onCancelled(DatabaseError arg0) {
+                            @Override
+                            public void onCancelled(DatabaseError arg0) {
 
-                        }
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            try {
-                                Quiz quiz = dataSnapshot.getValue(Quiz.class);
-                                quiz.setId(dataSnapshot.getKey());
-                                Utilities.log(quiz);
-                                Utilities.goToActivity(TakeQuizActivity.class, searchResultsActivity);
-
-                            } catch (Exception e) {
-                                Utilities.log(e);
                             }
 
-                        }
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                try {
+                                    Quiz quiz = dataSnapshot.getValue(Quiz.class);
+                                    quiz.setId(dataSnapshot.getKey());
+                                    Utilities.log(quiz);
+                                    Utilities.goToActivity(TakeQuizActivity.class, searchResultsActivity, quiz);
 
-                    });
+                                } catch (Exception e) {
+                                    Utilities.log(e);
+                                }
+
+                            }
+
+                        });
+                    } catch (Exception e) {
+                        Utilities.log(e);
+                    }
+
                 }
             });
 

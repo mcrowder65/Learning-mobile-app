@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.prendus.prendus.R;
@@ -40,10 +39,6 @@ public class SearchResultsActivity extends PrendusActivity {
         SearchResultsManipulator manipulator = new SearchResultsManipulator(mRecyclerView, searchInput, getIntent(), this);
         manipulator.manipulate();
 
-    }
-
-    public void goToQuiz(View view) {
-        Utilities.log("i clicked the butt");
     }
 
 

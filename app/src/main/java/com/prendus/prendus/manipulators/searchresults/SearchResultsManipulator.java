@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.activities.searchresults.Data;
 import com.prendus.prendus.activities.searchresults.RVAdapter;
 import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
-import com.prendus.prendus.constants.Constants;
+import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.quiz.Quiz;
 
@@ -43,7 +43,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
 
     @Override
     public void manipulate() {
-        String s = intent.getStringExtra(Constants.SEARCH_INPUT);
+        String s = intent.getStringExtra(IntentExtras.SEARCH_INPUT);
         searchInput.setText(s);
         String path = "quizzes";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

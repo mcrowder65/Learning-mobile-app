@@ -15,6 +15,7 @@ import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
 import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
+import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.objects.quiz.Quiz;
@@ -95,11 +96,18 @@ public class Utilities {
         activity.startActivity(i);
     }
 
+    public static void goToActivity(Class newActivity, Activity activity, Quiz quiz) {
+        Intent i = new Intent(activity.getApplicationContext(), newActivity);
+        i.putExtra(IntentExtras.QUIZ_AS_JSON, quiz.toJson());
+        activity.startActivity(i);
+    }
+
     public static void goToActivity(Class newActivity, Activity activity, Map<String, String> extraStrings) {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
         for (String key : extraStrings.keySet()) {
             i.putExtra(key, extraStrings.get(key));
         }
+
         activity.startActivity(i);
     }
 
