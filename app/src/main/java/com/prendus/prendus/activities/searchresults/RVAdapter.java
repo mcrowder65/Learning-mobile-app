@@ -12,7 +12,14 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.R;
+import com.prendus.prendus.objects.quiz.Quiz;
+import com.prendus.prendus.objects.quizsession.QuizSession;
 import com.prendus.prendus.objects.quizsession.QuizSessionWrapper;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -72,9 +79,35 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                 @Override
                 public void onClick(View v) {
                     //TODO go to quiz!
-                    new HitServer().execute(quizId);
+//                    new HitServer().execute(quizId);
+                    String path = "quizzes/" + quizId;
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference ref = database.getReference(path);
+
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onCancelled(DatabaseError arg0) {
+
+                        }
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            try {
+                                Quiz quiz = dataSnapshot.getValue(Quiz.class);
+                                quiz.setId(dataSnapshot.getKey());
+
+                                Utilities.log(quiz);
+                            } catch (Exception e) {
+                                Utilities.log(e);
+                            }
+
+                        }
+
+                    });
                 }
             });
+
         }
 
 
@@ -163,7 +196,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                     sb.append(line + "\n");
                 }
                 text = sb.toString();
-                QuizSessionWrapper session = Utilities.g.fromJson(text, QuizSessionWrapper.class);
+                QuizSessionWrapper wrapper = Utilities.g.fromJson(text, QuizSessionWrapper.class);
+                QuizSession session = wrapper.getQuizSession();
                 Utilities.log(session.toString());
             } catch (NetworkOnMainThreadException e) {
                 Utilities.log(e.toString());

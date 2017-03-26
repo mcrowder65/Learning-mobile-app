@@ -17,6 +17,7 @@ import com.prendus.prendus.activities.signup.SignupActivity;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.firebase.Firebase;
+import com.prendus.prendus.objects.quiz.Quiz;
 
 import java.util.Map;
 
@@ -130,6 +131,18 @@ public class Utilities {
 
     public static void log(String obj) {
         Log.wtf(Constants.TAG, obj);
+    }
+
+    public static void log(Quiz quiz) {
+        if (quiz != null) {
+            log(quiz.toString());
+        }
+    }
+
+    public static void log(Exception e) {
+        if (e != null) {
+            log(e.toString());
+        }
     }
 
     public static String buildParametersForServer(Map<String, String> parameters) {

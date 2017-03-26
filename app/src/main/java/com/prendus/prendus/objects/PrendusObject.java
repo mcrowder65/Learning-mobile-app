@@ -15,6 +15,7 @@ public abstract class PrendusObject {
     public String toJson() {
         return Utilities.g.toJson(this);
     }
+
     public String getId() {
         return id;
     }
@@ -22,6 +23,7 @@ public abstract class PrendusObject {
     public void setId(String id) {
         this.id = id;
     }
+
     public long getTimestamp() {
         return timestamp;
     }
@@ -36,6 +38,11 @@ public abstract class PrendusObject {
 
     public PrendusObject(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public PrendusObject(long timestamp, String id) {
+        this.timestamp = timestamp;
+        this.id = id;
     }
 
 }

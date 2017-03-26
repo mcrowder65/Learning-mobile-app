@@ -15,8 +15,29 @@ public class Quiz extends PrendusObject {
     private String visibility;
     private Map<String, Boolean> quizQuestionSettings;
     private Map<String, Map<String, Map<String, Boolean>>> questions;
-    public Quiz(){}
+
+    public Quiz() {
+    }
+
     public Quiz(String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions) {
+        this.title = title;
+        this.uid = uid;
+        this.visibility = visibility;
+        this.quizQuestionSettings = quizQuestionSettings;
+        this.questions = questions;
+    }
+
+    public Quiz(long timestamp, String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions) {
+        super(timestamp);
+        this.title = title;
+        this.uid = uid;
+        this.visibility = visibility;
+        this.quizQuestionSettings = quizQuestionSettings;
+        this.questions = questions;
+    }
+
+    public Quiz(long timestamp, String id, String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions) {
+        super(timestamp, id);
         this.title = title;
         this.uid = uid;
         this.visibility = visibility;
@@ -55,6 +76,7 @@ public class Quiz extends PrendusObject {
     public boolean getQuizQuestionSetting(String id) {
         return getQuizQuestionSettings().get(id);
     }
+
     public void setQuizQuestionSettings(Map<String, Boolean> quizQuestionSettings) {
         this.quizQuestionSettings = quizQuestionSettings;
     }

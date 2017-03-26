@@ -60,7 +60,12 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                     Quiz obj = child.getValue(Quiz.class);
                     if (obj.getQuestions() != null) {
                         obj.setId(child.getKey());
-                        quizTitles.add(new Data(obj.getTitle(), obj.getId()));
+                        String lowerCaseSearch = String.valueOf(searchInput.getText()).toLowerCase();
+                        String lowerCaseTitle = obj.getTitle().toLowerCase();
+                        if (lowerCaseTitle.contains(lowerCaseSearch)) {
+                            quizTitles.add(new Data(obj.getTitle(), obj.getId()));
+                        }
+
                     }
 
                 }
