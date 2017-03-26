@@ -89,8 +89,7 @@ public class Quiz extends PrendusObject {
         this.questions = questions;
     }
 
-    @Override
-    public String toString() {
-        return toJson();
+    public String[] getQuestionIds() {
+        return questions.keySet().toArray(new String[questions.keySet().size()]);
     }
 }

@@ -99,7 +99,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                                 try {
                                     Quiz quiz = dataSnapshot.getValue(Quiz.class);
                                     quiz.setId(dataSnapshot.getKey());
-                                    Utilities.log(quiz);
                                     Utilities.goToActivity(TakeQuizActivity.class, searchResultsActivity, quiz);
 
                                 } catch (Exception e) {

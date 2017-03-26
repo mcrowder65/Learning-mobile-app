@@ -1,7 +1,6 @@
 package com.prendus.prendus.objects.user;
 
 import com.prendus.prendus.objects.PrendusObject;
-import com.prendus.prendus.utilities.Utilities;
 
 /**
  * Created by mcrowder65 on 3/23/17.
@@ -14,7 +13,8 @@ public class MetaData extends PrendusObject {
     private String institution;
     private String uid;
 
-    public MetaData(){}
+    public MetaData() {
+    }
 
     public MetaData(String email, String firstName, String lastName, String institution, String uid) {
         this.email = email;
@@ -90,14 +90,5 @@ public class MetaData extends PrendusObject {
         this.uid = uid;
     }
 
-    @Override
-    public String toString() {
-        return "MetaData{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", institution='" + institution + '\'' +
-                ", uid='" + uid + '\'' +
-                '}';
-    }
+    
 }

@@ -78,15 +78,5 @@ public class QuizSession extends PrendusObject {
         this.questionSessions = questionSessions;
     }
 
-    @Override
-    public String toString() {
-        return "QuizSession{" +
-                "quiz=" + quiz +
-                ", quizId='" + quizId + '\'' +
-                ", start=" + start +
-                ", end=" + end +
-                ", questionSessions=" + questionSessions +
-                '}';
-    }
 
 }

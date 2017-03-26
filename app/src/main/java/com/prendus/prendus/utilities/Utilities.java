@@ -18,6 +18,7 @@ import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.firebase.Firebase;
+import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.objects.quiz.Quiz;
 
 import java.util.Map;
@@ -141,9 +142,9 @@ public class Utilities {
         Log.wtf(Constants.TAG, obj);
     }
 
-    public static void log(Quiz quiz) {
-        if (quiz != null) {
-            log(quiz.toString());
+    public static void log(PrendusObject prendusObject) {
+        if (prendusObject != null) {
+            log(prendusObject.toString());
         }
     }
 
@@ -153,15 +154,17 @@ public class Utilities {
         }
     }
 
+
     public static String buildParametersForServer(Map<String, String> parameters) {
         StringBuilder params = new StringBuilder();
         int counter = 0;
         for (String key : parameters.keySet()) {
+            ++counter;
             params.append(key + "=" + parameters.get(key));
             if (counter != parameters.keySet().size()) {
                 params.append("&");
             }
-            ++counter;
+
         }
         return params.toString();
     }

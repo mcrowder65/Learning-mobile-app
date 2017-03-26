@@ -2,10 +2,14 @@ package com.prendus.prendus.activities.takequiz;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.constants.IntentExtras;
+import com.prendus.prendus.manipulators.takequiz.TakeQuizManipulator;
 import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -15,6 +19,10 @@ import com.prendus.prendus.utilities.Utilities;
 
 public class TakeQuizActivity extends PrendusActivity {
     private Quiz quiz;
+    private TextView quizTitle;
+    private TextView quizQuestion;
+    private EditText answer;
+    private TakeQuizManipulator takeQuizManipulator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,14 @@ public class TakeQuizActivity extends PrendusActivity {
         if (!quizAsJson.equals(quiz.toJson())) {
             Utilities.log("Something is going horribly wrong in take quiz...");
         }
+        quizTitle = (TextView) findViewById(R.id.quizTitle);
+        quizQuestion = (TextView) findViewById(R.id.quizQuestion);
+        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz);
+        takeQuizManipulator.manipulate();
+    }
+
+    public void nextQuestionClicked(View view) {
+        takeQuizManipulator.nextQuestion();
     }
 
 }

@@ -12,23 +12,23 @@ public abstract class PrendusObject {
     protected String id;
     private long timestamp;
 
-    public String toJson() {
+    final public String toJson() {
         return Utilities.g.toJson(this);
     }
 
-    public String getId() {
+    final public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    final public void setId(String id) {
         this.id = id;
     }
 
-    public long getTimestamp() {
+    final public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    final public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -43,6 +43,11 @@ public abstract class PrendusObject {
     public PrendusObject(long timestamp, String id) {
         this.timestamp = timestamp;
         this.id = id;
+    }
+
+    @Override
+    final public String toString() {
+        return toJson();
     }
 
 }
