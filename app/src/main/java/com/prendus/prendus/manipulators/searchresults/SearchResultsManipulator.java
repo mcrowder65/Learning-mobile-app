@@ -13,9 +13,7 @@ import com.prendus.prendus.activities.searchresults.Data;
 import com.prendus.prendus.activities.searchresults.RVAdapter;
 import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
-import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.objects.quiz.Quiz;
-import com.prendus.prendus.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +26,13 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     private RecyclerView recyclerView;
     private TextView searchInput;
     private Intent intent;
+
     public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent) {
         this.recyclerView = recyclerView;
         this.searchInput = searchInput;
         this.intent = intent;
     }
+
     @Override
     public void update() {
 
@@ -58,8 +58,11 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                 List<Data> quizTitles = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Quiz obj = child.getValue(Quiz.class);
-                    obj.setId(child.getKey());
-                    quizTitles.add(new Data(obj.getTitle(), obj.getId()));
+                    if (obj.getQuestions() != null) {
+                        obj.setId(child.getKey());
+                        quizTitles.add(new Data(obj.getTitle(), obj.getId()));
+                    }
+
                 }
                 RVAdapter adapter = new RVAdapter(quizTitles);
                 recyclerView.setAdapter(adapter);

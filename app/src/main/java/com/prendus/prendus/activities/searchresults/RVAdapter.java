@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
 import com.prendus.prendus.R;
+import com.prendus.prendus.objects.quizsession.QuizSessionWrapper;
 import com.prendus.prendus.utilities.Utilities;
 
 import java.io.BufferedReader;
@@ -143,8 +144,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                 wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
                 Obj sender = new Obj(jwt, quizId);
                 String json = sender.toJson();
-                Utilities.log(json);
-//                wr.write(json);
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put("jwt", jwt);
                 parameters.put("quizId", quizId);
@@ -164,8 +163,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                     sb.append(line + "\n");
                 }
                 text = sb.toString();
-
-
+                QuizSessionWrapper session = Utilities.g.fromJson(text, QuizSessionWrapper.class);
+                Utilities.log(session.toString());
             } catch (NetworkOnMainThreadException e) {
                 Utilities.log(e.toString());
             } catch (MalformedURLException e) {
@@ -185,7 +184,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
         }
 
         protected void onPostExecute(String str) {
-            Utilities.log("onPostExecute " + str);
+
         }
     }
 
