@@ -51,20 +51,36 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     @Override
     public void manipulate() {
         this.quizTitle.setText(this.quiz.getTitle());
-        String questionId = this.questionIds[this.currentQuestionIndex];
+        this.callGetQuestion();
 
-        asyncQuestionGetter = new GetQuestion();
-        asyncQuestionGetter.delegate = this;
-        asyncQuestionGetter.execute(quiz.getId(), questionId);
+
     }
 
     public void nextQuestion() {
+        this.callGetQuestion();
+    }
+
+    private void callGetQuestion() {
+        //increment currentQuestionIndex for the next time you want it.
+        if (this.currentQuestionIndex < this.questionIds.length) {
+            //TODO handle this.
+            String questionId = this.questionIds[this.currentQuestionIndex++];
+            asyncQuestionGetter = new GetQuestion();
+            asyncQuestionGetter.delegate = this;
+            asyncQuestionGetter.execute(quiz.getId(), questionId);
+        } else {
+            //TODO display something meaningful
+        }
 
     }
 
     @Override
     public void processFinish(String output) {
+
         Utilities.log(output);
+        Question question = Utilities.g.fromJson(output, Question.class);
+
+        this.quizQuestion.setText(question.getQuestion());
     }
 
     class GetQuestion extends AsyncTask<String, Void, String> {

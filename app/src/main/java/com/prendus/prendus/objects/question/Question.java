@@ -2,6 +2,8 @@ package com.prendus.prendus.objects.question;
 
 import com.prendus.prendus.objects.PrendusObject;
 
+import org.jsoup.Jsoup;
+
 /**
  * Created by matt on 3/26/17.
  */
@@ -64,7 +66,7 @@ public class Question extends PrendusObject {
     }
 
     public String getText() {
-        //TODO remove html from text
+        setText(Jsoup.parse(this.text).text());
         return text;
     }
 
