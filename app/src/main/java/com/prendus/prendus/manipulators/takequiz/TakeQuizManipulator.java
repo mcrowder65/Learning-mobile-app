@@ -9,8 +9,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
+import com.prendus.prendus.objects.question.QuestionWrapper;
 import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.utilities.Utilities;
+
+import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -78,7 +81,7 @@ public class TakeQuizManipulator implements IPrendusManipulator {
                 // Send POST data request
                 GetTokenResult result = (GetTokenResult) jwtTask.getResult();
                 String jwt = result.getToken();
-                String urlStr = "http://192.168.0.108:5000/api/jwt/" + jwt + "/quiz/" + quizId + "/question/" + questionId;
+                String urlStr = "http://10.10.144.123:5000/api/jwt/" + jwt + "/quiz/" + quizId + "/question/" + questionId;
                 URL url = new URL(urlStr);
                 conn = url.openConnection();
                 conn.setDoOutput(false);
@@ -98,8 +101,11 @@ public class TakeQuizManipulator implements IPrendusManipulator {
                     sb.append(line + "\n");
                 }
                 text = sb.toString();
-                Question question = Utilities.g.fromJson(text, Question.class);
+                QuestionWrapper questionWrapper = Utilities.g.fromJson(text, QuestionWrapper.class);
+                Question question = questionWrapper.getQuestion();
                 Utilities.log(question);
+                String questionText = Jsoup.parse(question.getQuestion()).text();
+                Utilities.log(questionText);
             } catch (NetworkOnMainThreadException e) {
                 Utilities.log(e);
             } catch (MalformedURLException e) {

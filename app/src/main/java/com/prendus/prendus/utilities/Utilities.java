@@ -30,7 +30,6 @@ import java.util.Map;
 public class Utilities {
     public static Firebase firebase = new Firebase();
     public static Gson g = new Gson();
-
     public static void populatePopup(PopupMenu popup) {
         if (isLoggedIn()) {
             popup.getMenu().add(MenuOptions.MY_QUIZZES);
