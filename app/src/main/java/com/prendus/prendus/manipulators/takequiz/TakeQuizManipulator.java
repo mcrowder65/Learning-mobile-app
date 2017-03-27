@@ -7,13 +7,12 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
+import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
 import com.prendus.prendus.objects.question.QuestionWrapper;
 import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.utilities.Utilities;
-
-import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -28,12 +27,13 @@ import java.net.URLConnection;
  * Created by matt on 3/26/17.
  */
 
-public class TakeQuizManipulator implements IPrendusManipulator {
+public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private TextView quizTitle;
     private TextView quizQuestion;
     private Quiz quiz;
     private int currentQuestionIndex;
     private String[] questionIds;
+    private GetQuestion asyncQuestionGetter;
 
     public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz) {
         this.quizTitle = quizTitle;
@@ -53,14 +53,22 @@ public class TakeQuizManipulator implements IPrendusManipulator {
         this.quizTitle.setText(this.quiz.getTitle());
         String questionId = this.questionIds[this.currentQuestionIndex];
 
-        new GetQuestion().execute(quiz.getId(), questionId);
+        asyncQuestionGetter = new GetQuestion();
+        asyncQuestionGetter.delegate = this;
+        asyncQuestionGetter.execute(quiz.getId(), questionId);
     }
 
     public void nextQuestion() {
 
     }
 
+    @Override
+    public void processFinish(String output) {
+        Utilities.log(output);
+    }
+
     class GetQuestion extends AsyncTask<String, Void, String> {
+        public AsyncResponse delegate = null;
 
         @Override
         protected String doInBackground(String... strings) {
@@ -72,6 +80,7 @@ public class TakeQuizManipulator implements IPrendusManipulator {
             String text = null;
             OutputStreamWriter wr = null;
             // Send data
+            Question question = null;
             try {
 
                 // Defined URL  where to send data
@@ -85,9 +94,6 @@ public class TakeQuizManipulator implements IPrendusManipulator {
                 URL url = new URL(urlStr);
                 conn = url.openConnection();
                 conn.setDoOutput(false);
-//                wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-//                wr.write("i am matt");
-//                wr.flush();
 
                 // Get the server response
 
@@ -102,10 +108,8 @@ public class TakeQuizManipulator implements IPrendusManipulator {
                 }
                 text = sb.toString();
                 QuestionWrapper questionWrapper = Utilities.g.fromJson(text, QuestionWrapper.class);
-                Question question = questionWrapper.getQuestion();
-                Utilities.log(question);
-                String questionText = Jsoup.parse(question.getQuestion()).text();
-                Utilities.log(questionText);
+                question = questionWrapper.getQuestion();
+
             } catch (NetworkOnMainThreadException e) {
                 Utilities.log(e);
             } catch (MalformedURLException e) {
@@ -116,18 +120,12 @@ public class TakeQuizManipulator implements IPrendusManipulator {
                 Utilities.log(e);
             } catch (Exception e) {
                 Utilities.log(e);
-            } finally {
-//                try {
-//                    wr.close();
-//                } catch (IOException e) {
-//                    Utilities.log(e);
-//                }
             }
-            return text;
+            return question.toJson();
         }
 
         protected void onPostExecute(String str) {
-
+            delegate.processFinish(str);
         }
     }
 }
