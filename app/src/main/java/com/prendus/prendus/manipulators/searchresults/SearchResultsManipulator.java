@@ -15,6 +15,7 @@ import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
 import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.quiz.Quiz;
+import com.prendus.prendus.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +64,9 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                     Quiz obj = child.getValue(Quiz.class);
                     if (obj.getQuestions() != null) {
                         obj.setId(child.getKey());
-                        String lowerCaseSearch = String.valueOf(searchInput.getText()).toLowerCase();
-                        String lowerCaseTitle = obj.getTitle().toLowerCase();
+                        String lowerCaseSearch = Utilities.stripEverything(String.valueOf(searchInput.getText()));
+
+                        String lowerCaseTitle = Utilities.stripEverything(obj.getTitle());
                         if (lowerCaseTitle.contains(lowerCaseSearch)) {
                             quizTitles.add(new Data(obj.getTitle(), obj.getId()));
                         }

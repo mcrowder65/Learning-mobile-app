@@ -3,6 +3,7 @@ package com.prendus.prendus.activities.takequiz;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class TakeQuizActivity extends PrendusActivity {
     private TextView quizQuestion;
     private EditText answer;
     private TakeQuizManipulator takeQuizManipulator;
+    private Button nextQuestion;
+    private TextView quizResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,15 @@ public class TakeQuizActivity extends PrendusActivity {
         }
         quizTitle = (TextView) findViewById(R.id.quizTitle);
         quizQuestion = (TextView) findViewById(R.id.quizQuestion);
-        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz);
+        nextQuestion = (Button) findViewById(R.id.nextQuestion);
+        quizResults = (TextView) findViewById(R.id.quizResults);
+        answer = (EditText) findViewById(R.id.answer);
+        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz, nextQuestion, answer, quizResults);
         takeQuizManipulator.manipulate();
     }
 
     public void nextQuestionClicked(View view) {
+
         takeQuizManipulator.nextQuestion();
     }
 

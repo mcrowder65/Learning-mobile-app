@@ -3,15 +3,11 @@ package com.prendus.prendus.activities.login;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,10 +15,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
-import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
-import com.prendus.prendus.constants.MenuOptions;
+import com.prendus.prendus.constants.Constants;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
 
@@ -54,18 +48,20 @@ public class LoginActivity extends PrendusActivity {
         Snackbar mySnackBar = Snackbar.make(findViewById(R.id.myCoordinatorLayout), message, Snackbar.LENGTH_SHORT);
         mySnackBar.show();
     }
+
     public void loginClicked(View view) {
         Log.wtf(Constants.TAG, "login clicked!!!!");
-        username = (EditText)findViewById(R.id.username);
+        username = (EditText) findViewById(R.id.username);
 
         password = (EditText) findViewById(R.id.password);
-        String usernameText = String.valueOf(username.getText());
-        if(!Validator.isEmailValid(usernameText)) {
+        String usernameText = Utilities.stripEverything(String.valueOf(username.getText()));
+
+        if (!Validator.isEmailValid(usernameText)) {
             makeSnackBar("email invalid!");
             return;
         }
-        String passwordText = String.valueOf(password.getText());
-        if(!Validator.isPasswordValid(passwordText)) {
+        String passwordText = Utilities.stripEverything(String.valueOf(password.getText()));
+        if (!Validator.isPasswordValid(passwordText)) {
             makeSnackBar("password invalid");
             return;
         }
@@ -73,6 +69,7 @@ public class LoginActivity extends PrendusActivity {
         this.logInUserWithEmailAndPassword(usernameText, passwordText);
 
     }
+
     public void movingToLogin(MenuItem item) {
         makeSnackBar("you are already on login.");
     }
@@ -93,7 +90,7 @@ public class LoginActivity extends PrendusActivity {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
 
-                    if(!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
+                    if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
                         Log.wtf(Constants.TAG, "email not verified...");
                         FirebaseAuth.getInstance().signOut();
                     } else {

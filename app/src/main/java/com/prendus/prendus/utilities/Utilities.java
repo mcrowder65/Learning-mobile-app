@@ -21,6 +21,8 @@ import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.objects.quiz.Quiz;
 
+import org.jsoup.Jsoup;
+
 import java.util.Map;
 
 /**
@@ -30,6 +32,7 @@ import java.util.Map;
 public class Utilities {
     public static Firebase firebase = new Firebase();
     public static Gson g = new Gson();
+
     public static void populatePopup(PopupMenu popup) {
         if (isLoggedIn()) {
             popup.getMenu().add(MenuOptions.MY_QUIZZES);
@@ -137,6 +140,14 @@ public class Utilities {
         auth.signOut();
     }
 
+    public static void log(double dub) {
+        log(String.valueOf(dub));
+    }
+
+    public static void log(boolean bool) {
+        log(String.valueOf(bool));
+    }
+
     public static void log(String obj) {
         Log.wtf(Constants.TAG, obj);
     }
@@ -166,6 +177,33 @@ public class Utilities {
 
         }
         return params.toString();
+    }
+
+    /**
+     * Also lowercases it
+     *
+     * @param str
+     * @return
+     */
+    public static String stripEverything(String str) {
+        if (str == null) {
+            return str;
+        }
+
+        String newString = new String(str);
+        newString = newString.toLowerCase();
+        newString = newString.trim();
+        return newString;
+
+    }
+
+    public static String stripHtml(String str) {
+        if (str == null) {
+            return str;
+        }
+        String newString = Jsoup.parse(str).text();
+        return newString;
+
     }
 
 }

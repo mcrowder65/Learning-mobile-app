@@ -1,8 +1,7 @@
 package com.prendus.prendus.objects.question;
 
 import com.prendus.prendus.objects.PrendusObject;
-
-import org.jsoup.Jsoup;
+import com.prendus.prendus.utilities.Utilities;
 
 /**
  * Created by matt on 3/26/17.
@@ -56,8 +55,18 @@ public class Question extends PrendusObject {
         this.previewQuestionId = previewQuestionId;
     }
 
+    private boolean cleanedAnswer = false;
+
     public String getCode() {
         //TODO parse answer out
+        if (!cleanedAnswer) {
+            //TODO clean answer
+            setCode(Utilities.stripEverything(this.code));
+            int index = "answer = '".length();
+            this.code = this.code.substring(index);
+            this.code = this.code.substring(0, this.code.indexOf('\''));
+            cleanedAnswer = true;
+        }
         return code;
     }
 
@@ -65,8 +74,14 @@ public class Question extends PrendusObject {
         this.code = code;
     }
 
+    private boolean strippedHtml = false;
+
     public String getText() {
-        setText(Jsoup.parse(this.text).text());
+        if (!strippedHtml) {
+            setText(Utilities.stripHtml(this.text));
+            strippedHtml = true;
+        }
+
         return text;
     }
 

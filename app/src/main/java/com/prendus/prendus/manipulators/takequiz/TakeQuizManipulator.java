@@ -2,6 +2,8 @@ package com.prendus.prendus.manipulators.takequiz;
 
 import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
@@ -30,17 +32,28 @@ import java.net.URLConnection;
 public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private TextView quizTitle;
     private TextView quizQuestion;
+    private EditText userQuizAnswer;
     private Quiz quiz;
     private int currentQuestionIndex;
     private String[] questionIds;
     private GetQuestion asyncQuestionGetter;
+    private Button nextQuestion;
+    private Question currentQuestion;
+    private TextView quizResults;
+    private int numRight;
 
-    public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz) {
+    public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz,
+                               Button nextQuestion, EditText userQuizAnswer, TextView quizResults) {
         this.quizTitle = quizTitle;
         this.quizQuestion = quizQuestion;
         this.quiz = quiz;
         this.questionIds = quiz.getQuestionIds();
         this.currentQuestionIndex = 0;
+        this.nextQuestion = nextQuestion;
+        this.userQuizAnswer = userQuizAnswer;
+        numRight = 0;
+        this.quizResults = quizResults;
+        quizResults.setText("");
     }
 
     @Override
@@ -57,30 +70,59 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     }
 
     public void nextQuestion() {
+        this.gradeQuestion();
         this.callGetQuestion();
     }
 
+    private void gradeQuestion() {
+        //TODO check answer.
+        String userAnswerAsStr = String.valueOf(userQuizAnswer.getText());
+        boolean correct = isQuestionCorrect(userAnswerAsStr);
+        if (correct) {
+            ++numRight;
+        }
+    }
+
+    private boolean isQuestionCorrect(String userAnswerAsStr) {
+        return this.currentQuestion.getAnswer().equals(Utilities.stripEverything(userAnswerAsStr));
+    }
+
     private void callGetQuestion() {
-        //increment currentQuestionIndex for the next time you want it.
+
         if (this.currentQuestionIndex < this.questionIds.length) {
-            //TODO handle this.
+            //increment currentQuestionIndex for the next time you want it.
             String questionId = this.questionIds[this.currentQuestionIndex++];
+
             asyncQuestionGetter = new GetQuestion();
             asyncQuestionGetter.delegate = this;
             asyncQuestionGetter.execute(quiz.getId(), questionId);
+            if (this.currentQuestionIndex == this.questionIds.length) {
+                // call this here because currentQuestionIndex is incremented everytime... and the
+                // first if can never be entered again!
+                this.nextQuestion.setText("submit");
+            }
+            this.userQuizAnswer.setText("");
         } else {
-            //TODO display something meaningful
+            //TODO grade
+            this.gradeQuiz();
         }
 
+
+    }
+
+    private void gradeQuiz() {
+        double finalGrade = (double) numRight / (double) this.questionIds.length;
+        Utilities.log("final grade: " + finalGrade);
+        double percentage = (1 - finalGrade) * 100;
+        quizResults.setText(" You scored: " + percentage + "%");
     }
 
     @Override
     public void processFinish(String output) {
 
-        Utilities.log(output);
         Question question = Utilities.g.fromJson(output, Question.class);
-
         this.quizQuestion.setText(question.getQuestion());
+        this.currentQuestion = question;
     }
 
     class GetQuestion extends AsyncTask<String, Void, String> {
@@ -106,7 +148,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                 // Send POST data request
                 GetTokenResult result = (GetTokenResult) jwtTask.getResult();
                 String jwt = result.getToken();
-                String urlStr = "http://10.10.144.123:5000/api/jwt/" + jwt + "/quiz/" + quizId + "/question/" + questionId;
+                String urlStr = "http://10.37.32.196:5000/api/jwt/" + jwt + "/quiz/" + quizId + "/question/" + questionId;
                 URL url = new URL(urlStr);
                 conn = url.openConnection();
                 conn.setDoOutput(false);
