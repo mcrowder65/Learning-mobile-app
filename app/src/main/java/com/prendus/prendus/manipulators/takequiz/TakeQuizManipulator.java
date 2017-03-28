@@ -12,7 +12,6 @@ import com.google.firebase.auth.GetTokenResult;
 import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
-import com.prendus.prendus.objects.question.QuestionWrapper;
 import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -20,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -121,7 +121,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     public void processFinish(String output) {
 
         Question question = Utilities.g.fromJson(output, Question.class);
-        this.quizQuestion.setText(question.getQuestion());
+        this.quizQuestion.setText(question != null ? question.getQuestion() : "SERVER DOWN!!!");
         this.currentQuestion = question;
     }
 
@@ -137,6 +137,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             BufferedReader reader = null;
             String text = null;
             OutputStreamWriter wr = null;
+            OutputStream os = null;
             // Send data
             Question question = null;
             try {
@@ -148,11 +149,17 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                 // Send POST data request
                 GetTokenResult result = (GetTokenResult) jwtTask.getResult();
                 String jwt = result.getToken();
-                String urlStr = "http://10.37.32.196:5000/api/jwt/" + jwt + "/quiz/" + quizId + "/question/" + questionId;
+                String urlStr = "http://138.68.44.195:5000/getQuestion?questionId=" + questionId;
                 URL url = new URL(urlStr);
                 conn = url.openConnection();
                 conn.setDoOutput(false);
-
+//                os = conn.getOutputStream();
+//                Map<String, String> params = new HashMap<>();
+//                params.put("questionId", questionId);
+//                String paramsAsStr = Utilities.buildParametersForServer(params);
+//                wr = new OutputStreamWriter(os, "UTF-8");
+//                wr.write(paramsAsStr);
+//                wr.flush();
                 // Get the server response
 
                 reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -165,8 +172,11 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                     sb.append(line + "\n");
                 }
                 text = sb.toString();
-                QuestionWrapper questionWrapper = Utilities.g.fromJson(text, QuestionWrapper.class);
-                question = questionWrapper.getQuestion();
+                if (text.indexOf("A#8t&9u@dCfZAG8") == -1) {
+                    Question questionWrapper = Utilities.g.fromJson(text, Question.class);
+                    question = questionWrapper;
+                }
+
 
             } catch (NetworkOnMainThreadException e) {
                 Utilities.log(e);
@@ -178,6 +188,16 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                 Utilities.log(e);
             } catch (Exception e) {
                 Utilities.log(e);
+            }
+            if (wr != null) {
+                try {
+                    wr.close();
+                } catch (IOException e) {
+                    Utilities.log(e);
+                }
+            }
+            if (question == null) {
+                return "";
             }
             return question.toJson();
         }

@@ -168,6 +168,7 @@ public class Utilities {
     public static String buildParametersForServer(Map<String, String> parameters) {
         StringBuilder params = new StringBuilder();
         int counter = 0;
+        params.append("?");
         for (String key : parameters.keySet()) {
             ++counter;
             params.append(key + "=" + parameters.get(key));
