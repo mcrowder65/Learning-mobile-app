@@ -113,8 +113,9 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private void gradeQuiz() {
         double finalGrade = (double) numRight / (double) this.questionIds.length;
         Utilities.log("final grade: " + finalGrade);
-        double percentage = (1 - finalGrade) * 100;
+        double percentage = finalGrade * 100;
         quizResults.setText(" You scored: " + percentage + "%");
+        this.nextQuestion.setEnabled(false);
     }
 
     @Override

@@ -1,19 +1,11 @@
 package com.prendus.prendus.activities.myquizzes;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
-import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -22,6 +14,7 @@ import com.prendus.prendus.utilities.Utilities;
 
 public class MyQuizzesActivity extends PrendusActivity {
     private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +25,8 @@ public class MyQuizzesActivity extends PrendusActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        textView = (TextView)findViewById(R.id.myquiztitle);
-        textView.setText("my quizzes");
+        textView = (TextView) findViewById(R.id.myquiztitle);
+        textView.setText("This is the container for a my quizzes page. I will implement it with the next iteration of prototypes.");
         Utilities.hideSpinner(this);
     }
 

@@ -1,17 +1,15 @@
 package com.prendus.prendus.activities;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatCallback;
 import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.search.SearchActivity;
-import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -45,7 +43,10 @@ public abstract class PrendusActivity extends AppCompatActivity {
 
 
     public void searchClicked(MenuItem item) {
-        Utilities.goToActivity(SearchActivity.class, this);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Utilities.goToActivity(SearchActivity.class, this);
+        }
+
     }
 
 
