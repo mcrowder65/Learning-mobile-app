@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.utilities.Utilities;
@@ -43,16 +42,19 @@ public abstract class PrendusActivity extends AppCompatActivity {
 
 
     public void searchClicked(MenuItem item) {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Utilities.goToActivity(SearchActivity.class, this);
-        }
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        Utilities.goToActivity(SearchActivity.class, this);
+//        }
 
     }
 
 
     public ProgressBar getSpinner() {
         ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
+        if (spinner != null) {
+            spinner.setVisibility(View.GONE);
+        }
+
         return spinner;
     }
 

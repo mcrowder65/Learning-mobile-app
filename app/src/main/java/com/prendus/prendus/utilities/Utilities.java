@@ -115,11 +115,17 @@ public class Utilities {
     }
 
     public static void showSpinner(PrendusActivity activity) {
-        activity.getSpinner().setVisibility(View.VISIBLE);
+        if (activity.getSpinner() != null) {
+            activity.getSpinner().setVisibility(View.VISIBLE);
+        }
+
     }
 
     public static void hideSpinner(PrendusActivity activity) {
-        activity.getSpinner().setVisibility(View.GONE);
+        if (activity.getSpinner() != null) {
+            activity.getSpinner().setVisibility(View.GONE);
+        }
+
     }
 
     public static boolean isLoggedIn() {

@@ -6,9 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GetTokenResult;
 import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
@@ -44,16 +41,21 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz,
                                Button nextQuestion, EditText userQuizAnswer, TextView quizResults) {
-        this.quizTitle = quizTitle;
-        this.quizQuestion = quizQuestion;
-        this.quiz = quiz;
-        this.questionIds = quiz.getQuestionIds();
-        this.currentQuestionIndex = 0;
-        this.nextQuestion = nextQuestion;
-        this.userQuizAnswer = userQuizAnswer;
-        numRight = 0;
-        this.quizResults = quizResults;
-        quizResults.setText("");
+        try {
+            this.quizTitle = quizTitle;
+            this.quizQuestion = quizQuestion;
+            this.quiz = quiz;
+            this.questionIds = quiz.getQuestionIds();
+            this.currentQuestionIndex = 0;
+            this.nextQuestion = nextQuestion;
+            this.userQuizAnswer = userQuizAnswer;
+            numRight = 0;
+            this.quizResults = quizResults;
+            quizResults.setText("");
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+
     }
 
     @Override
@@ -63,24 +65,38 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     @Override
     public void manipulate() {
-        this.quizTitle.setText(this.quiz.getTitle());
-        this.callGetQuestion();
+        try {
+            this.quizTitle.setText(this.quiz.getTitle());
+            this.callGetQuestion();
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
 
 
     }
 
     public void nextQuestion() {
-        this.gradeQuestion();
-        this.callGetQuestion();
+        try {
+            this.gradeQuestion();
+            this.callGetQuestion();
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+
     }
 
     private void gradeQuestion() {
-        //TODO check answer.
-        String userAnswerAsStr = String.valueOf(userQuizAnswer.getText());
-        boolean correct = isQuestionCorrect(userAnswerAsStr);
-        if (correct) {
-            ++numRight;
+        try {
+            //TODO check answer.
+            String userAnswerAsStr = String.valueOf(userQuizAnswer.getText());
+            boolean correct = isQuestionCorrect(userAnswerAsStr);
+            if (correct) {
+                ++numRight;
+            }
+        } catch (Exception e) {
+            Utilities.log(e);
         }
+
     }
 
     private boolean isQuestionCorrect(String userAnswerAsStr) {
@@ -88,42 +104,54 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     }
 
     private void callGetQuestion() {
+        try {
+            if (this.currentQuestionIndex < this.questionIds.length) {
+                //increment currentQuestionIndex for the next time you want it.
+                String questionId = this.questionIds[this.currentQuestionIndex++];
 
-        if (this.currentQuestionIndex < this.questionIds.length) {
-            //increment currentQuestionIndex for the next time you want it.
-            String questionId = this.questionIds[this.currentQuestionIndex++];
-
-            asyncQuestionGetter = new GetQuestion();
-            asyncQuestionGetter.delegate = this;
-            asyncQuestionGetter.execute(quiz.getId(), questionId);
-            if (this.currentQuestionIndex == this.questionIds.length) {
-                // call this here because currentQuestionIndex is incremented everytime... and the
-                // first if can never be entered again!
-                this.nextQuestion.setText("submit");
+                asyncQuestionGetter = new GetQuestion();
+                asyncQuestionGetter.delegate = this;
+                asyncQuestionGetter.execute(quiz.getId(), questionId);
+                if (this.currentQuestionIndex == this.questionIds.length) {
+                    // call this here because currentQuestionIndex is incremented everytime... and the
+                    // first if can never be entered again!
+                    this.nextQuestion.setText("submit");
+                }
+                this.userQuizAnswer.setText("");
+            } else {
+                //TODO grade
+                this.gradeQuiz();
             }
-            this.userQuizAnswer.setText("");
-        } else {
-            //TODO grade
-            this.gradeQuiz();
+        } catch (Exception e) {
+            Utilities.log(e);
         }
 
 
     }
 
     private void gradeQuiz() {
-        double finalGrade = (double) numRight / (double) this.questionIds.length;
-        Utilities.log("final grade: " + finalGrade);
-        double percentage = finalGrade * 100;
-        quizResults.setText(" You scored: " + percentage + "%");
-        this.nextQuestion.setEnabled(false);
+        try {
+            double finalGrade = (double) numRight / (double) this.questionIds.length;
+            Utilities.log("final grade: " + finalGrade);
+            double percentage = finalGrade * 100;
+            quizResults.setText(" You scored: " + percentage + "%");
+            this.nextQuestion.setEnabled(false);
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+
     }
 
     @Override
     public void processFinish(String output) {
+        try {
+            Question question = Utilities.g.fromJson(output, Question.class);
+            this.quizQuestion.setText(question != null ? question.getQuestion() : "SERVER DOWN!!!");
+            this.currentQuestion = question;
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
 
-        Question question = Utilities.g.fromJson(output, Question.class);
-        this.quizQuestion.setText(question != null ? question.getQuestion() : "SERVER DOWN!!!");
-        this.currentQuestion = question;
     }
 
     class GetQuestion extends AsyncTask<String, Void, String> {
@@ -143,25 +171,12 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             Question question = null;
             try {
 
-                // Defined URL  where to send data
 
-                Task jwtTask = FirebaseAuth.getInstance().getCurrentUser().getToken(false);
-
-                // Send POST data request
-                GetTokenResult result = (GetTokenResult) jwtTask.getResult();
-                String jwt = result.getToken();
                 String urlStr = "http://138.68.44.195:5000/getQuestion?questionId=" + questionId;
                 URL url = new URL(urlStr);
                 conn = url.openConnection();
                 conn.setDoOutput(false);
-//                os = conn.getOutputStream();
-//                Map<String, String> params = new HashMap<>();
-//                params.put("questionId", questionId);
-//                String paramsAsStr = Utilities.buildParametersForServer(params);
-//                wr = new OutputStreamWriter(os, "UTF-8");
-//                wr.write(paramsAsStr);
-//                wr.flush();
-                // Get the server response
+
 
                 reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder sb = new StringBuilder();
