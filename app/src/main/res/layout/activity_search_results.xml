@@ -32,7 +32,6 @@
             android:id="@+id/cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <!--android:onClick="goToQuiz"-->
 
 
             <LinearLayout
@@ -51,8 +50,7 @@
                     android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="starClick"
-                    android:src="@mipmap/star_daddy"
+
                     android:title="star_border" />
 
             </LinearLayout>

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
@@ -73,15 +74,23 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
         CardView cv;
         TextView personName;
         String quizId;
+        ImageView star;
 
         QuizResultContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             personName = (TextView) itemView.findViewById(R.id.person_name);
+            star = (ImageView) itemView.findViewById(R.id.star);
+            star.setImageResource(R.drawable.star_border);
+            star.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    star.setImageResource(R.drawable.star_filled);
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO go to quiz!
                     String path = "quizzes/" + quizId;
                     try {
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
