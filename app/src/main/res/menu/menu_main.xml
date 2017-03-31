@@ -3,16 +3,14 @@
     <item
         android:id="@+id/search"
         android:icon="@drawable/search"
-        app:showAsAction="ifRoom"
+        android:onClick="searchClicked"
         android:title="search"
-        android:onClick="searchClicked">
-    </item>
+        app:showAsAction="ifRoom"></item>
     <item
         android:id="@+id/menu"
         android:icon="@drawable/menu"
-        app:showAsAction="ifRoom"
         android:onClick="dropDownMenuClicked"
-        android:title="menu">
-    </item>
+        android:title="menu"
+        app:showAsAction="ifRoom"></item>
 
 </menu>
