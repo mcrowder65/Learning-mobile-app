@@ -52,7 +52,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
 
     @Override
     public void onBindViewHolder(QuizResultContainer personViewHolder, int i) {
-        personViewHolder.personName.setText(datas.get(i).getName());
+        personViewHolder.quizTitle.setText(datas.get(i).getName());
         personViewHolder.quizId = datas.get(i).getQuizId();
     }
 
@@ -62,6 +62,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
     }
 
     List<Data> datas;
+    int currentDataIndex = 0;
     SearchResultsActivity searchResultsActivity;
 
     public RVAdapter(List<Data> persons, SearchResultsActivity activity) {
@@ -72,7 +73,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
 
     public class QuizResultContainer extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView personName;
+        TextView quizTitle;
         String quizId;
         ImageView star;
         boolean isFilled = false;
@@ -80,11 +81,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
         QuizResultContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            personName = (TextView) itemView.findViewById(R.id.person_name);
+            quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
             star = (ImageView) itemView.findViewById(R.id.star);
             //TODO figure out if starred or not
 
-            searchResultsActivity.getManipulator().setStar(quizId, star);
+            searchResultsActivity.getManipulator().setStar(datas.get(currentDataIndex++).getQuizId(), star);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -92,15 +93,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                     if (auth.getCurrentUser() == null) {
                         searchResultsActivity.makeSnackBar("You must log in to save quizzes");
                     } else {
+
                         if (!isFilled) {
-                            star.setImageResource(R.drawable.star_filled);
                             searchResultsActivity.makeSnackBar("Quiz saved!");
                             isFilled = true;
+                            searchResultsActivity.getManipulator().addQuizToMySavedQuizzes(quizId, star);
                         } else {
-                            star.setImageResource(R.drawable.star_border);
                             searchResultsActivity.makeSnackBar("Quiz not saved now!");
                             isFilled = false;
+                            searchResultsActivity.getManipulator().deleteQuizFromMySavedQuizzes(quizId, star);
                         }
+
                     }
 
 

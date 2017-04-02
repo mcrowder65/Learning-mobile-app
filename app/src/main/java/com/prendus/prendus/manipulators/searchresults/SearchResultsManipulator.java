@@ -35,6 +35,10 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     private Intent intent;
     private SearchResultsActivity searchResultsActivity;
 
+    private void makeSnackBar(String message) {
+        searchResultsActivity.makeSnackBar(message);
+    }
+
     public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent, SearchResultsActivity activity) {
         this.recyclerView = recyclerView;
         this.searchInput = searchInput;
@@ -124,5 +128,30 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         });
     }
 
+    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star) {
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            star.setImageResource(R.drawable.star_border);
+            makeSnackBar("You can't save a quiz since you're not logged in");
+            return;
+        }
+        String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
+        Utilities.firebase.update(path, quizId);
+        this.setStar(quizId, star);
+    }
+
+    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            star.setImageResource(R.drawable.star_border);
+            makeSnackBar("IDK how you got here because how was it saved in the first place?");
+            return;
+        }
+        String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
+        Utilities.firebase.delete(path);
+        this.setStar(quizId, star);
+    }
 }
