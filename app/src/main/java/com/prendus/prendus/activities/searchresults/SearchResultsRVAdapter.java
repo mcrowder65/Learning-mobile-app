@@ -32,6 +32,8 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,18 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
         personViewHolder.quizTitle.setText(searchResultsDatas.get(i).getName());
         personViewHolder.quizId = searchResultsDatas.get(i).getQuizId();
         personViewHolder.score.setText("score: " + searchResultsDatas.get(i).getScore());
-        personViewHolder.daysAgoMade.setText(searchResultsDatas.get(i).getDate().toString());
+        Calendar calendar = searchResultsDatas.get(i).getDate();
+        long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
+        int days = getNumberOfDays(timeElapsed);
+        personViewHolder.daysAgoMade.setText(String.valueOf(days) + " days old");
+    }
+
+    private int getNumberOfDays(long timeElapsed) {
+        long millisecondsInSecond = 1000;
+        long millisecondsInMinute = millisecondsInSecond * 60;
+        long millisecondsInHour = millisecondsInMinute * 60;
+        long millisecondsInDay = millisecondsInHour * 24;
+        return (int) timeElapsed / (int) millisecondsInDay;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.prendus.prendus.activities.searchresults;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by mcrowder65 on 3/25/17.
@@ -10,13 +11,14 @@ public class SearchResultsData {
     private String name;
     private String quizId;
     private int score;
-    private Date date;
+    private Calendar date;
 
     public SearchResultsData(String name, String quizId, int score, long timestamp) {
         this.name = name;
         this.quizId = quizId;
         this.score = score;
-        date = new Date(timestamp);
+        date = new GregorianCalendar();
+        date.setTimeInMillis(timestamp);
     }
 
     public String getQuizId() {
@@ -43,11 +45,11 @@ public class SearchResultsData {
         this.score = score;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 }
