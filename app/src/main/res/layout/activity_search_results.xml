@@ -37,6 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:padding="16dp">
 
                 <TextView
@@ -44,14 +45,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:textSize="30sp" />
+                    android:textSize="30sp">Derivatives</TextView>
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="30sp">Score: 0</TextView>
+
+                <TextView
+                    android:id="@+id/daysAgoMade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="30sp">3 days old</TextView>
 
                 <ImageView
                     android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:title="star_border" />
+                    android:src="@drawable/star_border" />
 
             </LinearLayout>
 

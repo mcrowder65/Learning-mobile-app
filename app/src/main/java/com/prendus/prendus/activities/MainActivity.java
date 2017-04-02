@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.login.LoginActivity;
-import com.prendus.prendus.utilities.Utilities;
 
 
 public class MainActivity extends PrendusActivity {
@@ -23,7 +22,6 @@ public class MainActivity extends PrendusActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         makeSnackBar("init!");
-        Utilities.hideSpinner(this);
     }
 
 

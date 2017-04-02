@@ -2,14 +2,9 @@ package com.prendus.prendus.activities.signup;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,9 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
-import com.prendus.prendus.activities.search.SearchActivity;
 import com.prendus.prendus.constants.Constants;
-import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.objects.user.MetaData;
 import com.prendus.prendus.utilities.Utilities;
 import com.prendus.prendus.validators.Validator;
@@ -48,8 +41,8 @@ public class SignupActivity extends PrendusActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        Utilities.hideSpinner(this);
     }
+
     public void submitClicked(View view) {
         email = (TextView) findViewById(R.id.email);
         password = (TextView) findViewById(R.id.password);
@@ -59,13 +52,13 @@ public class SignupActivity extends PrendusActivity {
         school = (TextView) findViewById(R.id.school);
 
         String emailStr = String.valueOf(email.getText());
-        if(!Validator.isEmailValid(emailStr)) {
+        if (!Validator.isEmailValid(emailStr)) {
             Log.wtf(Constants.TAG, "email invalid");
             return;
         }
         String passwordStr = String.valueOf(password.getText());
         String confirmPasswordStr = String.valueOf(confirmPassword.getText());
-        if(passwordStr == null || confirmPasswordStr == null || !passwordStr.equals(confirmPasswordStr)) {
+        if (passwordStr == null || confirmPasswordStr == null || !passwordStr.equals(confirmPasswordStr)) {
             Log.wtf(Constants.TAG, "passwords don't match");
             return;
         }
@@ -74,8 +67,8 @@ public class SignupActivity extends PrendusActivity {
         String schoolStr = String.valueOf(school.getText());
         this.signUpUserWithEmailAndPassword(emailStr, passwordStr, firstNameStr, lastNameStr, schoolStr);
     }
+
     public void signUpUserWithEmailAndPassword(final String username, String password, final String firstName, final String lastName, final String school) {
-        Utilities.showSpinner(this);
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final SignupActivity self = this;
         auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
@@ -88,7 +81,6 @@ public class SignupActivity extends PrendusActivity {
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {
-                    Utilities.hideSpinner(self);
                     Utilities.goToActivity(LoginActivity.class, self);
                     FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification();
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

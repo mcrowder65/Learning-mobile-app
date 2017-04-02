@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.manipulators.myquizzes.MyQuizzesManipulator;
-import com.prendus.prendus.utilities.Utilities;
 
 /**
  * Created by matt on 3/19/17.
@@ -35,7 +34,6 @@ public class MyQuizzesActivity extends PrendusActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        Utilities.hideSpinner(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);

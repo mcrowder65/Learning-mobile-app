@@ -37,7 +37,6 @@ public class TakeQuizActivity extends PrendusActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        Utilities.hideSpinner(this);
         String quizAsJson = getIntent().getStringExtra(IntentExtras.QUIZ_AS_JSON);
         quiz = Utilities.g.fromJson(quizAsJson, Quiz.class);
         if (!quizAsJson.equals(quiz.toJson())) {

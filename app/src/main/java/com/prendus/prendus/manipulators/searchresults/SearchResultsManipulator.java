@@ -79,7 +79,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
 
                         String lowerCaseTitle = Utilities.stripEverything(obj.getTitle());
                         if (lowerCaseTitle.contains(lowerCaseSearch)) {
-                            quizzes.add(new SearchResultsData(obj.getTitle(), obj.getId()));
+                            quizzes.add(new SearchResultsData(obj.getTitle(), obj.getId(), 0, obj.getTimestamp()));
                         }
 
                     }

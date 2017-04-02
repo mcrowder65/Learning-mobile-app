@@ -119,7 +119,6 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                 }
                 this.userQuizAnswer.setText("");
             } else {
-                //TODO grade
                 this.gradeQuiz();
             }
         } catch (Exception e) {

@@ -39,7 +39,6 @@ public class LoginActivity extends PrendusActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        Utilities.hideSpinner(this);
     }
 
 
@@ -69,7 +68,6 @@ public class LoginActivity extends PrendusActivity {
     }
 
     public void logInUserWithEmailAndPassword(String username, String password) {
-        Utilities.showSpinner(this);
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final LoginActivity self = this;
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -79,7 +77,6 @@ public class LoginActivity extends PrendusActivity {
                 // If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
                 // signed in user can be handled in the listener.
-                Utilities.hideSpinner(self);
                 if (!task.isSuccessful()) {
                     Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                 } else {

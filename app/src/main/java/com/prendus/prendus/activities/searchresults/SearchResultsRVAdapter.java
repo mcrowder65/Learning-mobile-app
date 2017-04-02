@@ -54,6 +54,8 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
     public void onBindViewHolder(QuizResultContainer personViewHolder, int i) {
         personViewHolder.quizTitle.setText(searchResultsDatas.get(i).getName());
         personViewHolder.quizId = searchResultsDatas.get(i).getQuizId();
+        personViewHolder.score.setText("score: " + searchResultsDatas.get(i).getScore());
+        personViewHolder.daysAgoMade.setText(searchResultsDatas.get(i).getDate().toString());
     }
 
     @Override
@@ -74,6 +76,8 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
     public class QuizResultContainer extends RecyclerView.ViewHolder {
         CardView cv;
         TextView quizTitle;
+        TextView score;
+        TextView daysAgoMade;
         String quizId;
         ImageView star;
         boolean isFilled = false;
@@ -87,6 +91,8 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
             cv = (CardView) itemView.findViewById(R.id.cv);
             quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
             star = (ImageView) itemView.findViewById(R.id.star);
+            score = (TextView) itemView.findViewById(R.id.score);
+            daysAgoMade = (TextView) itemView.findViewById(R.id.daysAgoMade);
             final QuizResultContainer self = this;
             searchResultsActivity.getManipulator().setStar(searchResultsDatas.get(currentDataIndex++).getQuizId(), star, this);
             star.setOnClickListener(new View.OnClickListener() {

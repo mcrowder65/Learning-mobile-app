@@ -19,6 +19,7 @@ public class SearchResultsActivity extends PrendusActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private TextView searchInput;
+
     private SearchResultsManipulator manipulator;
 
     public SearchResultsManipulator getManipulator() {
@@ -39,7 +40,6 @@ public class SearchResultsActivity extends PrendusActivity {
             // Sets the Abstract to act as the ActionBar for this Activity window.
             // Make sure the toolbar exists in the activity and is not null
             setSupportActionBar(toolbar);
-            Utilities.hideSpinner(this);
             searchInput = (TextView) findViewById(R.id.userSearchInput);
             mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
             mRecyclerView.setHasFixedSize(true);

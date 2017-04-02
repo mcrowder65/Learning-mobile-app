@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.activities.login.LoginActivity;
 import com.prendus.prendus.activities.myquizzes.MyQuizzesActivity;
 import com.prendus.prendus.activities.profile.ProfileActivity;
@@ -114,19 +112,6 @@ public class Utilities {
         activity.startActivity(i);
     }
 
-    public static void showSpinner(PrendusActivity activity) {
-        if (activity.getSpinner() != null) {
-            activity.getSpinner().setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    public static void hideSpinner(PrendusActivity activity) {
-        if (activity.getSpinner() != null) {
-            activity.getSpinner().setVisibility(View.GONE);
-        }
-
-    }
 
     public static boolean isLoggedIn() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();

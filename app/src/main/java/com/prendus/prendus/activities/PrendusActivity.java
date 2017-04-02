@@ -6,7 +6,6 @@ import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.search.SearchActivity;
@@ -49,15 +48,6 @@ public abstract class PrendusActivity extends AppCompatActivity {
 
     }
 
-
-    final public ProgressBar getSpinner() {
-        ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
-        if (spinner != null) {
-            spinner.setVisibility(View.GONE);
-        }
-
-        return spinner;
-    }
 
     final public void makeSnackBar(String message) {
         Snackbar mySnackBar = Snackbar.make(findViewById(R.id.activity), message, Snackbar.LENGTH_SHORT);
