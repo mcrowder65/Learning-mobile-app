@@ -40,33 +40,47 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/quiz_title"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:textSize="30sp">Derivatives</TextView>
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/score"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/quiz_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/score"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:textSize="30sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:textSize="30sp">Score: 0</TextView>
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/daysAgoMade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:textSize="30sp">3 days old</TextView>
+                    <TextView
+                        android:id="@+id/daysAgoMade"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:textSize="30sp" />
 
-                <ImageView
-                    android:id="@+id/star"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star_border" />
-
+                    <ImageView
+                        android:id="@+id/star"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1" />
+                </LinearLayout>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
