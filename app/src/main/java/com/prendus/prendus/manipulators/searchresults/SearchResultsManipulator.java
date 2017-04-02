@@ -2,13 +2,16 @@ package com.prendus.prendus.manipulators.searchresults;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prendus.prendus.R;
 import com.prendus.prendus.activities.searchresults.Data;
 import com.prendus.prendus.activities.searchresults.RVAdapter;
 import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
@@ -18,7 +21,9 @@ import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.utilities.Utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matt on 3/25/17.
@@ -79,8 +84,44 @@ public class SearchResultsManipulator implements IPrendusManipulator {
             }
 
         });
+    }
 
+    /**
+     * This is called when a star is being initialized and decides whether or not to star it!
+     *
+     * @param quizId
+     */
+    public void setStar(final String quizId, final ImageView star) {
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            star.setImageResource(R.drawable.star_border);
+            return;
+        }
+        String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes";
+
+        DatabaseReference ref = database.getReference(path);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onCancelled(DatabaseError arg0) {
+
+            }
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, String> quizIds = new HashMap<>();
+                star.setImageResource(R.drawable.star_border);
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String key = child.getKey();
+                    if (key.equals(quizId)) {
+                        star.setImageResource(R.drawable.star_filled);
+                    }
+                }
+            }
+
+        });
     }
 
 

@@ -75,19 +75,39 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
         TextView personName;
         String quizId;
         ImageView star;
+        boolean isFilled = false;
 
         QuizResultContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             personName = (TextView) itemView.findViewById(R.id.person_name);
             star = (ImageView) itemView.findViewById(R.id.star);
-            star.setImageResource(R.drawable.star_border);
+            //TODO figure out if starred or not
+
+            searchResultsActivity.getManipulator().setStar(quizId, star);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    star.setImageResource(R.drawable.star_filled);
+                    final FirebaseAuth auth = FirebaseAuth.getInstance();
+                    if (auth.getCurrentUser() == null) {
+                        searchResultsActivity.makeSnackBar("You must log in to save quizzes");
+                    } else {
+                        if (!isFilled) {
+                            star.setImageResource(R.drawable.star_filled);
+                            searchResultsActivity.makeSnackBar("Quiz saved!");
+                            isFilled = true;
+                        } else {
+                            star.setImageResource(R.drawable.star_border);
+                            searchResultsActivity.makeSnackBar("Quiz not saved now!");
+                            isFilled = false;
+                        }
+                    }
+
+
                 }
+
             });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

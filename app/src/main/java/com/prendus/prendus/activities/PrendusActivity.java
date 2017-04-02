@@ -1,5 +1,6 @@
 package com.prendus.prendus.activities;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
@@ -25,7 +26,7 @@ public abstract class PrendusActivity extends AppCompatActivity {
         return true;
     }
 
-    public void dropDownMenuClicked(MenuItem item) {
+    final public void dropDownMenuClicked(MenuItem item) {
         View menuItemView = findViewById(R.id.menu);
         PopupMenu popup = new PopupMenu(PrendusActivity.this, menuItemView);
         Utilities.populatePopup(popup);
@@ -49,13 +50,18 @@ public abstract class PrendusActivity extends AppCompatActivity {
     }
 
 
-    public ProgressBar getSpinner() {
+    final public ProgressBar getSpinner() {
         ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
         if (spinner != null) {
             spinner.setVisibility(View.GONE);
         }
 
         return spinner;
+    }
+
+    final public void makeSnackBar(String message) {
+        Snackbar mySnackBar = Snackbar.make(findViewById(R.id.activity), message, Snackbar.LENGTH_SHORT);
+        mySnackBar.show();
     }
 
 }

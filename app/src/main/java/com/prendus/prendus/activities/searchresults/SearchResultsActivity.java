@@ -19,6 +19,14 @@ public class SearchResultsActivity extends PrendusActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private TextView searchInput;
+    private SearchResultsManipulator manipulator;
+
+    public SearchResultsManipulator getManipulator() {
+        if (manipulator == null) {
+            Utilities.log("Why the freak is this manipulator null?!?!?!?!?!");
+        }
+        return manipulator;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,7 @@ public class SearchResultsActivity extends PrendusActivity {
             mRecyclerView.setHasFixedSize(true);
             mLinearLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
-            SearchResultsManipulator manipulator = new SearchResultsManipulator(mRecyclerView, searchInput, getIntent(), this);
+            manipulator = new SearchResultsManipulator(mRecyclerView, searchInput, getIntent(), this);
             manipulator.manipulate();
         } catch (Exception e) {
             Utilities.log(e);

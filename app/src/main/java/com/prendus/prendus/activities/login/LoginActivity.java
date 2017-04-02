@@ -2,7 +2,6 @@ package com.prendus.prendus.activities.login;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -43,11 +42,6 @@ public class LoginActivity extends PrendusActivity {
         Utilities.hideSpinner(this);
     }
 
-
-    private void makeSnackBar(String message) {
-        Snackbar mySnackBar = Snackbar.make(findViewById(R.id.myCoordinatorLayout), message, Snackbar.LENGTH_SHORT);
-        mySnackBar.show();
-    }
 
     public void loginClicked(View view) {
         Log.wtf(Constants.TAG, "login clicked!!!!");
