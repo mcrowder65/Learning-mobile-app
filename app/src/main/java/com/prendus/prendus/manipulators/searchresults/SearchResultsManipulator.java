@@ -12,8 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.R;
-import com.prendus.prendus.activities.searchresults.Data;
-import com.prendus.prendus.activities.searchresults.RVAdapter;
+import com.prendus.prendus.activities.PrendusActivity;
+import com.prendus.prendus.activities.searchresults.SearchResultsData;
+import com.prendus.prendus.activities.searchresults.SearchResultsRVAdapter;
 import com.prendus.prendus.activities.searchresults.SearchResultsActivity;
 import com.prendus.prendus.constants.IntentExtras;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
@@ -35,15 +36,16 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     private Intent intent;
     private SearchResultsActivity searchResultsActivity;
 
-    private void makeSnackBar(String message) {
-        searchResultsActivity.makeSnackBar(message);
-    }
 
     public SearchResultsManipulator(RecyclerView recyclerView, TextView searchInput, Intent intent, SearchResultsActivity activity) {
         this.recyclerView = recyclerView;
         this.searchInput = searchInput;
         this.intent = intent;
         this.searchResultsActivity = activity;
+    }
+
+    private void makeSnackBar(String message) {
+        searchResultsActivity.makeSnackBar(message);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Data> quizTitles = new ArrayList<>();
+                List<SearchResultsData> quizzes = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Quiz obj = child.getValue(Quiz.class);
                     if (obj.getQuestions() != null) {
@@ -77,17 +79,22 @@ public class SearchResultsManipulator implements IPrendusManipulator {
 
                         String lowerCaseTitle = Utilities.stripEverything(obj.getTitle());
                         if (lowerCaseTitle.contains(lowerCaseSearch)) {
-                            quizTitles.add(new Data(obj.getTitle(), obj.getId()));
+                            quizzes.add(new SearchResultsData(obj.getTitle(), obj.getId()));
                         }
 
                     }
 
                 }
-                RVAdapter adapter = new RVAdapter(quizTitles, searchResultsActivity);
+                SearchResultsRVAdapter adapter = new SearchResultsRVAdapter(quizzes, searchResultsActivity);
                 recyclerView.setAdapter(adapter);
             }
 
         });
+    }
+
+
+    public PrendusActivity getActivity() {
+        return searchResultsActivity;
     }
 
     /**
@@ -95,7 +102,8 @@ public class SearchResultsManipulator implements IPrendusManipulator {
      *
      * @param quizId
      */
-    public void setStar(final String quizId, final ImageView star, final RVAdapter.QuizResultContainer container) {
+
+    public void setStar(final String quizId, final ImageView star, final SearchResultsRVAdapter.QuizResultContainer container) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -131,7 +139,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         });
     }
 
-    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star, final RVAdapter.QuizResultContainer container) {
+    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star, final SearchResultsRVAdapter.QuizResultContainer container, PrendusActivity activity) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -142,10 +150,10 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         }
         String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
         Utilities.firebase.update(path, quizId);
-        this.setStar(quizId, star, container);
+        setStar(quizId, star, container);
     }
 
-    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, RVAdapter.QuizResultContainer container) {
+    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, SearchResultsRVAdapter.QuizResultContainer container, PrendusActivity activity) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
@@ -155,6 +163,8 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         }
         String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
         Utilities.firebase.delete(path);
-        this.setStar(quizId, star, container);
+        setStar(quizId, star, container);
     }
+
+
 }

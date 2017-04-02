@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContainer> {
+public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRVAdapter.QuizResultContainer> {
 
     @Override
     public QuizResultContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -52,21 +52,21 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
 
     @Override
     public void onBindViewHolder(QuizResultContainer personViewHolder, int i) {
-        personViewHolder.quizTitle.setText(datas.get(i).getName());
-        personViewHolder.quizId = datas.get(i).getQuizId();
+        personViewHolder.quizTitle.setText(searchResultsDatas.get(i).getName());
+        personViewHolder.quizId = searchResultsDatas.get(i).getQuizId();
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return searchResultsDatas.size();
     }
 
-    List<Data> datas;
+    List<SearchResultsData> searchResultsDatas;
     int currentDataIndex = 0;
     SearchResultsActivity searchResultsActivity;
 
-    public RVAdapter(List<Data> persons, SearchResultsActivity activity) {
-        this.datas = persons;
+    public SearchResultsRVAdapter(List<SearchResultsData> persons, SearchResultsActivity activity) {
+        this.searchResultsDatas = persons;
         this.searchResultsActivity = activity;
     }
 
@@ -87,9 +87,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
             cv = (CardView) itemView.findViewById(R.id.cv);
             quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
             star = (ImageView) itemView.findViewById(R.id.star);
-            //TODO figure out if starred or not
             final QuizResultContainer self = this;
-            searchResultsActivity.getManipulator().setStar(datas.get(currentDataIndex++).getQuizId(), star, this);
+            searchResultsActivity.getManipulator().setStar(searchResultsDatas.get(currentDataIndex++).getQuizId(), star, this);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,11 +100,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                         if (!isFilled) {
                             searchResultsActivity.makeSnackBar("Quiz saved!");
                             isFilled = true;
-                            searchResultsActivity.getManipulator().addQuizToMySavedQuizzes(quizId, star, self);
+                            searchResultsActivity.getManipulator().addQuizToMySavedQuizzes(quizId, star, self, searchResultsActivity);
                         } else {
                             searchResultsActivity.makeSnackBar("Quiz not saved now!");
                             isFilled = false;
-                            searchResultsActivity.getManipulator().deleteQuizFromMySavedQuizzes(quizId, star, self);
+                            searchResultsActivity.getManipulator().deleteQuizFromMySavedQuizzes(quizId, star, self, searchResultsActivity);
                         }
 
                     }

@@ -1,11 +1,14 @@
 package com.prendus.prendus.activities.myquizzes;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
+import com.prendus.prendus.manipulators.myquizzes.MyQuizzesManipulator;
 import com.prendus.prendus.utilities.Utilities;
 
 /**
@@ -13,7 +16,14 @@ import com.prendus.prendus.utilities.Utilities;
  */
 
 public class MyQuizzesActivity extends PrendusActivity {
-    private TextView textView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+    private TextView searchInput;
+    private MyQuizzesManipulator manipulator;
+
+    public MyQuizzesManipulator getManipulator() {
+        return manipulator;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +35,13 @@ public class MyQuizzesActivity extends PrendusActivity {
         // Sets the Abstract to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        textView = (TextView) findViewById(R.id.myquiztitle);
-        textView.setText("This is the container for a my quizzes page. I will implement it with the next iteration of prototypes.");
         Utilities.hideSpinner(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        manipulator = new MyQuizzesManipulator(mRecyclerView, getIntent(), this);
+        manipulator.manipulate();
     }
 
 }
