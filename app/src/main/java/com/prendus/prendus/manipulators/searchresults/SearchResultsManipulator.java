@@ -95,12 +95,13 @@ public class SearchResultsManipulator implements IPrendusManipulator {
      *
      * @param quizId
      */
-    public void setStar(final String quizId, final ImageView star) {
+    public void setStar(final String quizId, final ImageView star, final RVAdapter.QuizResultContainer container) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             star.setImageResource(R.drawable.star_border);
+            container.setFilled(false);
             return;
         }
         String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes";
@@ -117,10 +118,12 @@ public class SearchResultsManipulator implements IPrendusManipulator {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, String> quizIds = new HashMap<>();
                 star.setImageResource(R.drawable.star_border);
+                container.setFilled(false);
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String key = child.getKey();
                     if (key.equals(quizId)) {
                         star.setImageResource(R.drawable.star_filled);
+                        container.setFilled(true);
                     }
                 }
             }
@@ -128,7 +131,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         });
     }
 
-    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star) {
+    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star, final RVAdapter.QuizResultContainer container) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -139,10 +142,10 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         }
         String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
         Utilities.firebase.update(path, quizId);
-        this.setStar(quizId, star);
+        this.setStar(quizId, star, container);
     }
 
-    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star) {
+    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, RVAdapter.QuizResultContainer container) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
@@ -152,6 +155,6 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         }
         String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes/" + quizId;
         Utilities.firebase.delete(path);
-        this.setStar(quizId, star);
+        this.setStar(quizId, star, container);
     }
 }

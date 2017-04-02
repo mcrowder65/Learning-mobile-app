@@ -78,14 +78,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
         ImageView star;
         boolean isFilled = false;
 
+        public void setFilled(boolean filled) {
+            isFilled = filled;
+        }
+
         QuizResultContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
             star = (ImageView) itemView.findViewById(R.id.star);
             //TODO figure out if starred or not
-
-            searchResultsActivity.getManipulator().setStar(datas.get(currentDataIndex++).getQuizId(), star);
+            final QuizResultContainer self = this;
+            searchResultsActivity.getManipulator().setStar(datas.get(currentDataIndex++).getQuizId(), star, this);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,11 +101,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.QuizResultContaine
                         if (!isFilled) {
                             searchResultsActivity.makeSnackBar("Quiz saved!");
                             isFilled = true;
-                            searchResultsActivity.getManipulator().addQuizToMySavedQuizzes(quizId, star);
+                            searchResultsActivity.getManipulator().addQuizToMySavedQuizzes(quizId, star, self);
                         } else {
                             searchResultsActivity.makeSnackBar("Quiz not saved now!");
                             isFilled = false;
-                            searchResultsActivity.getManipulator().deleteQuizFromMySavedQuizzes(quizId, star);
+                            searchResultsActivity.getManipulator().deleteQuizFromMySavedQuizzes(quizId, star, self);
                         }
 
                     }
