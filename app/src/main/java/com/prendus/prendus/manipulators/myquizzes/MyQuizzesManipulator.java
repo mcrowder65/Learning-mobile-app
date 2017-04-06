@@ -69,19 +69,29 @@ public class MyQuizzesManipulator implements IPrendusManipulator {
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<MyQuizzesData> quizzes = new ArrayList<>();
+                        try {
+                            List<MyQuizzesData> quizzes = new ArrayList<>();
 
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
 
-                            if (quizIds.indexOf(child.getKey()) != -1) {
-                                Quiz quiz = child.getValue(Quiz.class);
-                                quiz.setId(child.getKey());
-                                quizzes.add(new MyQuizzesData(quiz.getTitle(), quiz.getId()));
+                                if (quizIds.indexOf(child.getKey()) != -1) {
+                                    Quiz quiz = child.getValue(Quiz.class);
+                                    quiz.setId(child.getKey());
+                                    quizzes.add(new MyQuizzesData(quiz.getTitle(), quiz.getId()));
+                                }
+
                             }
-
+                            MyQuizzesRVAdapter adapter = new MyQuizzesRVAdapter(quizzes, myQuizzesActivity);
+                            recyclerView.setAdapter(adapter);
+                            if (quizzes.size() == 0) {
+                                myQuizzesActivity.noQuizzesYetText.setText("You don't have any quizzes saved yet!");
+                            } else {
+                                myQuizzesActivity.noQuizzesYetText.setText("");
+                            }
+                        } catch (Exception e) {
+                            Utilities.log(e);
                         }
-                        MyQuizzesRVAdapter adapter = new MyQuizzesRVAdapter(quizzes, myQuizzesActivity);
-                        recyclerView.setAdapter(adapter);
+
                     }
 
                     @Override
@@ -112,44 +122,7 @@ public class MyQuizzesManipulator implements IPrendusManipulator {
         return myQuizzesActivity;
     }
 
-    /**
-     * This is called when a star is being initialized and decides whether or not to star it!
-     *
-     * @param quizId
-     */
-//    public void setStar(final String quizId, final ImageView star, final MyQuizzesRVAdapter.QuizResultContainer container) {
-//
-//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        final FirebaseAuth auth = FirebaseAuth.getInstance();
-//        if (auth.getCurrentUser() == null) {
-//            star.setImageResource(R.drawable.star_border);
-//            return;
-//        }
-//        String path = "users/" + auth.getCurrentUser().getUid() + "/starredQuizzes";
-//        final MyQuizzesManipulator self = this;
-//        DatabaseReference ref = database.getReference(path);
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//            @Override
-//            public void onCancelled(DatabaseError arg0) {
-//
-//            }
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Map<String, String> quizIds = new HashMap<>();
-//                star.setImageResource(R.drawable.star_border);
-//                for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                    String key = child.getKey();
-//                    if (key.equals(quizId)) {
-//                        star.setImageResource(R.drawable.star_filled);
-//                    }
-//                }
-//                self.manipulate();
-//            }
-//
-//        });
-//    }
+
     public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, MyQuizzesRVAdapter.QuizResultContainer container) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();

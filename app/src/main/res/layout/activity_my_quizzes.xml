@@ -16,6 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/noquizzesyet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="30sp" />
         <!-- Rest of content for the activity -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

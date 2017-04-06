@@ -17,7 +17,7 @@ import com.prendus.prendus.manipulators.myquizzes.MyQuizzesManipulator;
 public class MyQuizzesActivity extends PrendusActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private TextView searchInput;
+    public TextView noQuizzesYetText;
     private MyQuizzesManipulator manipulator;
 
     public MyQuizzesManipulator getManipulator() {
@@ -37,6 +37,7 @@ public class MyQuizzesActivity extends PrendusActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
+        noQuizzesYetText = (TextView) findViewById(R.id.noquizzesyet);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         manipulator = new MyQuizzesManipulator(mRecyclerView, getIntent(), this);
         manipulator.manipulate();
