@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.prendus.prendus.R;
@@ -19,14 +20,16 @@ import com.prendus.prendus.utilities.Utilities;
  */
 
 public class TakeQuizActivity extends PrendusActivity {
-    private Quiz quiz;
-    private TextView quizTitle;
-    private TextView quizQuestion;
-    private EditText answer;
-    private TakeQuizManipulator takeQuizManipulator;
-    private Button nextQuestion;
-    private TextView quizResults;
-    private TextView currentQuestionNumber;
+    public Quiz quiz;
+    public TextView quizTitle;
+    public TextView quizQuestion;
+    public EditText answer;
+    public TakeQuizManipulator takeQuizManipulator;
+    public Button nextQuestion;
+    public TextView quizResults;
+    public TextView currentQuestionNumber;
+    public ImageView thumbUp;
+    public ImageView thumbDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,8 @@ public class TakeQuizActivity extends PrendusActivity {
         quizResults = (TextView) findViewById(R.id.quizResults);
         answer = (EditText) findViewById(R.id.answer);
         currentQuestionNumber = (TextView) findViewById(R.id.currentQuestionNumber);
-        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz, nextQuestion, answer, quizResults, currentQuestionNumber);
+        TakeQuizActivity self = this;
+        takeQuizManipulator = new TakeQuizManipulator(self);
         takeQuizManipulator.manipulate();
     }
 

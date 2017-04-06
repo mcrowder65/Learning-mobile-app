@@ -33,6 +33,21 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <ImageView
+                    android:id="@+id/thumbdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thumb_down"
+                    android:tint="@color/black" />
+
+                <ImageView
+                    android:id="@+id/thumbup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thumb_up"
+                    android:tint="@color/black" />
+
+
                 <TextView
                     android:id="@+id/quizTitle"
                     android:layout_width="match_parent"

@@ -2,14 +2,11 @@ package com.prendus.prendus.manipulators.takequiz;
 
 import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
+import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
-import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.questionresult.QuestionResult;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -29,34 +26,21 @@ import java.util.List;
  */
 
 public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
-    private TextView quizTitle;
-    private TextView quizQuestion;
-    private EditText userQuizAnswer;
-    private Quiz quiz;
     private int currentQuestionIndex;
     private String[] questionIds;
     private GetQuestion asyncQuestionGetter;
-    private Button nextQuestion;
     private Question currentQuestion;
-    private TextView quizResults;
-    private TextView currentQuestionNumber;
     private int numRight;
     private List<QuestionResult> questionResults;
+    private TakeQuizActivity takeQuizActivity;
 
-    public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz,
-                               Button nextQuestion, EditText userQuizAnswer, TextView quizResults, TextView currentQuestionNumber) {
+    public TakeQuizManipulator(TakeQuizActivity takeQuizActivity) {
         try {
-            this.quizTitle = quizTitle;
-            this.quizQuestion = quizQuestion;
-            this.quiz = quiz;
-            this.questionIds = quiz.getQuestionIds();
+            this.takeQuizActivity = takeQuizActivity;
+            this.questionIds = takeQuizActivity.quiz.getQuestionIds();
             this.currentQuestionIndex = 0;
-            this.nextQuestion = nextQuestion;
-            this.userQuizAnswer = userQuizAnswer;
-            this.currentQuestionNumber = currentQuestionNumber;
             numRight = 0;
-            this.quizResults = quizResults;
-            quizResults.setText("");
+            takeQuizActivity.quizResults.setText("");
         } catch (Exception e) {
             Utilities.log(e);
         }
@@ -70,13 +54,13 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     private void setQuestionNumberIndex() {
         int num = currentQuestionIndex == 0 ? 1 : currentQuestionIndex;
-        this.currentQuestionNumber.setText("Question " + num + " out of " + this.questionIds.length);
+        takeQuizActivity.currentQuestionNumber.setText("Question " + num + " out of " + this.questionIds.length);
     }
 
     @Override
     public void manipulate() {
         try {
-            this.quizTitle.setText(this.quiz.getTitle());
+            takeQuizActivity.quizTitle.setText(takeQuizActivity.quiz.getTitle());
             this.setQuestionNumberIndex();
             this.callGetQuestion();
         } catch (Exception e) {
@@ -99,7 +83,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     private void gradeQuestion() {
         try {
-            String userAnswerAsStr = String.valueOf(userQuizAnswer.getText());
+            String userAnswerAsStr = String.valueOf(takeQuizActivity.answer.getText());
 
 
             boolean correct = isQuestionCorrect(userAnswerAsStr);
@@ -126,13 +110,13 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
                 asyncQuestionGetter = new GetQuestion();
                 asyncQuestionGetter.delegate = this;
-                asyncQuestionGetter.execute(quiz.getId(), questionId);
+                asyncQuestionGetter.execute(takeQuizActivity.quiz.getId(), questionId);
                 if (this.currentQuestionIndex == this.questionIds.length) {
                     // call this here because currentQuestionIndex is incremented everytime... and the
                     // first if can never be entered again!
-                    this.nextQuestion.setText("submit");
+                    takeQuizActivity.nextQuestion.setText("submit");
                 }
-                this.userQuizAnswer.setText("");
+                takeQuizActivity.answer.setText("");
             } else {
                 this.gradeQuiz();
             }
@@ -148,8 +132,8 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             double finalGrade = (double) numRight / (double) this.questionIds.length;
             Utilities.log("final grade: " + finalGrade);
             double percentage = finalGrade * 100;
-            quizResults.setText(" You scored: " + percentage + "%");
-            this.nextQuestion.setEnabled(false);
+            takeQuizActivity.quizResults.setText(" You scored: " + percentage + "%");
+            takeQuizActivity.nextQuestion.setEnabled(false);
             //TODO go to quiz results page
         } catch (Exception e) {
             Utilities.log(e);
@@ -161,7 +145,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     public void processFinish(String output) {
         try {
             Question question = Utilities.g.fromJson(output, Question.class);
-            this.quizQuestion.setText(question != null ? question.getQuestion() : "SERVER DOWN!!!");
+            takeQuizActivity.quizQuestion.setText(question != null ? question.getQuestion() : "SERVER DOWN!!!");
             this.currentQuestion = question;
         } catch (Exception e) {
             Utilities.log(e);
