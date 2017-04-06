@@ -19,7 +19,7 @@ public class SearchResultsActivity extends PrendusActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private TextView searchInput;
-
+    public TextView noQuizzesYetText;
     private SearchResultsManipulator manipulator;
 
     public SearchResultsManipulator getManipulator() {
@@ -45,6 +45,7 @@ public class SearchResultsActivity extends PrendusActivity {
             mRecyclerView.setHasFixedSize(true);
             mLinearLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            noQuizzesYetText = (TextView) findViewById(R.id.noquizzesyet);
             manipulator = new SearchResultsManipulator(mRecyclerView, searchInput, getIntent(), this);
             manipulator.manipulate();
         } catch (Exception e) {

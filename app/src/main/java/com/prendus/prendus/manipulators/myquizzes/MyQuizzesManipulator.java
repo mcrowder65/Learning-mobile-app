@@ -77,7 +77,7 @@ public class MyQuizzesManipulator implements IPrendusManipulator {
                                 if (quizIds.indexOf(child.getKey()) != -1) {
                                     Quiz quiz = child.getValue(Quiz.class);
                                     quiz.setId(child.getKey());
-                                    quizzes.add(new MyQuizzesData(quiz.getTitle(), quiz.getId()));
+                                    quizzes.add(new MyQuizzesData(quiz.getTitle(), quiz.getId(), 0, quiz.getTimestamp()));
                                 }
 
                             }
