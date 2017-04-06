@@ -26,6 +26,7 @@
         <activity android:name=".activities.signup.SignupActivity" />
         <activity android:name=".activities.takequiz.TakeQuizActivity" />
         <activity android:name=".activities.searchresults.SearchResultsActivity" />
+        <activity android:name=".activities.quizresults.QuizResultsActivity" />
 
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

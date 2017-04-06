@@ -10,6 +10,7 @@ import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
 import com.prendus.prendus.objects.quiz.Quiz;
+import com.prendus.prendus.questionresult.QuestionResult;
 import com.prendus.prendus.utilities.Utilities;
 
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 /**
  * Created by matt on 3/26/17.
@@ -38,6 +40,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private Question currentQuestion;
     private TextView quizResults;
     private int numRight;
+    private List<QuestionResult> questionResults;
 
     public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz,
                                Button nextQuestion, EditText userQuizAnswer, TextView quizResults) {
@@ -87,12 +90,15 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     private void gradeQuestion() {
         try {
-            //TODO check answer.
             String userAnswerAsStr = String.valueOf(userQuizAnswer.getText());
+
+
             boolean correct = isQuestionCorrect(userAnswerAsStr);
+            QuestionResult questionResult = new QuestionResult(currentQuestion, userAnswerAsStr, correct);
             if (correct) {
                 ++numRight;
             }
+            questionResults.add(questionResult);
         } catch (Exception e) {
             Utilities.log(e);
         }
@@ -135,6 +141,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             double percentage = finalGrade * 100;
             quizResults.setText(" You scored: " + percentage + "%");
             this.nextQuestion.setEnabled(false);
+            //TODO go to quiz results page
         } catch (Exception e) {
             Utilities.log(e);
         }
