@@ -1,7 +1,9 @@
 package com.prendus.prendus.manipulators.takequiz;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
+import android.view.View;
 
 import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.async.AsyncResponse;
@@ -33,14 +35,47 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private int numRight;
     private List<QuestionResult> questionResults;
     private TakeQuizActivity takeQuizActivity;
+    private String currentThumbDownColor = ThumbDownColor.black;
+    private String currentThumbUpColor = ThumbUpColor.black;
 
-    public TakeQuizManipulator(TakeQuizActivity takeQuizActivity) {
+    public TakeQuizManipulator(final TakeQuizActivity takeQuizActivity) {
         try {
             this.takeQuizActivity = takeQuizActivity;
             this.questionIds = takeQuizActivity.quiz.getQuestionIds();
             this.currentQuestionIndex = 0;
             numRight = 0;
             takeQuizActivity.quizResults.setText("");
+
+            takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (currentThumbDownColor == ThumbDownColor.black) {
+                        int color = Color.parseColor(ColorValues.red);
+                        takeQuizActivity.thumbDown.setColorFilter(color);
+                        currentThumbDownColor = ThumbDownColor.red;
+                    } else if (currentThumbDownColor == ThumbDownColor.red) {
+                        int color = Color.parseColor(ColorValues.black);
+                        takeQuizActivity.thumbDown.setColorFilter(color);
+                        currentThumbDownColor = ThumbDownColor.black;
+
+                    }
+                }
+            });
+
+            takeQuizActivity.thumbUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (currentThumbUpColor == ThumbUpColor.black) {
+                        int color = Color.parseColor(ColorValues.green);
+                        takeQuizActivity.thumbUp.setColorFilter(color);
+                        currentThumbUpColor = ThumbUpColor.green;
+                    } else if (currentThumbUpColor == ThumbUpColor.green) {
+                        int color = Color.parseColor(ColorValues.black);
+                        takeQuizActivity.thumbUp.setColorFilter(color);
+                        currentThumbUpColor = ThumbDownColor.black;
+                    }
+                }
+            });
         } catch (Exception e) {
             Utilities.log(e);
         }

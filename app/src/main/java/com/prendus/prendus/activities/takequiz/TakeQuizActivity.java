@@ -52,6 +52,8 @@ public class TakeQuizActivity extends PrendusActivity {
         quizResults = (TextView) findViewById(R.id.quizResults);
         answer = (EditText) findViewById(R.id.answer);
         currentQuestionNumber = (TextView) findViewById(R.id.currentQuestionNumber);
+        thumbUp = (ImageView) findViewById(R.id.thumbup);
+        thumbDown = (ImageView) findViewById(R.id.thumbdown);
         TakeQuizActivity self = this;
         takeQuizManipulator = new TakeQuizManipulator(self);
         takeQuizManipulator.manipulate();
