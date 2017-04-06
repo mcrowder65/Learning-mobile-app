@@ -26,6 +26,7 @@ public class TakeQuizActivity extends PrendusActivity {
     private TakeQuizManipulator takeQuizManipulator;
     private Button nextQuestion;
     private TextView quizResults;
+    private TextView currentQuestionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class TakeQuizActivity extends PrendusActivity {
         nextQuestion = (Button) findViewById(R.id.nextQuestion);
         quizResults = (TextView) findViewById(R.id.quizResults);
         answer = (EditText) findViewById(R.id.answer);
-        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz, nextQuestion, answer, quizResults);
+        currentQuestionNumber = (TextView) findViewById(R.id.currentQuestionNumber);
+        takeQuizManipulator = new TakeQuizManipulator(quizTitle, quizQuestion, quiz, nextQuestion, answer, quizResults, currentQuestionNumber);
         takeQuizManipulator.manipulate();
     }
 

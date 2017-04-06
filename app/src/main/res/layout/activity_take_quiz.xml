@@ -39,6 +39,11 @@
                     android:layout_height="match_parent" />
 
                 <TextView
+                    android:id="@+id/currentQuestionNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
                     android:id="@+id/quizQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

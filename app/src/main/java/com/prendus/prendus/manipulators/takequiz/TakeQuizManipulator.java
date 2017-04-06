@@ -39,11 +39,12 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private Button nextQuestion;
     private Question currentQuestion;
     private TextView quizResults;
+    private TextView currentQuestionNumber;
     private int numRight;
     private List<QuestionResult> questionResults;
 
     public TakeQuizManipulator(TextView quizTitle, TextView quizQuestion, Quiz quiz,
-                               Button nextQuestion, EditText userQuizAnswer, TextView quizResults) {
+                               Button nextQuestion, EditText userQuizAnswer, TextView quizResults, TextView currentQuestionNumber) {
         try {
             this.quizTitle = quizTitle;
             this.quizQuestion = quizQuestion;
@@ -52,6 +53,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             this.currentQuestionIndex = 0;
             this.nextQuestion = nextQuestion;
             this.userQuizAnswer = userQuizAnswer;
+            this.currentQuestionNumber = currentQuestionNumber;
             numRight = 0;
             this.quizResults = quizResults;
             quizResults.setText("");
@@ -66,10 +68,16 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     }
 
+    private void setQuestionNumberIndex() {
+        int num = currentQuestionIndex == 0 ? 1 : currentQuestionIndex;
+        this.currentQuestionNumber.setText("Question " + num + " out of " + this.questionIds.length);
+    }
+
     @Override
     public void manipulate() {
         try {
             this.quizTitle.setText(this.quiz.getTitle());
+            this.setQuestionNumberIndex();
             this.callGetQuestion();
         } catch (Exception e) {
             Utilities.log(e);
@@ -82,6 +90,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
         try {
             this.gradeQuestion();
             this.callGetQuestion();
+            this.setQuestionNumberIndex();
         } catch (Exception e) {
             Utilities.log(e);
         }
