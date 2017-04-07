@@ -45,7 +45,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             this.currentQuestionIndex = 0;
             numRight = 0;
             takeQuizActivity.quizResults.setText("");
-
+            //TODO swap the thumbs
             takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
