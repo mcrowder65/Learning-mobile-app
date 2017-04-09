@@ -18,9 +18,11 @@ import com.prendus.prendus.constants.MenuOptions;
 import com.prendus.prendus.firebase.Firebase;
 import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.objects.quiz.Quiz;
+import com.prendus.prendus.questionresult.QuestionResult;
 
 import org.jsoup.Jsoup;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -100,6 +102,14 @@ public class Utilities {
     public static void goToActivity(Class newActivity, Activity activity, Quiz quiz) {
         Intent i = new Intent(activity.getApplicationContext(), newActivity);
         i.putExtra(IntentExtras.QUIZ_AS_JSON, quiz.toJson());
+        activity.startActivity(i);
+    }
+
+    public static void goToActivity(Class newActivity, Activity activity, double finalGrade, List<QuestionResult> questionResults) {
+        Intent i = new Intent(activity.getApplicationContext(), newActivity);
+
+        i.putExtra(IntentExtras.FINAL_GRADE, finalGrade);
+        i.putExtra(IntentExtras.QUIZ_RESULTS_LIST, g.toJson(questionResults));
         activity.startActivity(i);
     }
 

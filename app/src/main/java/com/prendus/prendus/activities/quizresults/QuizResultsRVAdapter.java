@@ -1,0 +1,61 @@
+package com.prendus.prendus.activities.quizresults;
+
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.prendus.prendus.R;
+
+/**
+ * Created by mcrowder65 on 4/9/17.
+ */
+
+public class QuizResultsRVAdapter extends RecyclerView.Adapter<QuizResultsRVAdapter.QuizResultsContainer> {
+
+    @Override
+    public QuizResultsContainer onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_quiz_results, viewGroup, false);
+        QuizResultsContainer quizResultsContainer = new QuizResultsContainer(viewGroup);
+        return quizResultsContainer;
+
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onBindViewHolder(QuizResultsContainer holder, int position) {
+        //TODO implement me
+    }
+
+    @Override
+    public int getItemCount() {
+        //TODO implement me
+        return 0;
+    }
+
+    public class QuizResultsContainer extends RecyclerView.ViewHolder {
+        private CardView cv;
+        private ImageView icon;
+        private TextView question;
+        private TextView yourAnswer;
+        private TextView correctAnswer;
+
+        public QuizResultsContainer(View itemView) {
+            super(itemView);
+            cv = (CardView) itemView.findViewById(R.id.cv);
+            icon = (ImageView) itemView.findViewById(R.id.icon);
+            question = (TextView) itemView.findViewById(R.id.questionText);
+            yourAnswer = (TextView) itemView.findViewById(R.id.yourAnswer);
+            correctAnswer = (TextView) itemView.findViewById(R.id.correctAnswer);
+
+
+        }
+    }
+}

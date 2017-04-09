@@ -123,7 +123,7 @@ public class MyQuizzesManipulator implements IPrendusManipulator {
     }
 
 
-    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, MyQuizzesRVAdapter.QuizResultContainer container) {
+    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, MyQuizzesRVAdapter.MyQuizzesContainer container) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {

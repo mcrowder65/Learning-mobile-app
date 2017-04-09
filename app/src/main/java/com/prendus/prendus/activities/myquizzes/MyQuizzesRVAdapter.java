@@ -23,12 +23,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.QuizResultContainer> {
+public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.MyQuizzesContainer> {
 
     @Override
-    public QuizResultContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public MyQuizzesContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_my_quizzes, viewGroup, false);
-        QuizResultContainer qvc = new QuizResultContainer(v);
+        MyQuizzesContainer qvc = new MyQuizzesContainer(v);
         return qvc;
     }
 
@@ -38,7 +38,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
     }
 
     @Override
-    public void onBindViewHolder(QuizResultContainer personViewHolder, int i) {
+    public void onBindViewHolder(MyQuizzesContainer personViewHolder, int i) {
         personViewHolder.quizTitle.setText(myQuizzesDatas.get(i).getName());
         personViewHolder.quizId = myQuizzesDatas.get(i).getQuizId();
         personViewHolder.score.setText("score: " + myQuizzesDatas.get(i).getScore());
@@ -70,7 +70,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
         return (int) timeElapsed / (int) millisecondsInDay;
     }
 
-    public class QuizResultContainer extends RecyclerView.ViewHolder {
+    public class MyQuizzesContainer extends RecyclerView.ViewHolder {
         CardView cv;
         TextView quizTitle;
         String quizId;
@@ -78,7 +78,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
         TextView score;
         TextView daysAgoMage;
 
-        QuizResultContainer(View itemView) {
+        MyQuizzesContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
@@ -86,7 +86,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
             score = (TextView) itemView.findViewById(R.id.score);
             daysAgoMage = (TextView) itemView.findViewById(R.id.daysAgoMade);
 
-            final QuizResultContainer self = this;
+            final MyQuizzesContainer self = this;
             star.setImageResource(R.drawable.star_filled);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override

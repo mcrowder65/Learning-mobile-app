@@ -108,7 +108,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
      * @param quizId
      */
 
-    public void setStar(final String quizId, final ImageView star, final SearchResultsRVAdapter.QuizResultContainer container) {
+    public void setStar(final String quizId, final ImageView star, final SearchResultsRVAdapter.SearchResultsContainer container) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -144,7 +144,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         });
     }
 
-    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star, final SearchResultsRVAdapter.QuizResultContainer container, PrendusActivity activity) {
+    public void addQuizToMySavedQuizzes(final String quizId, final ImageView star, final SearchResultsRVAdapter.SearchResultsContainer container, PrendusActivity activity) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -158,7 +158,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         setStar(quizId, star, container);
     }
 
-    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, SearchResultsRVAdapter.QuizResultContainer container, PrendusActivity activity) {
+    public void deleteQuizFromMySavedQuizzes(final String quizId, final ImageView star, SearchResultsRVAdapter.SearchResultsContainer container, PrendusActivity activity) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {

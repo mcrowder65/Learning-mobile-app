@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
 import android.view.View;
 
+import com.prendus.prendus.activities.quizresults.QuizResultsActivity;
 import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
@@ -21,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -126,6 +128,9 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             if (correct) {
                 ++numRight;
             }
+            if (questionResults == null) {
+                questionResults = new ArrayList<>();
+            }
             questionResults.add(questionResult);
         } catch (Exception e) {
             Utilities.log(e);
@@ -170,6 +175,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             takeQuizActivity.quizResults.setText(" You scored: " + percentage + "%");
             takeQuizActivity.nextQuestion.setEnabled(false);
             //TODO go to quiz results page
+            Utilities.goToActivity(QuizResultsActivity.class, takeQuizActivity, finalGrade, questionResults);
         } catch (Exception e) {
             Utilities.log(e);
         }

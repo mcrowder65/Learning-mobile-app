@@ -38,12 +38,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRVAdapter.QuizResultContainer> {
+public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRVAdapter.SearchResultsContainer> {
 
     @Override
-    public QuizResultContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public SearchResultsContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_search_results, viewGroup, false);
-        QuizResultContainer qvc = new QuizResultContainer(v);
+        SearchResultsContainer qvc = new SearchResultsContainer(v);
         return qvc;
     }
 
@@ -53,7 +53,7 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
     }
 
     @Override
-    public void onBindViewHolder(QuizResultContainer personViewHolder, int i) {
+    public void onBindViewHolder(SearchResultsContainer personViewHolder, int i) {
         personViewHolder.quizTitle.setText(searchResultsDatas.get(i).getName());
         personViewHolder.quizId = searchResultsDatas.get(i).getQuizId();
         personViewHolder.score.setText("score: " + searchResultsDatas.get(i).getScore());
@@ -86,7 +86,7 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
     }
 
 
-    public class QuizResultContainer extends RecyclerView.ViewHolder {
+    public class SearchResultsContainer extends RecyclerView.ViewHolder {
         CardView cv;
         TextView quizTitle;
         TextView score;
@@ -99,14 +99,14 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
             isFilled = filled;
         }
 
-        QuizResultContainer(View itemView) {
+        SearchResultsContainer(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             quizTitle = (TextView) itemView.findViewById(R.id.quiz_title);
             star = (ImageView) itemView.findViewById(R.id.star);
             score = (TextView) itemView.findViewById(R.id.score);
             daysAgoMade = (TextView) itemView.findViewById(R.id.daysAgoMade);
-            final QuizResultContainer self = this;
+            final SearchResultsContainer self = this;
             searchResultsActivity.getManipulator().setStar(searchResultsDatas.get(currentDataIndex++).getQuizId(), star, this);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
