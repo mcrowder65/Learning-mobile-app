@@ -5,6 +5,11 @@ import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.prendus.prendus.activities.quizresults.QuizResultsActivity;
 import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.async.AsyncResponse;
@@ -49,7 +54,6 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             final TakeQuizManipulator self = this;
             takeQuizActivity.quizResults.setText("");
             takeQuizActivity.quizScore.setText(String.valueOf(takeQuizActivity.quiz.getScore()));
-            //TODO swap the thumbs
             takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,9 +100,53 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                     }
                 }
             });
+            determineThumbColor();
         } catch (Exception e) {
             Utilities.log(e);
         }
+
+    }
+
+    private void determineThumbColor() {
+        final TakeQuizManipulator self = this;
+        String path = "upvotes/" + takeQuizActivity.quiz.getId() + "/" + Utilities.getCurrentUid();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference(path);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    self.currentThumbUpColor = ThumbUpColor.green;
+                    self.currentThumbDownColor = ThumbDownColor.black;
+                    takeQuizActivity.thumbUp.setColorFilter(Color.parseColor(ColorValues.green));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        path = "downvotes/" + takeQuizActivity.quiz.getId() + "/" + Utilities.getCurrentUid();
+        final FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+        DatabaseReference ref2 = database2.getReference(path);
+        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    self.currentThumbUpColor = ThumbUpColor.black;
+                    self.currentThumbDownColor = ThumbDownColor.red;
+                    takeQuizActivity.thumbDown.setColorFilter(Color.parseColor(ColorValues.red));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

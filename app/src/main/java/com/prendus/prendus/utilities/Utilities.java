@@ -172,6 +172,15 @@ public class Utilities {
         }
     }
 
+    public static String getCurrentUid() {
+        String uid = null;
+        try {
+            uid = getAuth().getCurrentUser().getUid();
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+        return uid;
+    }
 
     public static String buildParametersForServer(Map<String, String> parameters) {
         StringBuilder params = new StringBuilder();
