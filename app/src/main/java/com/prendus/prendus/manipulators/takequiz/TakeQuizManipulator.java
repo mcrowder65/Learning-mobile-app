@@ -10,6 +10,7 @@ import com.prendus.prendus.activities.takequiz.TakeQuizActivity;
 import com.prendus.prendus.async.AsyncResponse;
 import com.prendus.prendus.manipulators.IPrendusManipulator;
 import com.prendus.prendus.objects.question.Question;
+import com.prendus.prendus.objects.quiz.Quiz;
 import com.prendus.prendus.questionresult.QuestionResult;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -47,6 +48,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             numRight = 0;
             final TakeQuizManipulator self = this;
             takeQuizActivity.quizResults.setText("");
+            takeQuizActivity.quizScore.setText(String.valueOf(takeQuizActivity.quiz.getScore()));
             //TODO swap the thumbs
             takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,11 +103,18 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     }
 
     public void upvote() {
-        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+        Quiz quiz = takeQuizActivity.quiz;
+        quiz.upvote();
+        Utilities.firebase.update("quizzes/" + quiz.getId(), quiz);
+        takeQuizActivity.quizScore.setText(String.valueOf(quiz.getScore()));
+
     }
 
     public void downvote() {
-        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+        Quiz quiz = takeQuizActivity.quiz;
+        quiz.downvote();
+        Utilities.firebase.update("quizzes/" + quiz.getId(), quiz);
+        takeQuizActivity.quizScore.setText(String.valueOf(quiz.getScore()));
     }
 
     private void setQuestionNumberIndex() {

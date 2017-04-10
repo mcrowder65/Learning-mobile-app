@@ -31,7 +31,6 @@ public class TakeQuizActivity extends PrendusActivity {
     public ImageView thumbUp;
     public ImageView thumbDown;
     public TextView quizScore;
-    public int quizScoreAsNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

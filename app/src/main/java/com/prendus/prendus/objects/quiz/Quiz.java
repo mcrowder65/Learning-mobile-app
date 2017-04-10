@@ -15,8 +15,38 @@ public class Quiz extends PrendusObject {
     private String visibility;
     private Map<String, Boolean> quizQuestionSettings;
     private Map<String, Map<String, Map<String, Boolean>>> questions;
+    private int score;
 
     public Quiz() {
+    }
+
+    public Quiz(String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions, int score) {
+        this.title = title;
+        this.uid = uid;
+        this.visibility = visibility;
+        this.quizQuestionSettings = quizQuestionSettings;
+        this.questions = questions;
+        this.score = score;
+    }
+
+    public Quiz(long timestamp, String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions, int score) {
+        super(timestamp);
+        this.title = title;
+        this.uid = uid;
+        this.visibility = visibility;
+        this.quizQuestionSettings = quizQuestionSettings;
+        this.questions = questions;
+        this.score = score;
+    }
+
+    public Quiz(long timestamp, String id, String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions, int score) {
+        super(timestamp, id);
+        this.title = title;
+        this.uid = uid;
+        this.visibility = visibility;
+        this.quizQuestionSettings = quizQuestionSettings;
+        this.questions = questions;
+        this.score = score;
     }
 
     public Quiz(String title, String uid, String visibility, Map<String, Boolean> quizQuestionSettings, Map<String, Map<String, Map<String, Boolean>>> questions) {
@@ -43,6 +73,14 @@ public class Quiz extends PrendusObject {
         this.visibility = visibility;
         this.quizQuestionSettings = quizQuestionSettings;
         this.questions = questions;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public String getTitle() {
@@ -92,4 +130,13 @@ public class Quiz extends PrendusObject {
     public String[] getQuestionIds() {
         return questions.keySet().toArray(new String[questions.keySet().size()]);
     }
+
+    public void upvote() {
+        score++;
+    }
+
+    public void downvote() {
+        score--;
+    }
 }
+
