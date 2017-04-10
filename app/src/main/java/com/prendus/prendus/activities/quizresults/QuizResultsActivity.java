@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
 import com.prendus.prendus.manipulators.quizresults.QuizResultsManipulator;
 import com.prendus.prendus.questionresult.QuestionResult;
-import com.prendus.prendus.utilities.Utilities;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ import java.util.List;
 
 public class QuizResultsActivity extends PrendusActivity {
     private List<QuestionResult> questionResults;
-    private double finalGrade;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
+    private TextView finalGrade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,20 @@ public class QuizResultsActivity extends PrendusActivity {
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        if (finalGrade == -1) {
-            Utilities.log("something is going terribly wrong in the quiz results activity");
-        }
         QuizResultsManipulator manipulator = new QuizResultsManipulator(this);
         manipulator.manipulate();
 
     }
 
+    public void setFinalGrade(double grade) {
+        if (finalGrade == null) {
+            finalGrade = (TextView) findViewById(R.id.quizscore);
+        }
+        double percentage = grade * 100;
+        finalGrade.setText("Final score: " + String.valueOf(percentage) + "%");
+    }
+
+    public void setAdapter(QuizResultsRVAdapter adapter) {
+        mRecyclerView.setAdapter(adapter);
+    }
 }

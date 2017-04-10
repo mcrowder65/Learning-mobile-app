@@ -5,6 +5,5 @@ package com.prendus.prendus.manipulators;
  */
 
 public interface IPrendusManipulator {
-    public void update();
     public void manipulate();
 }

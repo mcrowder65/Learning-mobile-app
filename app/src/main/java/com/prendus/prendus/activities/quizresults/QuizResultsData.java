@@ -8,13 +8,21 @@ public class QuizResultsData {
     private String question;
     private String yourAnswer;
     private String correctAnswer;
-    private String iconSrc;
+    private boolean isCorrect;
 
-    public QuizResultsData(String question, String yourAnswer, String correctAnswer, String iconSrc) {
+    public QuizResultsData(String question, String yourAnswer, String correctAnswer, boolean isCorrect) {
         this.question = question;
         this.yourAnswer = yourAnswer;
         this.correctAnswer = correctAnswer;
-        this.iconSrc = iconSrc;
+        this.isCorrect = isCorrect;
+    }
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
     }
 
     public String getQuestion() {
@@ -41,11 +49,4 @@ public class QuizResultsData {
         this.correctAnswer = correctAnswer;
     }
 
-    public String getIconSrc() {
-        return iconSrc;
-    }
-
-    public void setIconSrc(String iconSrc) {
-        this.iconSrc = iconSrc;
-    }
 }

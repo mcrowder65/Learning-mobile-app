@@ -1,5 +1,6 @@
 package com.prendus.prendus.objects.question;
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.prendus.prendus.objects.PrendusObject;
 import com.prendus.prendus.utilities.Utilities;
 
@@ -18,6 +19,19 @@ public class Question extends PrendusObject {
     private String previewQuestionId;
 
     public Question() {
+    }
+
+    public Question(LinkedTreeMap map) {
+        code = (String) map.get("code");
+        text = (String) map.get("text");
+        uid = (String) map.get("uid");
+        visibility = (String) map.get("visibility");
+        discipline = (String) map.get("discipline");
+        concept = (String) map.get("concept");
+        subject = (String) map.get("subject");
+        previewQuestionId = (String) map.get("previewQuestionId");
+        cleanedAnswer = true;
+        strippedHtml = true;
     }
 
     public Question(String code, String text, String uid, String visibility, String discipline, String concept, String subject, String previewQuestionId) {
@@ -58,9 +72,7 @@ public class Question extends PrendusObject {
     private boolean cleanedAnswer = false;
 
     public String getCode() {
-        //TODO parse answer out
         if (!cleanedAnswer) {
-            //TODO clean answer
             setCode(Utilities.stripEverything(this.code));
             int index = "answer = '".length();
             this.code = this.code.substring(index);

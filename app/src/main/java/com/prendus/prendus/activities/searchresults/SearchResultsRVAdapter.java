@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRVAdapter.SearchResultsContainer> {
+    List<SearchResultsData> searchResultsDatas;
+    int currentDataIndex = 0;
+    SearchResultsActivity searchResultsActivity;
 
     @Override
     public SearchResultsContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -53,14 +56,14 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
     }
 
     @Override
-    public void onBindViewHolder(SearchResultsContainer personViewHolder, int i) {
-        personViewHolder.quizTitle.setText(searchResultsDatas.get(i).getName());
-        personViewHolder.quizId = searchResultsDatas.get(i).getQuizId();
-        personViewHolder.score.setText("score: " + searchResultsDatas.get(i).getScore());
+    public void onBindViewHolder(SearchResultsContainer searchResultsContainer, int i) {
+        searchResultsContainer.quizTitle.setText(searchResultsDatas.get(i).getName());
+        searchResultsContainer.quizId = searchResultsDatas.get(i).getQuizId();
+        searchResultsContainer.score.setText("score: " + searchResultsDatas.get(i).getScore());
         Calendar calendar = searchResultsDatas.get(i).getDate();
         long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
         int days = getNumberOfDays(timeElapsed);
-        personViewHolder.daysAgoMade.setText(String.valueOf(days) + " days old");
+        searchResultsContainer.daysAgoMade.setText(String.valueOf(days) + " days old");
     }
 
     private int getNumberOfDays(long timeElapsed) {
@@ -76,12 +79,9 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
         return searchResultsDatas.size();
     }
 
-    List<SearchResultsData> searchResultsDatas;
-    int currentDataIndex = 0;
-    SearchResultsActivity searchResultsActivity;
 
-    public SearchResultsRVAdapter(List<SearchResultsData> persons, SearchResultsActivity activity) {
-        this.searchResultsDatas = persons;
+    public SearchResultsRVAdapter(List<SearchResultsData> searchResultsDatas, SearchResultsActivity activity) {
+        this.searchResultsDatas = searchResultsDatas;
         this.searchResultsActivity = activity;
     }
 

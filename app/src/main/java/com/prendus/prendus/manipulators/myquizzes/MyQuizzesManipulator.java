@@ -32,10 +32,6 @@ public class MyQuizzesManipulator implements IPrendusManipulator {
     private MyQuizzesActivity myQuizzesActivity;
     private MyQuizzesManipulator self;
 
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public void manipulate() {

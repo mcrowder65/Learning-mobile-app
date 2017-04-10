@@ -48,10 +48,6 @@ public class SearchResultsManipulator implements IPrendusManipulator {
         searchResultsActivity.makeSnackBar(message);
     }
 
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public void manipulate() {

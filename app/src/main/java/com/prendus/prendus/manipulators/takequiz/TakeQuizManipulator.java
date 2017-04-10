@@ -84,10 +84,6 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     }
 
-    @Override
-    public void update() {
-
-    }
 
     private void setQuestionNumberIndex() {
         int num = currentQuestionIndex == 0 ? 1 : currentQuestionIndex;
@@ -170,7 +166,6 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private void gradeQuiz() {
         try {
             double finalGrade = (double) numRight / (double) this.questionIds.length;
-            Utilities.log("final grade: " + finalGrade);
             double percentage = finalGrade * 100;
             takeQuizActivity.quizResults.setText(" You scored: " + percentage + "%");
             takeQuizActivity.nextQuestion.setEnabled(false);
