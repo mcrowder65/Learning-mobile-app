@@ -22,6 +22,12 @@ public class Firebase {
         ref.setValue(obj);
     }
 
+    public void update(String path, double dub) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference(path);
+        ref.setValue(dub);
+    }
+
     public void update(String path, String str) {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

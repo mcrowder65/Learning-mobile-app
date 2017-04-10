@@ -159,9 +159,16 @@ public class Utilities {
         }
     }
 
+    public static void log(StackTraceElement elem) {
+        Log.wtf(Constants.TAG, elem.toString());
+    }
+
     public static void log(Exception e) {
         if (e != null) {
             log(e.toString());
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                log(e.getStackTrace()[i]);
+            }
         }
     }
 

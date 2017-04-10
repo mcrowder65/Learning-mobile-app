@@ -68,14 +68,14 @@ public class SearchResultsManipulator implements IPrendusManipulator {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<SearchResultsData> quizzes = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Quiz obj = child.getValue(Quiz.class);
-                    if (obj.getQuestions() != null) {
-                        obj.setId(child.getKey());
+                    Quiz quiz = child.getValue(Quiz.class);
+                    if (quiz.getQuestions() != null) {
+                        quiz.setId(child.getKey());
                         String lowerCaseSearch = Utilities.stripEverything(String.valueOf(searchInput.getText()));
 
-                        String lowerCaseTitle = Utilities.stripEverything(obj.getTitle());
+                        String lowerCaseTitle = Utilities.stripEverything(quiz.getTitle());
                         if (lowerCaseTitle.contains(lowerCaseSearch)) {
-                            quizzes.add(new SearchResultsData(obj.getTitle(), obj.getId(), 0, obj.getTimestamp()));
+                            quizzes.add(new SearchResultsData(quiz.getTitle(), quiz.getId(), quiz.getScore(), quiz.getTimestamp()));
                         }
 
                     }
