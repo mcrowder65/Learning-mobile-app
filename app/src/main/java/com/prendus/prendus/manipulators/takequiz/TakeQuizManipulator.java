@@ -45,6 +45,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             this.questionIds = takeQuizActivity.quiz.getQuestionIds();
             this.currentQuestionIndex = 0;
             numRight = 0;
+            final TakeQuizManipulator self = this;
             takeQuizActivity.quizResults.setText("");
             //TODO swap the thumbs
             takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
@@ -55,16 +56,17 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                         takeQuizActivity.thumbDown.setColorFilter(color);
                         currentThumbDownColor = ThumbDownColor.red;
                         if (currentThumbUpColor == ThumbUpColor.green) {
-                            takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+                            self.downvote();
+
                         }
                         currentThumbUpColor = ThumbUpColor.black;
                         takeQuizActivity.thumbUp.setColorFilter(Color.parseColor(ColorValues.black));
-                        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+                        self.downvote();
                     } else if (currentThumbDownColor == ThumbDownColor.red) {
                         int color = Color.parseColor(ColorValues.black);
                         takeQuizActivity.thumbDown.setColorFilter(color);
                         currentThumbDownColor = ThumbDownColor.black;
-                        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+                        self.upvote();
 
                     }
                 }
@@ -79,17 +81,16 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                         takeQuizActivity.thumbUp.setColorFilter(color);
                         currentThumbUpColor = ThumbUpColor.green;
                         if (currentThumbDownColor == ThumbDownColor.red) {
-                            takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+                            self.upvote();
                         }
                         currentThumbDownColor = ThumbDownColor.black;
                         takeQuizActivity.thumbDown.setColorFilter(Color.parseColor(ColorValues.black));
-
-                        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+                        self.upvote();
                     } else if (currentThumbUpColor == ThumbUpColor.green) {
                         int color = Color.parseColor(ColorValues.black);
                         takeQuizActivity.thumbUp.setColorFilter(color);
                         currentThumbUpColor = ThumbDownColor.black;
-                        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+                        self.downvote();
                     }
                 }
             });
@@ -99,6 +100,13 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     }
 
+    public void upvote() {
+        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+    }
+
+    public void downvote() {
+        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+    }
 
     private void setQuestionNumberIndex() {
         int num = currentQuestionIndex == 0 ? 1 : currentQuestionIndex;
