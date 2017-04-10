@@ -40,6 +40,11 @@
                     android:src="@drawable/thumb_down"
                     android:tint="@color/black" />
 
+                <TextView
+                    android:id="@+id/quizScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
                 <ImageView
                     android:id="@+id/thumbup"
                     android:layout_width="match_parent"

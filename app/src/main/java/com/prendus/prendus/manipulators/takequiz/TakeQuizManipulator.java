@@ -17,7 +17,6 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,10 +54,17 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
                         int color = Color.parseColor(ColorValues.red);
                         takeQuizActivity.thumbDown.setColorFilter(color);
                         currentThumbDownColor = ThumbDownColor.red;
+                        if (currentThumbUpColor == ThumbUpColor.green) {
+                            takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
+                        }
+                        currentThumbUpColor = ThumbUpColor.black;
+                        takeQuizActivity.thumbUp.setColorFilter(Color.parseColor(ColorValues.black));
+                        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
                     } else if (currentThumbDownColor == ThumbDownColor.red) {
                         int color = Color.parseColor(ColorValues.black);
                         takeQuizActivity.thumbDown.setColorFilter(color);
                         currentThumbDownColor = ThumbDownColor.black;
+                        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
 
                     }
                 }
@@ -67,14 +73,23 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             takeQuizActivity.thumbUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (currentThumbUpColor == ThumbUpColor.black) {
                         int color = Color.parseColor(ColorValues.green);
                         takeQuizActivity.thumbUp.setColorFilter(color);
                         currentThumbUpColor = ThumbUpColor.green;
+                        if (currentThumbDownColor == ThumbDownColor.red) {
+                            takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
+                        }
+                        currentThumbDownColor = ThumbDownColor.black;
+                        takeQuizActivity.thumbDown.setColorFilter(Color.parseColor(ColorValues.black));
+
+                        takeQuizActivity.quizScore.setText(String.valueOf(++takeQuizActivity.quizScoreAsNum));
                     } else if (currentThumbUpColor == ThumbUpColor.green) {
                         int color = Color.parseColor(ColorValues.black);
                         takeQuizActivity.thumbUp.setColorFilter(color);
                         currentThumbUpColor = ThumbDownColor.black;
+                        takeQuizActivity.quizScore.setText(String.valueOf(--takeQuizActivity.quizScoreAsNum));
                     }
                 }
             });
@@ -194,14 +209,12 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
         @Override
         protected String doInBackground(String... strings) {
-            String quizId = strings[0];
             String questionId = strings[1];
             // Create data variable for sent values to server
             URLConnection conn = null;
             BufferedReader reader = null;
             String text = null;
             OutputStreamWriter wr = null;
-            OutputStream os = null;
             // Send data
             Question question = null;
             try {

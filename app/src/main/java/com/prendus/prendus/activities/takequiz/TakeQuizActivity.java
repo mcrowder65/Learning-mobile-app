@@ -30,6 +30,8 @@ public class TakeQuizActivity extends PrendusActivity {
     public TextView currentQuestionNumber;
     public ImageView thumbUp;
     public ImageView thumbDown;
+    public TextView quizScore;
+    public int quizScoreAsNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class TakeQuizActivity extends PrendusActivity {
         currentQuestionNumber = (TextView) findViewById(R.id.currentQuestionNumber);
         thumbUp = (ImageView) findViewById(R.id.thumbup);
         thumbDown = (ImageView) findViewById(R.id.thumbdown);
+        quizScore = (TextView) findViewById(R.id.quizScore);
         TakeQuizActivity self = this;
         takeQuizManipulator = new TakeQuizManipulator(self);
         takeQuizManipulator.manipulate();
