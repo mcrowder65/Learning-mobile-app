@@ -107,6 +107,11 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
         Quiz quiz = takeQuizActivity.quiz;
         quiz.upvote();
         vote(quiz);
+        Utilities.firebase.update("upvotes/" + quiz.getId() + "/" +
+                        Utilities.getAuth().getCurrentUser().getUid(),
+                Utilities.getAuth().getCurrentUser().getUid());
+        Utilities.firebase.delete("downvotes/" + quiz.getId()
+                + "/" + Utilities.getAuth().getCurrentUser().getUid());
 
     }
 
@@ -114,6 +119,11 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
         Quiz quiz = takeQuizActivity.quiz;
         quiz.downvote();
         vote(quiz);
+        Utilities.firebase.update("downvotes/" + quiz.getId() + "/" +
+                        Utilities.getAuth().getCurrentUser().getUid(),
+                Utilities.getAuth().getCurrentUser().getUid());
+        Utilities.firebase.delete("upvotes/" + quiz.getId()
+                + "/" + Utilities.getAuth().getCurrentUser().getUid());
     }
 
     private void vote(Quiz quiz) {
