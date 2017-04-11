@@ -52,7 +52,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     @Override
     public void manipulate() {
         String s = intent.getStringExtra(IntentExtras.SEARCH_INPUT);
-        searchInput.setText(s);
+        searchInput.setText("Your search: " + s);
         String path = "quizzes";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(path);
@@ -84,7 +84,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
                 SearchResultsRVAdapter adapter = new SearchResultsRVAdapter(quizzes, searchResultsActivity);
                 recyclerView.setAdapter(adapter);
                 if (quizzes.size() == 0) {
-                    searchResultsActivity.noQuizzesYetText.setText("You don't have any quizzes saved yet!");
+                    searchResultsActivity.noQuizzesYetText.setText("No quizzes match this search");
                 } else {
                     searchResultsActivity.noQuizzesYetText.setText("");
                 }

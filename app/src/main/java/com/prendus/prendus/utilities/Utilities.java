@@ -209,6 +209,10 @@ public class Utilities {
         }
 
         String newString = new String(str);
+        if (newString.indexOf("Your search: ") > -1) {
+            newString = newString.substring("Your index: ".length());
+        }
+
         newString = newString.toLowerCase();
         newString = newString.trim();
         return newString;
