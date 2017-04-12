@@ -27,7 +27,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
 
     @Override
     public MyQuizzesContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.quiz_card, viewGroup, false);
         MyQuizzesContainer qvc = new MyQuizzesContainer(v);
         return qvc;
     }

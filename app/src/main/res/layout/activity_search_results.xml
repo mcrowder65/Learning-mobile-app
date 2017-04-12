@@ -16,11 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--android:orientation="horizontal">-->
 
         <TextView
             android:id="@+id/userSearchInput"
@@ -29,13 +24,6 @@
             android:layout_alignParentTop="true"
             android:textSize="30sp" />
 
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="0px"-->
-        <!--android:layout_weight="1"-->
-        <!--android:onClick="showFilter"-->
-        <!--android:src="@drawable/filter" />-->
-        <!--</LinearLayout>-->
 
         <TextView
             android:id="@+id/noquizzesyet"
@@ -50,7 +38,7 @@
             android:layout_height="match_parent" />
 
         <include
-            layout="@layout/card"
+            layout="@layout/quiz_card"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
     </LinearLayout>

@@ -24,7 +24,7 @@ public class QuizResultsRVAdapter extends RecyclerView.Adapter<QuizResultsRVAdap
 
     @Override
     public QuizResultsContainer onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_quiz_results, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.quiz_result_card, viewGroup, false);
         QuizResultsContainer quizResultsContainer = new QuizResultsContainer(v);
         return quizResultsContainer;
 
