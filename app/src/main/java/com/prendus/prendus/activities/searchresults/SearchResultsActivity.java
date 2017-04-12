@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.prendus.prendus.R;
@@ -53,6 +54,11 @@ public class SearchResultsActivity extends PrendusActivity {
         }
 
 
+    }
+
+    public void showFilter(View view) {
+//        DialogFragment frag = new FilterDialogFragment();
+//        frag.show(getFragmentManager(), "tag daddy");
     }
 
 }

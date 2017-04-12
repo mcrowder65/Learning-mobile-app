@@ -29,11 +29,12 @@
             android:layout_alignParentTop="true"
             android:textSize="30sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:src="@drawable/filter" />
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0px"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="showFilter"-->
+        <!--android:src="@drawable/filter" />-->
         <!--</LinearLayout>-->
 
         <TextView
