@@ -3,10 +3,13 @@ package com.prendus.prendus.activities.takequiz;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.prendus.prendus.R;
 import com.prendus.prendus.activities.PrendusActivity;
@@ -31,6 +34,8 @@ public class TakeQuizActivity extends PrendusActivity {
     public ImageView thumbUp;
     public ImageView thumbDown;
     public TextView quizScore;
+    public ViewAnimator simpleViewAnimator;
+    Animation slide_in_left, slide_out_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +64,18 @@ public class TakeQuizActivity extends PrendusActivity {
         TakeQuizActivity self = this;
         takeQuizManipulator = new TakeQuizManipulator(self);
         takeQuizManipulator.manipulate();
+        simpleViewAnimator = (ViewAnimator) findViewById(R.id.simpleViewAnimator); //get the reference of ViewAnimator
+
+        slide_in_left = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        slide_out_right = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+
+        simpleViewAnimator.setInAnimation(slide_out_right);
+        simpleViewAnimator.setOutAnimation(slide_out_right);
     }
 
     public void nextQuestionClicked(View view) {
 
+        simpleViewAnimator.showNext();
         takeQuizManipulator.nextQuestion();
     }
 
