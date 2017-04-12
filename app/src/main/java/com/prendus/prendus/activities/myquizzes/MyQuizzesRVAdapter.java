@@ -44,7 +44,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
         personViewHolder.score.setText("score: " + myQuizzesDatas.get(i).getScore());
         Calendar calendar = myQuizzesDatas.get(i).getDate();
         long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
-        int days = getNumberOfDays(timeElapsed);
+        long days = getNumberOfDays(timeElapsed);
         personViewHolder.daysAgoMage.setText(String.valueOf(days) + " days old");
     }
 
@@ -62,12 +62,12 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
         this.myQuizzesActivity = activity;
     }
 
-    private int getNumberOfDays(long timeElapsed) {
+    private long getNumberOfDays(long timeElapsed) {
         long millisecondsInSecond = 1000;
         long millisecondsInMinute = millisecondsInSecond * 60;
         long millisecondsInHour = millisecondsInMinute * 60;
         long millisecondsInDay = millisecondsInHour * 24;
-        return (int) timeElapsed / (int) millisecondsInDay;
+        return (long) timeElapsed / (long) millisecondsInDay;
     }
 
     public class MyQuizzesContainer extends RecyclerView.ViewHolder {

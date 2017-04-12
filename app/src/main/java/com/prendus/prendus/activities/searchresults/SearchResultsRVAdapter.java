@@ -62,16 +62,17 @@ public class SearchResultsRVAdapter extends RecyclerView.Adapter<SearchResultsRV
         searchResultsContainer.score.setText("score: " + searchResultsDatas.get(i).getScore());
         Calendar calendar = searchResultsDatas.get(i).getDate();
         long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
-        int days = getNumberOfDays(timeElapsed);
+        long days = getNumberOfDays(timeElapsed);
         searchResultsContainer.daysAgoMade.setText(String.valueOf(days) + " days old");
     }
 
-    private int getNumberOfDays(long timeElapsed) {
+    private long getNumberOfDays(long timeElapsed) {
         long millisecondsInSecond = 1000;
         long millisecondsInMinute = millisecondsInSecond * 60;
         long millisecondsInHour = millisecondsInMinute * 60;
         long millisecondsInDay = millisecondsInHour * 24;
-        return (int) timeElapsed / (int) millisecondsInDay;
+        long days = (long) timeElapsed / (long) millisecondsInDay;
+        return days;
     }
 
     @Override
