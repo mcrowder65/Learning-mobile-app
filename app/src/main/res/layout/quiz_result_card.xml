@@ -47,8 +47,7 @@
                 android:id="@+id/icon"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="1"
-                android:src="@drawable/thumb_up" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
