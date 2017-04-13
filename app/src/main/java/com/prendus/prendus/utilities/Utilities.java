@@ -177,7 +177,7 @@ public class Utilities {
         try {
             uid = getAuth().getCurrentUser().getUid();
         } catch (Exception e) {
-            Utilities.log(e);
+
         }
         return uid;
     }

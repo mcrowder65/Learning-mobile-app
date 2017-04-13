@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,46 +58,54 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
             takeQuizActivity.thumbDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (currentThumbDownColor == ThumbDownColor.black) {
-                        int color = Color.parseColor(ColorValues.red);
-                        takeQuizActivity.thumbDown.setColorFilter(color);
-                        currentThumbDownColor = ThumbDownColor.red;
-                        if (currentThumbUpColor == ThumbUpColor.green) {
+                    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                        makeSnackBar("You must be logged in to upvote/downvote");
+                    } else {
+                        if (currentThumbDownColor == ThumbDownColor.black) {
+                            int color = Color.parseColor(ColorValues.red);
+                            takeQuizActivity.thumbDown.setColorFilter(color);
+                            currentThumbDownColor = ThumbDownColor.red;
+                            if (currentThumbUpColor == ThumbUpColor.green) {
+                                self.downvote(true);
+
+                            }
+                            currentThumbUpColor = ThumbUpColor.black;
+                            takeQuizActivity.thumbUp.setColorFilter(Color.parseColor(ColorValues.black));
                             self.downvote(true);
+                        } else if (currentThumbDownColor == ThumbDownColor.red) {
+                            int color = Color.parseColor(ColorValues.black);
+                            takeQuizActivity.thumbDown.setColorFilter(color);
+                            currentThumbDownColor = ThumbDownColor.black;
+                            self.upvote(false);
 
                         }
-                        currentThumbUpColor = ThumbUpColor.black;
-                        takeQuizActivity.thumbUp.setColorFilter(Color.parseColor(ColorValues.black));
-                        self.downvote(true);
-                    } else if (currentThumbDownColor == ThumbDownColor.red) {
-                        int color = Color.parseColor(ColorValues.black);
-                        takeQuizActivity.thumbDown.setColorFilter(color);
-                        currentThumbDownColor = ThumbDownColor.black;
-                        self.upvote(false);
-
                     }
+
                 }
             });
 
             takeQuizActivity.thumbUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if (currentThumbUpColor == ThumbUpColor.black) {
-                        int color = Color.parseColor(ColorValues.green);
-                        takeQuizActivity.thumbUp.setColorFilter(color);
-                        currentThumbUpColor = ThumbUpColor.green;
-                        if (currentThumbDownColor == ThumbDownColor.red) {
+                    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                        makeSnackBar("You must be logged in to upvote/downvote");
+                    } else {
+                        if (currentThumbUpColor == ThumbUpColor.black) {
+                            int color = Color.parseColor(ColorValues.green);
+                            takeQuizActivity.thumbUp.setColorFilter(color);
+                            currentThumbUpColor = ThumbUpColor.green;
+                            if (currentThumbDownColor == ThumbDownColor.red) {
+                                self.upvote(true);
+                            }
+                            currentThumbDownColor = ThumbDownColor.black;
+                            takeQuizActivity.thumbDown.setColorFilter(Color.parseColor(ColorValues.black));
                             self.upvote(true);
+                        } else if (currentThumbUpColor == ThumbUpColor.green) {
+                            int color = Color.parseColor(ColorValues.black);
+                            takeQuizActivity.thumbUp.setColorFilter(color);
+                            currentThumbUpColor = ThumbDownColor.black;
+                            self.downvote(false);
                         }
-                        currentThumbDownColor = ThumbDownColor.black;
-                        takeQuizActivity.thumbDown.setColorFilter(Color.parseColor(ColorValues.black));
-                        self.upvote(true);
-                    } else if (currentThumbUpColor == ThumbUpColor.green) {
-                        int color = Color.parseColor(ColorValues.black);
-                        takeQuizActivity.thumbUp.setColorFilter(color);
-                        currentThumbUpColor = ThumbDownColor.black;
-                        self.downvote(false);
                     }
                 }
             });
@@ -150,34 +159,57 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
 
     }
 
+    private void makeSnackBar(String message) {
+        takeQuizActivity.makeSnackBar(message);
+    }
+
     public void upvote(boolean addUpVoteToDatabase) {
 
-        Quiz quiz = takeQuizActivity.quiz;
-        quiz.upvote();
-        vote(quiz);
-        if (addUpVoteToDatabase) {
-            Utilities.firebase.update("upvotes/" + quiz.getId() + "/" +
-                            Utilities.getAuth().getCurrentUser().getUid(),
-                    Utilities.getAuth().getCurrentUser().getUid());
+        try {
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                makeSnackBar("You must be logged in to upvote/downvote");
+                return;
+            }
+            Quiz quiz = takeQuizActivity.quiz;
+            quiz.upvote();
+            vote(quiz);
+            if (addUpVoteToDatabase) {
+                Utilities.firebase.update("upvotes/" + quiz.getId() + "/" +
+                                Utilities.getAuth().getCurrentUser().getUid(),
+                        Utilities.getAuth().getCurrentUser().getUid());
+            }
+
+            Utilities.firebase.delete("downvotes/" + quiz.getId()
+                    + "/" + Utilities.getAuth().getCurrentUser().getUid());
+        } catch (Exception e) {
+            Utilities.log(e);
         }
 
-        Utilities.firebase.delete("downvotes/" + quiz.getId()
-                + "/" + Utilities.getAuth().getCurrentUser().getUid());
 
     }
 
     public void downvote(boolean addDownVoteToDatabase) {
-        Quiz quiz = takeQuizActivity.quiz;
-        quiz.downvote();
-        vote(quiz);
-        if (addDownVoteToDatabase) {
-            Utilities.firebase.update("downvotes/" + quiz.getId() + "/" +
-                            Utilities.getAuth().getCurrentUser().getUid(),
-                    Utilities.getAuth().getCurrentUser().getUid());
-        }
 
-        Utilities.firebase.delete("upvotes/" + quiz.getId()
-                + "/" + Utilities.getAuth().getCurrentUser().getUid());
+        try {
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                makeSnackBar("You must be logged in to upvote/downvote");
+                return;
+            }
+            Quiz quiz = takeQuizActivity.quiz;
+            quiz.downvote();
+            vote(quiz);
+            if (addDownVoteToDatabase) {
+                Utilities.firebase.update("downvotes/" + quiz.getId() + "/" +
+                                Utilities.getAuth().getCurrentUser().getUid(),
+                        Utilities.getAuth().getCurrentUser().getUid());
+            }
+
+            Utilities.firebase.delete("upvotes/" + quiz.getId()
+                    + "/" + Utilities.getAuth().getCurrentUser().getUid());
+        } catch (Exception e) {
+
+            Utilities.log(e);
+        }
     }
 
     private void vote(Quiz quiz) {
