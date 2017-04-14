@@ -38,32 +38,37 @@
                     android:text="Derivatives"
                     android:textSize="30sp" />
 
-
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:src="@drawable/star_border" />
 
-                    <ImageView
-                        android:id="@+id/thumbdown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/thumb_down"
-                        android:tint="@color/black" />
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center">-->
 
-                    <TextView
-                        android:id="@+id/quizScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="0" />
+                <ImageView
+                    android:id="@+id/thumbdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thumb_down"
+                    android:tint="@color/black" />
 
-                    <ImageView
-                        android:id="@+id/thumbup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/thumb_up"
-                        android:tint="@color/black" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/quizScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="0" />
+
+                <ImageView
+                    android:id="@+id/thumbup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thumb_up"
+                    android:tint="@color/black" />
+                <!--</LinearLayout>-->
             </LinearLayout>
 
 
