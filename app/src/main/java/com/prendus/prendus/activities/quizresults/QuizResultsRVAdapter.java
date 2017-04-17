@@ -78,15 +78,15 @@ public class QuizResultsRVAdapter extends RecyclerView.Adapter<QuizResultsRVAdap
 
         public void setYourAnswer(String s) {
 
-            yourAnswer.setText("Your answer: " + (s.equals("") ? " you put nothing!" : s));
+            yourAnswer.setText((s.equals("") ? " you put nothing!" : s));
         }
 
         public void setCorrectAnswer(String s) {
-            correctAnswer.setText("Correct answer: " + s);
+            correctAnswer.setText(s);
         }
 
         public void setQuestion(String s) {
-            question.setText("Question: " + s);
+            question.setText(s);
         }
 
 
