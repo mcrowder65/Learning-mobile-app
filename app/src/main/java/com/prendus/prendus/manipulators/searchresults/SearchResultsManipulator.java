@@ -52,7 +52,7 @@ public class SearchResultsManipulator implements IPrendusManipulator {
     @Override
     public void manipulate() {
         String s = intent.getStringExtra(IntentExtras.SEARCH_INPUT);
-        searchInput.setText("Your search: " + s);
+        searchInput.setText(s);
         String path = "quizzes";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(path);
