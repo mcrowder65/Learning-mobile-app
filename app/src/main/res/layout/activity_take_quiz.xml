@@ -19,42 +19,49 @@
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="500dp"
-            android:layout_height="40dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
 
             android:layout_marginTop="30dp"
             card_view:cardCornerRadius="1dp"
             card_view:cardElevation="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
 
-                <TextView
-                    android:id="@+id/quizTitle"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Derivatives"
-                    android:textSize="30sp" />
+                    android:layout_height="wrap_content">
 
-                <!--<ImageView-->
-                <!--android:id="@+id/star"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/star_border" />-->
+
+                    <TextView
+                        android:id="@+id/quizTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Derivatives"
+                        android:textSize="50sp" />
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/star"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@drawable/star_border" />-->
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/thumbdown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/thumb_down"
                         android:tint="@color/black" />
 
@@ -62,85 +69,95 @@
                         android:id="@+id/quizScore"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="0" />
+                        android:text="0"
+                        android:textSize="32dp" />
 
                     <ImageView
                         android:id="@+id/thumbup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:src="@drawable/thumb_up"
                         android:tint="@color/black" />
                 </LinearLayout>
-            </LinearLayout>
 
-
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
 
         <!-- Rest of content for the activity -->
-        <ViewAnimator
-            android:id="@+id/simpleViewAnimator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="380dp"
+            android:layout_height="321dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="4dp">
+
+            <ViewAnimator
+                android:id="@+id/simpleViewAnimator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp">
 
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="380dp"
-                android:layout_height="321dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                card_view:cardElevation="4dp">
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="380dp"
+                    android:layout_height="321dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    card_view:cardCornerRadius="1dp"
+                    card_view:cardElevation="4dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-
-                    <TextView
-                        android:id="@+id/currentQuestionNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Question 1 out of 5"
-                        android:textSize="30sp" />
-
-                    <TextView
-                        android:id="@+id/quizQuestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="What is the derivative of 3x^2?" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/answerLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/answer"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="answer" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/nextQuestion"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:onClick="nextQuestionClicked"
-                        android:text="NEXT" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/quizResults"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
 
-        </ViewAnimator>
+                        <TextView
+                            android:id="@+id/currentQuestionNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Question 1 out of 5"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/quizQuestion"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="What is the derivative of 3x^2?" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/answerLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/answer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="answer" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/nextQuestion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="nextQuestionClicked"
+                            android:text="NEXT" />
+
+                        <TextView
+                            android:id="@+id/quizResults"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </ViewAnimator>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 
