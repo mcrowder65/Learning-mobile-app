@@ -128,7 +128,8 @@
                         android:id="@+id/nextQuestion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:onClick="nextQuestionClicked"
                         android:text="NEXT" />
 
