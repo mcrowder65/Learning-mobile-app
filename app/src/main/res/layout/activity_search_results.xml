@@ -54,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:text="No quizzes match that search"
             android:textSize="30sp" />
         <!-- Rest of content for the activity -->
         <android.support.v7.widget.RecyclerView
