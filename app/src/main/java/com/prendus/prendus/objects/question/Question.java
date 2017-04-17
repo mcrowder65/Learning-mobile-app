@@ -77,6 +77,7 @@ public class Question extends PrendusObject {
             int index = "answer = '".length();
             this.code = this.code.substring(index);
             this.code = this.code.substring(0, this.code.indexOf('\''));
+            this.code = Utilities.stripWhitespace(this.code);
             cleanedAnswer = true;
         }
         return code;

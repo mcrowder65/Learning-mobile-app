@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="My quizzes"
+                android:text="My Quizzes"
                 android:textSize="30sp" />
 
         </android.support.v7.widget.CardView>

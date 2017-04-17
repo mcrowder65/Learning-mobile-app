@@ -228,4 +228,9 @@ public class Utilities {
 
     }
 
+    public static String stripWhitespace(String str) {
+        String newStr = str.replace(" ", "");
+        return newStr;
+    }
+
 }

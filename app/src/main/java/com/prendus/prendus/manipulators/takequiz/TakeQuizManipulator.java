@@ -249,7 +249,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     private void gradeQuestion() {
         try {
             String userAnswerAsStr = String.valueOf(takeQuizActivity.answer.getText());
-
+            userAnswerAsStr = Utilities.stripWhitespace(userAnswerAsStr);
 
             boolean correct = isQuestionCorrect(userAnswerAsStr);
             QuestionResult questionResult = new QuestionResult(currentQuestion, userAnswerAsStr, correct);
@@ -267,7 +267,14 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
     }
 
     private boolean isQuestionCorrect(String userAnswerAsStr) {
-        return this.currentQuestion.getAnswer().equals(Utilities.stripEverything(userAnswerAsStr));
+        boolean bool = false;
+        try {
+            return this.currentQuestion.getAnswer().equals(Utilities.stripEverything(userAnswerAsStr));
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+        return bool;
+
     }
 
     private void callGetQuestion() {
