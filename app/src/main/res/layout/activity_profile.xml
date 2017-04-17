@@ -25,6 +25,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
+
+            card_view:cardCornerRadius="1dp"
             card_view:cardElevation="4dp">
 
             <LinearLayout

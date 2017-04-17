@@ -47,9 +47,9 @@ public class SignupActivity extends PrendusActivity {
         email = (TextView) findViewById(R.id.email);
         password = (TextView) findViewById(R.id.password);
         confirmPassword = (TextView) findViewById(R.id.confirmPassword);
-        firstName = (TextView) findViewById(R.id.firstName);
-        lastName = (TextView) findViewById(R.id.lastName);
-        school = (TextView) findViewById(R.id.school);
+//        firstName = (TextView) findViewById(R.id.firstName);
+//        lastName = (TextView) findViewById(R.id.lastName);
+//        school = (TextView) findViewById(R.id.school);
 
         String emailStr = String.valueOf(email.getText());
         if (!Validator.isEmailValid(emailStr)) {
@@ -62,10 +62,10 @@ public class SignupActivity extends PrendusActivity {
             Log.wtf(Constants.TAG, "passwords don't match");
             return;
         }
-        String firstNameStr = String.valueOf(firstName.getText());
-        String lastNameStr = String.valueOf(lastName.getText());
-        String schoolStr = String.valueOf(school.getText());
-        this.signUpUserWithEmailAndPassword(emailStr, passwordStr, firstNameStr, lastNameStr, schoolStr);
+//        String firstNameStr = String.valueOf(firstName.getText());
+//        String lastNameStr = String.valueOf(lastName.getText());
+//        String schoolStr = String.valueOf(school.getText());
+        this.signUpUserWithEmailAndPassword(emailStr, passwordStr, null, null, null);
     }
 
     public void signUpUserWithEmailAndPassword(final String username, String password, final String firstName, final String lastName, final String school) {

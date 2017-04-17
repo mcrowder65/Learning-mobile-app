@@ -9,7 +9,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:stateListAnimator="@animator/lift_on_touch">
+
+    android:stateListAnimator="@animator/lift_on_touch"
+    card_view:cardCornerRadius="1dp">
 
 
     <LinearLayout
