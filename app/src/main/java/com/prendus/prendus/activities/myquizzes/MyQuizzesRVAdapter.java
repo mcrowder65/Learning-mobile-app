@@ -27,6 +27,7 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
 
     @Override
     public MyQuizzesContainer onCreateViewHolder(ViewGroup viewGroup, int i) {
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.quiz_card, viewGroup, false);
         MyQuizzesContainer qvc = new MyQuizzesContainer(v);
         return qvc;
@@ -39,13 +40,18 @@ public class MyQuizzesRVAdapter extends RecyclerView.Adapter<MyQuizzesRVAdapter.
 
     @Override
     public void onBindViewHolder(MyQuizzesContainer personViewHolder, int i) {
-        personViewHolder.quizTitle.setText(myQuizzesDatas.get(i).getName());
-        personViewHolder.quizId = myQuizzesDatas.get(i).getQuizId();
-        personViewHolder.score.setText("score: " + myQuizzesDatas.get(i).getScore());
-        Calendar calendar = myQuizzesDatas.get(i).getDate();
-        long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
-        long days = getNumberOfDays(timeElapsed);
-        personViewHolder.daysAgoMage.setText(String.valueOf(days) + " days old");
+        try {
+            personViewHolder.quizTitle.setText(myQuizzesDatas.get(i).getName());
+            personViewHolder.quizId = myQuizzesDatas.get(i).getQuizId();
+            personViewHolder.score.setText("score: " + myQuizzesDatas.get(i).getScore());
+            Calendar calendar = myQuizzesDatas.get(i).getDate();
+            long timeElapsed = new GregorianCalendar().getTimeInMillis() - calendar.getTimeInMillis();
+            long days = getNumberOfDays(timeElapsed);
+            personViewHolder.daysAgoMage.setText(String.valueOf(days) + " days old");
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+
     }
 
     @Override

@@ -30,41 +30,57 @@ public class LoginActivity extends PrendusActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Abstract to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
+            // Find the toolbar view inside the activity layout
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            // Sets the Abstract to act as the ActionBar for this Activity window.
+            // Make sure the toolbar exists in the activity and is not null
+            setSupportActionBar(toolbar);
+
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
 
     }
 
 
     public void loginClicked(View view) {
-        Log.wtf(Constants.TAG, "login clicked!!!!");
-        username = (EditText) findViewById(R.id.username);
 
-        password = (EditText) findViewById(R.id.password);
-        String usernameText = Utilities.stripEverything(String.valueOf(username.getText()));
+        try {
+            Log.wtf(Constants.TAG, "login clicked!!!!");
+            username = (EditText) findViewById(R.id.username);
 
-        if (!Validator.isEmailValid(usernameText)) {
-            makeSnackBar("email invalid!");
-            return;
+            password = (EditText) findViewById(R.id.password);
+            String usernameText = Utilities.stripEverything(String.valueOf(username.getText()));
+
+            if (!Validator.isEmailValid(usernameText)) {
+                makeSnackBar("email invalid!");
+                return;
+            }
+            String passwordText = Utilities.stripEverything(String.valueOf(password.getText()));
+            if (!Validator.isPasswordValid(passwordText)) {
+                makeSnackBar("password invalid");
+                return;
+            }
+
+            this.logInUserWithEmailAndPassword(usernameText, passwordText);
+        } catch (Exception e) {
+            Utilities.log(e);
         }
-        String passwordText = Utilities.stripEverything(String.valueOf(password.getText()));
-        if (!Validator.isPasswordValid(passwordText)) {
-            makeSnackBar("password invalid");
-            return;
-        }
 
-        this.logInUserWithEmailAndPassword(usernameText, passwordText);
 
     }
 
     public void movingToLogin(MenuItem item) {
-        makeSnackBar("you are already on login.");
+        try {
+            makeSnackBar("you are already on login.");
+        } catch (Exception e) {
+            Utilities.log(e);
+        }
+
     }
 
     public void logInUserWithEmailAndPassword(String username, String password) {
@@ -73,22 +89,26 @@ public class LoginActivity extends PrendusActivity {
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
-                // If sign in fails, display a message to the user. If sign in succeeds
-                // the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
-                if (!task.isSuccessful()) {
-                    Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
-                } else {
-
-                    if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
-                        Log.wtf(Constants.TAG, "email not verified...");
-                        FirebaseAuth.getInstance().signOut();
+                try {
+                    // If sign in fails, display a message to the user. If sign in succeeds
+                    // the auth state listener will be notified and logic to handle the
+                    // signed in user can be handled in the listener.
+                    if (!task.isSuccessful()) {
+                        Log.wtf(Constants.TAG, "signInWithEmail", task.getException());
                     } else {
-                        Utilities.goToActivity(MyQuizzesActivity.class, self);
-                    }
 
+                        if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
+                            Log.wtf(Constants.TAG, "email not verified...");
+                            FirebaseAuth.getInstance().signOut();
+                        } else {
+                            Utilities.goToActivity(MyQuizzesActivity.class, self);
+                        }
+
+                    }
+                } catch (Exception e) {
+                    Utilities.log(e);
                 }
+
 
             }
         });

@@ -14,6 +14,7 @@ public class MyQuizzesData {
     private Calendar date;
 
     public MyQuizzesData(String name, String quizId, int score, long timestamp) {
+
         this.name = name;
         this.quizId = quizId;
         this.score = score;

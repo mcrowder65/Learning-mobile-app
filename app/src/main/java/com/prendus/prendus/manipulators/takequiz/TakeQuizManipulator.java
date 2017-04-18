@@ -306,7 +306,7 @@ public class TakeQuizManipulator implements IPrendusManipulator, AsyncResponse {
         try {
             double finalGrade = (double) numRight / (double) this.questionIds.length;
             double percentage = finalGrade * 100;
-            takeQuizActivity.quizResults.setText(" You scored: " + percentage + "%");
+//            takeQuizActivity.quizResults.setText(" You scored: " + percentage + "%");
             takeQuizActivity.nextQuestion.setEnabled(false);
             //TODO go to quiz results page
             Utilities.goToActivity(QuizResultsActivity.class, takeQuizActivity, finalGrade, questionResults);
